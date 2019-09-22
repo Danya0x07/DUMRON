@@ -1,0 +1,16 @@
+/Debug/
+/Drivers/
+/Middlewares/
+/Startup/
+*.ld
+.cproject
+.mxproject
+.project
+.settings/
+Inc/stm32*
+Inc/stm32*
+Src/freertos.c
+Src/stm32*
+Src/sys*
+DUMRON.ioc
+DUMRON.txt
