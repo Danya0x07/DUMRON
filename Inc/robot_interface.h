@@ -1,7 +1,7 @@
 #ifndef ROBOT_INTERFACE_H_INCLUDED
 #define ROBOT_INTERFACE_H_INCLUDED
 
-#include <main.h>
+#include "main.h"
 
 typedef enum {
     ROBOT_DIRECTION_NONE,

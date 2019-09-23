@@ -1,12 +1,12 @@
-#include "motors.h"
+#include <modules/motors.h>
 /*
  * motors.c
  *
  *  Created on: Sep 20, 2019
  *      Author: danya
  */
-static inline void motors_pin_set(uint16_t mot_pin);
-static inline void motors_pin_reset(uint16_t mot_pin);
+static inline void motors_pin_set(uint32_t mot_pin);
+static inline void motors_pin_reset(uint32_t mot_pin);
 
 void motors_set_direction(RobotDirection direction)
 {
@@ -41,13 +41,13 @@ void motors_set_speed(uint8_t speed_left, uint8_t speed_right)
 	TIM1->CCR2 = speed_right;
 }
 
-static inline void motors_pin_set(uint16_t mot_pin)
+static inline void motors_pin_set(uint32_t mot_pin)
 {
-	HAL_GPIO_WritePin(MOT_GPIO_Port, mot_pin, GPIO_PIN_SET);
+	LL_GPIO_SetOutputPin(MOT_GPIO_Port, mot_pin);
 }
 
-static inline void motors_pin_reset(uint16_t mot_pin)
+static inline void motors_pin_reset(uint32_t mot_pin)
 {
-	HAL_GPIO_WritePin(MOT_GPIO_Port, mot_pin, GPIO_PIN_RESET);
+	LL_GPIO_ResetOutputPin(MOT_GPIO_Port, mot_pin);
 }
 
