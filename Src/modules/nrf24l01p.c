@@ -102,6 +102,10 @@ void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperatio
  */
 static uint8_t nrf_spi_send_recv(uint8_t byte)
 {
-    LL_SPI_TransmitData8(SPI1, byte);
+    while (!LL_SPI_IsActiveFlag_TXE(SPI1))
+    	;
+	LL_SPI_TransmitData8(SPI1, byte);
+    while (!LL_SPI_IsActiveFlag_RXNE(SPI1))
+    	;
     return LL_SPI_ReceiveData8(SPI1);
 }

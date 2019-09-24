@@ -187,9 +187,9 @@ void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask, FlagStatus flag_statu
 #define nrf_get_status()  nrf_cmd(NOP)
 #define nrf_clear_interrupts()  nrf_bitmask(STATUS, 0, RESET)
 
-#define nrf_csn_1() HAL_GPIO_WritePin(NRF_CSN_GPIO_Port, NRF_CSN_Pin, GPIO_PIN_SET)
-#define nrf_csn_0() HAL_GPIO_WritePin(NRF_CSN_GPIO_Port, NRF_CSN_Pin, GPIO_PIN_RESET)
-#define nrf_ce_1()  HAL_GPIO_WritePin(NRF_CE_GPIO_Port, NRF_CE_Pin, GPIO_PIN_SET)
-#define nrf_ce_0()  HAL_GPIO_WritePin(NRF_CE_GPIO_Port, NRF_CE_Pin, GPIO_PIN_RESET)
+#define nrf_csn_1() LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
+#define nrf_csn_0() LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
+#define nrf_ce_1()  LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)
+#define nrf_ce_0()  LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)
 
 #endif
