@@ -1,7 +1,12 @@
 #include "modules/debug.h"
 #include <stdlib.h>
 
-static inline void debug_uart_send_byte(uint8_t);
+static inline void debug_uart_send_byte(uint8_t byte)
+{
+	while (!LL_USART_IsActiveFlag_TXE(USART1))
+		;
+	LL_USART_TransmitData8(USART1, byte);
+}
 
 void debug_led_set(_Bool state)
 {
@@ -21,11 +26,4 @@ void debug_logi(int n)
 {
 	char buffer[17];
 	debug_logs(itoa(n, buffer, 10));
-}
-
-static inline void debug_uart_send_byte(uint8_t byte)
-{
-	while (!LL_USART_IsActiveFlag_TXE(USART1))
-		;
-	LL_USART_TransmitData8(USART1, byte);
 }
