@@ -8,13 +8,14 @@
 #include "main.h"
 
 /* Команды */
-typedef enum {
-    R_REGISTER = 0x00,  /* + n Прочитать регистр n */
-    W_REGISTER = 0x20,  /* + n Записать регистр n */
-    R_RX_PAYLOAD = 0x61,  /* Принять данные данные из верхнего слота очереди приёмника. */
-    W_TX_PAYLOAD = 0xA0,  /* Записать в очередь передатчика данные для отправки */
-    FLUSH_TX = 0xE1,  /* Сбросить очередь передатчика */
-    FLUSH_RX = 0xE2,  /* Сбросить очередь приёмника */
+typedef enum
+{
+    R_REGISTER = 0x00,   /* + n Прочитать регистр n */
+    W_REGISTER = 0x20,   /* + n Записать регистр n */
+    R_RX_PAYLOAD = 0x61, /* Принять данные данные из верхнего слота очереди приёмника. */
+    W_TX_PAYLOAD = 0xA0, /* Записать в очередь передатчика данные для отправки */
+    FLUSH_TX = 0xE1,     /* Сбросить очередь передатчика */
+    FLUSH_RX = 0xE2,     /* Сбросить очередь приёмника */
     REUSE_TX_PL = 0xE3,  /* Использовать повторно последний переданный пакет */
     R_RX_PL_WID = 0x60,  /* Прочитать размер данных принятого пакета в начале очереди приёмника. */
     W_ACK_PAYLOAD = 0xA8,  /* + p Записать данные для отправки с пакетом подтверждения по каналу p. */
@@ -23,15 +24,16 @@ typedef enum {
 } NrfCommand;
 
 /* Регистры */
-typedef enum {
+typedef enum
+{
     CONFIG = 0x00,  /* Регистр настроек */
-    EN_AA  = 0x01,  /* Выбор автоподтверждения */
-    EN_RXADDR  = 0x02,  /* Выбор каналов приёмника */
-    SETUP_AW   = 0x03,  /* Настройка размера адреса */
-    SETUP_RETR = 0x04,  /* Настройка повторной отправки */
-    RF_CH    = 0x05,  /* Номер радиоканала, на котором осуществляется работа. От 0 до 125. */
+    EN_AA = 0x01,   /* Выбор автоподтверждения */
+    EN_RXADDR = 0x02,  /* Выбор каналов приёмника */
+    SETUP_AW = 0x03,   /* Настройка размера адреса */
+    SETUP_RETR = 0x04, /* Настройка повторной отправки */
+    RF_CH = 0x05,  /* Номер радиоканала, на котором осуществляется работа. От 0 до 125. */
     RF_SETUP = 0x06,  /* Настройка радиоканала */
-    STATUS   = 0x07,  /* Регистр статуса. */
+    STATUS = 0x07,    /* Регистр статуса. */
     OBSERVE_TX = 0x08,  /* Количество повторов передачи и потерянных пакетов */
     RPD = 0x09,  /* Мощность принимаемого сигнала. Если младший бит = 1, то уровень более -64dBm */
     RX_ADDR_P0 = 0x0A,  /* 3-5 байт (начиная с младшего байта). Адрес канала 0 приёмника. */
@@ -47,8 +49,8 @@ typedef enum {
     RX_PW_P3 = 0x14,  /* Размер данных при приёме по каналу 3: от 1 до 32. 0 - канал не используется. */
     RX_PW_P4 = 0x15,  /* Размер данных при приёме по каналу 4: от 1 до 32. 0 - канал не используется. */
     RX_PW_P5 = 0x16,  /* Размер данных при приёме по каналу 5: от 1 до 32. 0 - канал не используется. */
-    FIFO_STATUS = 0x17,  /* Состояние очередей FIFO приёмника и передатчика */
-    DYNPD   = 0x1C,  /* Выбор каналов приёмника для которых используется произвольная длина пакетов. */
+    FIFO_STATUS = 0x17, /* Состояние очередей FIFO приёмника и передатчика */
+    DYNPD = 0x1C,   /* Выбор каналов приёмника для которых используется произвольная длина пакетов. */
     FEATURE = 0x1D  /* Регистр опций */
 } NrfRegAddress;
 /* Биты регистров */
@@ -143,7 +145,7 @@ typedef enum {
 #define MAX_RT  (1 << 4)  /* Флаг превышения установленного числа повторов. Без сброса (записать 1) обмен невозможен */
 #define RX_P_NO (1 << 1)  /* 3 бита. Номер канала, данные для которого доступны в FIFO приёмника. 7 -  FIFO пусто. */
 /* Признак заполнения FIFO передатчика: 1 - заполнено; 0 - есть доступные слоты
-   (переименовано из TX_FULL во избежание путаницы с одноимённым битом из регистра FIFO_STATUS) */
+  (переименовано из TX_FULL во избежание путаницы с одноимённым битом из регистра FIFO_STATUS) */
 #define TX_FULL_STATUS (1 << 0)
 
 /* OBSERVE_TX */
@@ -153,7 +155,7 @@ typedef enum {
 /* FIFO_STATUS */
 #define TX_REUSE (1 << 6)  /* Признак готовности последнего пакета для повторной отправки. */
 /* Флаг переполнения FIFO очереди передатчика.
- (переименовано из TX_FULL во избежание путаницы с одноимённым битом из регистра STATUS) */
+  (переименовано из TX_FULL во избежание путаницы с одноимённым битом из регистра STATUS) */
 #define TX_FULL_FIFO (1 << 5)
 #define TX_EMPTY (1 << 4)  /* Флаг освобождения FIFO очереди передатчика. */
 #define RX_FULL  (1 << 1)  /* Флаг переполнения FIFO очереди приёмника. */
@@ -172,17 +174,19 @@ typedef enum {
 #define EN_ACK_PAY (1 << 1)  /* Разрешает передачу данных с пакетами подтверждения приёма */
 #define EN_DYN_ACK (1 << 0)  /* Разрешает использование W_TX_PAYLOAD_NOACK */
 
-typedef enum {
-    NRF_OPERATION_READ,
-    NRF_OPERATION_WRITE
+typedef enum
+{
+    NRF_OPERATION_READ, NRF_OPERATION_WRITE
 } NrfOperation;
 
 void nrf_init_gpio(void);
 uint8_t nrf_cmd(NrfCommand cmd);
 uint8_t nrf_read_byte(NrfRegAddress reg_addr);
 void nrf_overwrite_byte(NrfRegAddress reg_addr, uint8_t bit_flags);
-void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperation operation);
-void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask, FlagStatus flag_status);
+void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size,
+        NrfOperation operation);
+void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask,
+        FlagStatus flag_status);
 
 #define nrf_get_status()  nrf_cmd(NOP)
 #define nrf_clear_interrupts()  nrf_bitmask(STATUS, 0, RESET)

@@ -61,7 +61,8 @@ void nrf_overwrite_byte(NrfRegAddress reg_addr, uint8_t bit_flags)
  * @param  bit_flags: Битовые флаги для применения к регистру.
  * @param  bit_status: Установить/сбросить указанные флаги.
  */
-void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask, FlagStatus bit_status)
+void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask,
+        FlagStatus bit_status)
 {
     uint8_t reg_value;
     nrf_read_to_buffer(reg_addr, &reg_value, 1);
@@ -81,7 +82,8 @@ void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask, FlagStatus bit_status
  * @param  size: Сколько байт доп. данных или ответа.
  * @param  operation: Отправлять доп. данные или принимать ответ.
  */
-void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperation operation)
+void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size,
+        NrfOperation operation)
 {
     nrf_csn_0();
     nrf_spi_send_recv(composite_cmd);
@@ -103,9 +105,9 @@ void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperatio
 static uint8_t nrf_spi_send_recv(uint8_t byte)
 {
     while (!LL_SPI_IsActiveFlag_TXE(SPI1))
-    	;
-	LL_SPI_TransmitData8(SPI1, byte);
+        ;
+    LL_SPI_TransmitData8(SPI1, byte);
     while (!LL_SPI_IsActiveFlag_RXNE(SPI1))
-    	;
+        ;
     return LL_SPI_ReceiveData8(SPI1);
 }
