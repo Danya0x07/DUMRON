@@ -9,20 +9,12 @@
 .settings/
 
 Inc/stm32*
-Inc/stm32*
-Inc/usart.h
-Inc/adc.h
-Inc/gpio.h
-Inc/spi.h
-Inc/tim.h
+!Inc/stm32f1xx_it.h
 
 Src/stm32*
+!Src/stm32f1xx_it.c
+
 Src/sys*
-Src/adc.c
-Src/gpio.c
-Src/usart.c
-Src/spi.c
-Src/tim.c
 
 DUMRON.ioc
 DUMRON.txt
