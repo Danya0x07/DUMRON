@@ -12,6 +12,7 @@ Inc/stm32*
 Inc/stm32*
 Inc/usart.h
 Inc/adc.h
+Inc/gpio.h
 Inc/spi.h
 Inc/tim.h
 

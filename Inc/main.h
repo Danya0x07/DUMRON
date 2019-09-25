@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
-#include "stm32f1xx_ll_adc.h"
 #include "stm32f1xx_ll_rcc.h"
 #include "stm32f1xx_ll_bus.h"
 #include "stm32f1xx_ll_system.h"
@@ -62,6 +61,8 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 #define MOT_GPIO_Port	GPIOB
+#define BATTERY_BRAIN_Channel       ADC_CHANNEL_8
+#define BATTERY_RADIATORS_Channel   ADC_CHANNEL_9
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -80,10 +81,6 @@ void Error_Handler(void);
 #define SERVO_CLAW_GPIO_Port GPIOA
 #define NRF_CSN_Pin LL_GPIO_PIN_4
 #define NRF_CSN_GPIO_Port GPIOA
-#define BRAIN_BATTERY_Pin LL_GPIO_PIN_0
-#define BRAIN_BATTERY_GPIO_Port GPIOB
-#define MOT_BATTERY_Pin LL_GPIO_PIN_1
-#define MOT_BATTERY_GPIO_Port GPIOB
 #define MOT_R_P2_Pin LL_GPIO_PIN_12
 #define MOT_R_P2_GPIO_Port GPIOB
 #define MOT_R_P1_Pin LL_GPIO_PIN_13
