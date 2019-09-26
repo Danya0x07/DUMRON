@@ -56,7 +56,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(GPIOA, NRF_CSN_Pin|SONAR_TRIG_Pin|ONEWIRE_Pin|NRF_CE_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOB, MOT_R_P2_Pin|MOT_R_P1_Pin|MOT_L_P2_Pin|MOT_L_P1_Pin 
+  LL_GPIO_ResetOutputPin(GPIOB, MOTOR_R2_Pin|MOTOR_R1_Pin|MOTOR_L2_Pin|MOTOR_L1_Pin 
                           |LIGHTS_Pin|BUZZER_Pin);
 
   /**/
@@ -74,7 +74,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = MOT_R_P2_Pin|MOT_R_P1_Pin|MOT_L_P2_Pin|MOT_L_P1_Pin 
+  GPIO_InitStruct.Pin = MOTOR_R2_Pin|MOTOR_R1_Pin|MOTOR_L2_Pin|MOTOR_L1_Pin 
                           |LIGHTS_Pin|BUZZER_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;

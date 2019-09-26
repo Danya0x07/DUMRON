@@ -60,9 +60,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define MOT_GPIO_Port	GPIOB
-#define BATTERY_BRAIN_Channel       ADC_CHANNEL_8
-#define BATTERY_RADIATORS_Channel   ADC_CHANNEL_9
+
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -75,24 +73,24 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LED_DEBUG_Pin LL_GPIO_PIN_13
 #define LED_DEBUG_GPIO_Port GPIOC
-#define SERVO_SHOULDER_Pin LL_GPIO_PIN_0
-#define SERVO_SHOULDER_GPIO_Port GPIOA
+#define SERVO_ARM_Pin LL_GPIO_PIN_0
+#define SERVO_ARM_GPIO_Port GPIOA
 #define SERVO_CLAW_Pin LL_GPIO_PIN_1
 #define SERVO_CLAW_GPIO_Port GPIOA
 #define NRF_CSN_Pin LL_GPIO_PIN_4
 #define NRF_CSN_GPIO_Port GPIOA
-#define MOT_R_P2_Pin LL_GPIO_PIN_12
-#define MOT_R_P2_GPIO_Port GPIOB
-#define MOT_R_P1_Pin LL_GPIO_PIN_13
-#define MOT_R_P1_GPIO_Port GPIOB
-#define MOT_L_P2_Pin LL_GPIO_PIN_14
-#define MOT_L_P2_GPIO_Port GPIOB
-#define MOT_L_P1_Pin LL_GPIO_PIN_15
-#define MOT_L_P1_GPIO_Port GPIOB
-#define MOT_R_EN_Pin LL_GPIO_PIN_8
-#define MOT_R_EN_GPIO_Port GPIOA
-#define MOT_L_EN_Pin LL_GPIO_PIN_9
-#define MOT_L_EN_GPIO_Port GPIOA
+#define MOTOR_R2_Pin LL_GPIO_PIN_12
+#define MOTOR_R2_GPIO_Port GPIOB
+#define MOTOR_R1_Pin LL_GPIO_PIN_13
+#define MOTOR_R1_GPIO_Port GPIOB
+#define MOTOR_L2_Pin LL_GPIO_PIN_14
+#define MOTOR_L2_GPIO_Port GPIOB
+#define MOTOR_L1_Pin LL_GPIO_PIN_15
+#define MOTOR_L1_GPIO_Port GPIOB
+#define MOTOR_RPWM_Pin LL_GPIO_PIN_8
+#define MOTOR_RPWM_GPIO_Port GPIOA
+#define MOTOR_LPWM_Pin LL_GPIO_PIN_9
+#define MOTOR_LPWM_GPIO_Port GPIOA
 #define SONAR_ECHO_Pin LL_GPIO_PIN_10
 #define SONAR_ECHO_GPIO_Port GPIOA
 #define SONAR_TRIG_Pin LL_GPIO_PIN_11
@@ -108,7 +106,17 @@ void Error_Handler(void);
 #define BUZZER_Pin LL_GPIO_PIN_9
 #define BUZZER_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
+#define MOTOR_GPIO_Port   GPIOB
+#define MOTOR_TIM   TIM1
+#define MOTOR_L_PWM_Reg   CCR1
+#define MOTOR_R_PWM_Reg   CCR2
 
+#define SERVO_TIM   TIM2
+#define SERVO_ARM_PWM_Reg   CCR1
+#define SERVO_CLAW_PWM_Reg  CCR2
+
+#define BATTERY_BRAIN_Channel       ADC_CHANNEL_8
+#define BATTERY_RADIATORS_Channel   ADC_CHANNEL_9
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

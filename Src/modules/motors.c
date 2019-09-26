@@ -5,8 +5,8 @@
  *  Created on: Sep 20, 2019
  *      Author: danya
  */
-static inline void motors_pin_set(uint32_t mot_pin);
-static inline void motors_pin_reset(uint32_t mot_pin);
+#define motors_pins_set(pinmask)    LL_GPIO_SetOutputPin(MOTOR_GPIO_Port, (pinmask))
+#define motors_pins_reset(pinmask)  LL_GPIO_ResetOutputPin(MOTOR_GPIO_Port, (pinmask))
 
 void motors_set_direction(RobotDirection direction)
 {
@@ -14,40 +14,29 @@ void motors_set_direction(RobotDirection direction)
     switch (direction)
     {
     case ROBOT_DIRECTION_NONE:
-        motors_pin_reset(MOT_L_P1_Pin | MOT_L_P2_Pin | MOT_R_P1_Pin | MOT_R_P2_Pin);
+        motors_pins_reset(MOTOR_L1_Pin | MOTOR_L2_Pin | MOTOR_R1_Pin | MOTOR_R2_Pin);
         break;
     case ROBOT_DIRECTION_FORWARD:
-        motors_pin_reset(MOT_L_P2_Pin | MOT_R_P2_Pin);
-        motors_pin_set  (MOT_L_P1_Pin | MOT_R_P1_Pin);
+        motors_pins_reset(MOTOR_L2_Pin | MOTOR_R2_Pin);
+        motors_pins_set  (MOTOR_L1_Pin | MOTOR_R1_Pin);
         break;
     case ROBOT_DIRECTION_BACKWARD:
-        motors_pin_reset(MOT_L_P1_Pin | MOT_R_P1_Pin);
-        motors_pin_set  (MOT_L_P2_Pin | MOT_R_P2_Pin);
+        motors_pins_reset(MOTOR_L1_Pin | MOTOR_R1_Pin);
+        motors_pins_set  (MOTOR_L2_Pin | MOTOR_R2_Pin);
         break;
     case ROBOT_DIRECTION_LEFTWARD:
-        motors_pin_reset(MOT_L_P1_Pin | MOT_R_P2_Pin);
-        motors_pin_set  (MOT_L_P2_Pin | MOT_R_P1_Pin);
+        motors_pins_reset(MOTOR_L1_Pin | MOTOR_R2_Pin);
+        motors_pins_set  (MOTOR_L2_Pin | MOTOR_R1_Pin);
         break;
     case ROBOT_DIRECTION_RIGHTWARD:
-        motors_pin_reset(MOT_L_P2_Pin | MOT_R_P1_Pin);
-        motors_pin_set  (MOT_L_P1_Pin | MOT_R_P2_Pin);
+        motors_pins_reset(MOTOR_L2_Pin | MOTOR_R1_Pin);
+        motors_pins_set  (MOTOR_L1_Pin | MOTOR_R2_Pin);
         break;
     }
 }
 
 void motors_set_speed(uint8_t speed_left, uint8_t speed_right)
 {
-    TIM1->CCR1 = speed_left;
-    TIM1->CCR2 = speed_right;
+    LL_TIM_WriteReg(MOTOR_TIM, MOTOR_L_PWM_Reg, speed_left);
+    LL_TIM_WriteReg(MOTOR_TIM, MOTOR_R_PWM_Reg, speed_right);
 }
-
-static inline void motors_pin_set(uint32_t mot_pin)
-{
-    LL_GPIO_SetOutputPin(MOT_GPIO_Port, mot_pin);
-}
-
-static inline void motors_pin_reset(uint32_t mot_pin)
-{
-    LL_GPIO_ResetOutputPin(MOT_GPIO_Port, mot_pin);
-}
-

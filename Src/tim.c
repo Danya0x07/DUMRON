@@ -35,7 +35,7 @@ void MX_TIM1_Init(void)
   /* Peripheral clock enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM1);
 
-  TIM_InitStruct.Prescaler = 1023;
+  TIM_InitStruct.Prescaler = 8191;
   TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
   TIM_InitStruct.Autoreload = 255;
   TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
@@ -74,7 +74,7 @@ void MX_TIM1_Init(void)
     PA8     ------> TIM1_CH1
     PA9     ------> TIM1_CH2 
     */
-  GPIO_InitStruct.Pin = MOT_R_EN_Pin|MOT_L_EN_Pin;
+  GPIO_InitStruct.Pin = MOTOR_RPWM_Pin|MOTOR_LPWM_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
@@ -91,9 +91,9 @@ void MX_TIM2_Init(void)
   /* Peripheral clock enable */
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
 
-  TIM_InitStruct.Prescaler = 64;
+  TIM_InitStruct.Prescaler = 255;
   TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
-  TIM_InitStruct.Autoreload = 1250;
+  TIM_InitStruct.Autoreload = 2499;
   TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
   LL_TIM_Init(TIM2, &TIM_InitStruct);
   LL_TIM_DisableARRPreload(TIM2);
@@ -118,7 +118,7 @@ void MX_TIM2_Init(void)
     PA0-WKUP     ------> TIM2_CH1
     PA1     ------> TIM2_CH2 
     */
-  GPIO_InitStruct.Pin = SERVO_SHOULDER_Pin|SERVO_CLAW_Pin;
+  GPIO_InitStruct.Pin = SERVO_ARM_Pin|SERVO_CLAW_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
