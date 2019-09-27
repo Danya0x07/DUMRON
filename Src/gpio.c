@@ -53,11 +53,14 @@ void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(LED_DEBUG_GPIO_Port, LED_DEBUG_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, NRF_CSN_Pin|SONAR_TRIG_Pin|ONEWIRE_Pin|NRF_CE_Pin);
-
-  /**/
   LL_GPIO_ResetOutputPin(GPIOB, MOTOR_R2_Pin|MOTOR_R1_Pin|MOTOR_L2_Pin|MOTOR_L1_Pin 
                           |LIGHTS_Pin|BUZZER_Pin);
+
+  /**/
+  LL_GPIO_ResetOutputPin(GPIOA, SONAR_TRIG_Pin|NRF_CE_Pin);
+
+  /**/
+  LL_GPIO_SetOutputPin(GPIOA, NRF_CSN_Pin|ONEWIRE_Pin);
 
   /**/
   GPIO_InitStruct.Pin = LED_DEBUG_Pin;
@@ -67,17 +70,16 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(LED_DEBUG_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = NRF_CSN_Pin|SONAR_TRIG_Pin|ONEWIRE_Pin|NRF_CE_Pin;
+  GPIO_InitStruct.Pin = NRF_CSN_Pin|NRF_CE_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = MOTOR_R2_Pin|MOTOR_R1_Pin|MOTOR_L2_Pin|MOTOR_L1_Pin 
-                          |LIGHTS_Pin|BUZZER_Pin;
+  GPIO_InitStruct.Pin = MOTOR_R2_Pin|MOTOR_R1_Pin|MOTOR_L2_Pin|MOTOR_L1_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_MEDIUM;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
@@ -85,6 +87,27 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = SONAR_ECHO_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
   LL_GPIO_Init(SONAR_ECHO_GPIO_Port, &GPIO_InitStruct);
+
+  /**/
+  GPIO_InitStruct.Pin = SONAR_TRIG_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_MEDIUM;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  LL_GPIO_Init(SONAR_TRIG_GPIO_Port, &GPIO_InitStruct);
+
+  /**/
+  GPIO_InitStruct.Pin = ONEWIRE_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_MEDIUM;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
+  LL_GPIO_Init(ONEWIRE_GPIO_Port, &GPIO_InitStruct);
+
+  /**/
+  GPIO_InitStruct.Pin = LIGHTS_Pin|BUZZER_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /**/
   LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTB, LL_GPIO_AF_EXTI_LINE5);
