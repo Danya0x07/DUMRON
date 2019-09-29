@@ -5,12 +5,17 @@
 
 #include "modules/nrf24l01p.h"
 
-#define nrf_read_to_buffer(reg_addr, buf_addr, size) \
-    nrf_rw_buff(R_REGISTER | ((reg_addr) & 0x1F), (buf_addr), (size), NRF_OPERATION_READ)
-#define nrf_write_from_buffer(reg_addr, buf_addr, size) \
-    nrf_rw_buff(W_REGISTER | ((reg_addr) & 0x1F), (buf_addr), (size), NRF_OPERATION_WRITE)
-
 static uint8_t nrf_spi_send_recv(uint8_t);
+
+static inline void nrf_read_to_buffer(uint8_t reg_addr, uint8_t* buff, uint8_t size)
+{
+    nrf_rw_buff(R_REGISTER | (reg_addr & 0x1F), buff, size, NRF_OPERATION_READ);
+}
+
+static inline void nrf_write_from_buffer(uint8_t reg_addr, uint8_t* buff, uint8_t size)
+{
+    nrf_rw_buff(W_REGISTER | (reg_addr & 0x1F), buff, size, NRF_OPERATION_WRITE);
+}
 
 /**
  * @brief  Отправляет простую команду радиомодулю.
@@ -82,8 +87,7 @@ void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask,
  * @param  size: Сколько байт доп. данных или ответа.
  * @param  operation: Отправлять доп. данные или принимать ответ.
  */
-void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size,
-        NrfOperation operation)
+void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperation operation)
 {
     nrf_csn_0();
     nrf_spi_send_recv(composite_cmd);

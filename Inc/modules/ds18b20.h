@@ -24,12 +24,24 @@ typedef enum {
     DS_RESOLUTION_12BIT = 0x7F
 } DsResulution;
 
+/**
+ * @brief  Структура, описывающая настройки датчика,
+ *         которые могут быть установлены пользователем.
+ */
 typedef struct {
     uint8_t temp_lim_h;
     uint8_t temp_lim_l;
     DsResulution resolution;
 } DsConfig;
 
+/**
+ * @brief  Структура, описывающая выходные данные с датчика.
+ *         Помимо двух байтов с температурой, из того, что
+ *         может интересоввать пользователя, датчик ещё
+ *         выдаёт девятым байтом контрольную сумму для
+ *         предыдущих восьми, но функционал её проверки
+ *         ещё не реализован.
+ */
 typedef struct {
     uint8_t temp_lsb;
     uint8_t temp_msb;
@@ -43,6 +55,7 @@ uint64_t ds_get_addr_of_single(void);
 void ds_write_config(DsConfig*);
 void ds_read_data(DsOutputData*);
 
+ErrorStatus ds_reset_pulse(void);
 void ds_write_byte(uint8_t);
 uint8_t ds_read_byte(void);
 
