@@ -174,19 +174,17 @@ typedef enum
 #define EN_ACK_PAY (1 << 1)  /* Разрешает передачу данных с пакетами подтверждения приёма */
 #define EN_DYN_ACK (1 << 0)  /* Разрешает использование W_TX_PAYLOAD_NOACK */
 
-typedef enum
-{
-    NRF_OPERATION_READ, NRF_OPERATION_WRITE
+typedef enum {
+    NRF_OPERATION_READ,
+    NRF_OPERATION_WRITE
 } NrfOperation;
 
 void nrf_init_gpio(void);
 uint8_t nrf_cmd(NrfCommand cmd);
 uint8_t nrf_read_byte(NrfRegAddress reg_addr);
 void nrf_overwrite_byte(NrfRegAddress reg_addr, uint8_t bit_flags);
-void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size,
-        NrfOperation operation);
-void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask,
-        FlagStatus flag_status);
+void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperation operation);
+void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask, FlagStatus flag_status);
 
 #define nrf_get_status()  nrf_cmd(NOP)
 #define nrf_clear_interrupts()  nrf_bitmask(STATUS, 0, RESET)

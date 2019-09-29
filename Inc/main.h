@@ -45,7 +45,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "tim.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -117,6 +117,9 @@ void Error_Handler(void);
 
 #define BATTERY_BRAIN_Channel       ADC_CHANNEL_8
 #define BATTERY_RADIATORS_Channel   ADC_CHANNEL_9
+
+#define DS_ADDR_ENVIRONMENT 0x0000000000000000
+#define DS_ADDR_RADIATORS   0x0000000000000000
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
