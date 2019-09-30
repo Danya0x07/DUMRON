@@ -120,6 +120,8 @@ void Error_Handler(void);
 
 #define DS_ADDR_ENVIRONMENT 0x0000000000000000
 #define DS_ADDR_RADIATORS   0x0000000000000000
+
+#define SONAR_GPIO_Port   GPIOA
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
