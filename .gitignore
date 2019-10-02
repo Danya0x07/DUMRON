@@ -16,5 +16,6 @@ Src/stm32*
 
 Src/sys*
 
-DUMRON.ioc
+DUMRON.elf.*
 DUMRON.txt
+/Release/

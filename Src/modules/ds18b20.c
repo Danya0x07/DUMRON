@@ -11,12 +11,12 @@ static _Bool ds_read_bit(void);
  * @brief  Начинает общение с одним из датчиков на линии.
  * @param  addr: адрес устройства для начала сеанса.
  */
-void ds_select_single(uint64_t addr)
+void ds_select_single(uint8_t address_buff[8])
 {
     ds_reset_pulse();
     ds_write_byte(DS_MATCH_ROM);
-    for (uint8_t i = 0; i < 64; i++)
-        ds_write_bit(addr & (1 << i));
+    for (uint8_t i = 0; i < 8; i++)
+        ds_write_byte(address_buff[i]);
 }
 
 /**
@@ -32,14 +32,12 @@ void ds_select_all(void)
  * @brief  Считывает адрес единственного датчика на линии.
  * @retval полный ROM-адрес датчика.
  */
-uint64_t ds_get_addr_of_single(void)
+void ds_get_addr_of_single(uint8_t addr_buff[8])
 {
     ds_reset_pulse();
     ds_write_byte(DS_READ_ROM);
-    uint64_t addr;
-    for (uint8_t i = 0; i < 64; i++)
-        addr |= ds_read_bit() << i;
-    return addr;
+    for (uint8_t i = 0; i < 8; i++)
+        addr_buff[7 - i] = ds_read_byte();
 }
 
 /**
@@ -69,6 +67,7 @@ void ds_read_data(DsOutputData* p_data)
     ds_write_byte(DS_R_SCRATCHPAD);
     p_data->temp_lsb = ds_read_byte();
     p_data->temp_msb = ds_read_byte();
+    p_data->th = ds_read_byte();
     ds_reset_pulse();
 }
 
@@ -78,10 +77,8 @@ void ds_read_data(DsOutputData* p_data)
  */
 void ds_write_byte(uint8_t byte)
 {
-    for (uint8_t i = 0; i < 8; i++) {
+    for (uint8_t i = 0; i < 8; i++)
         ds_write_bit(byte & (1 << i));
-        delay_us(5);
-    }
 }
 
 /**
@@ -104,14 +101,12 @@ uint8_t ds_read_byte(void)
  */
 ErrorStatus ds_reset_pulse(void)
 {
-    if (ds_pin_is_1())
-        return ERROR;
     ds_pin_0();
-    delay_us(485);
+    delay_us(490);
     ds_pin_1();
     delay_us(70);
-    ErrorStatus ds_status = ds_pin_is_1() ? SUCCESS : ERROR;
-    delay_us(500);
+    ErrorStatus ds_status = ds_pin_is_1() ? ERROR : SUCCESS;
+    delay_us(250);
     return ds_status;
 }
 
@@ -128,8 +123,8 @@ static _Bool ds_read_bit(void)
     ds_pin_0();
     delay_us(2);
     ds_pin_1();
-    delay_us(15);
+    delay_us(10);
     _Bool bit = ds_pin_is_1();
-    delay_us(50);
+    delay_us(55);
     return bit;
 }

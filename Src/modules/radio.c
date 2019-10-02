@@ -27,10 +27,10 @@ void radio_init(void)
     /* Подали питание. */
     nrf_csn_1();
     nrf_ce_0();
-    LL_mDelay(100);
+    delay_ms(100);
     /* Power down --> Standby_1 */
     nrf_overwrite_byte(CONFIG, PWR_UP);
-    LL_mDelay(5);
+    delay_ms(5);
 
     /* Записываем настройки в модуль. */
     nrf_bitmask(CONFIG, config, SET);
@@ -55,7 +55,7 @@ void radio_init(void)
     /* Начинаем слушать эфир.
      Standby_1 --> Rx mode. */
     nrf_ce_1();
-    LL_mDelay(1);
+    delay_ms(1);
 }
 
 void radio_take_incoming(DataToRobot* idata)

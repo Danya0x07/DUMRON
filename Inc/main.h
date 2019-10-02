@@ -60,7 +60,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define delay_ms(ms)    LL_mDelay((ms) << 1)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -117,9 +117,6 @@ void Error_Handler(void);
 
 #define BATTERY_BRAIN_Channel       ADC_CHANNEL_8
 #define BATTERY_RADIATORS_Channel   ADC_CHANNEL_9
-
-#define DS_ADDR_ENVIRONMENT 0x0000000000000000
-#define DS_ADDR_RADIATORS   0x0000000000000000
 
 #define SONAR_GPIO_Port   GPIOA
 /* USER CODE END Private defines */

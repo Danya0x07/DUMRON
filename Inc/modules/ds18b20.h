@@ -45,12 +45,12 @@ typedef struct {
 typedef struct {
     uint8_t temp_lsb;
     uint8_t temp_msb;
-    //uint8_t crc;
+    uint8_t th;
 } DsOutputData;
 
-void ds_select_single(uint64_t addr);
 void ds_select_all(void);
-uint64_t ds_get_addr_of_single(void);
+void ds_select_single(uint8_t [8]);
+void ds_get_addr_of_single(uint8_t [8]);
 
 void ds_write_config(DsConfig*);
 void ds_read_data(DsOutputData*);
@@ -60,6 +60,6 @@ void ds_write_byte(uint8_t);
 uint8_t ds_read_byte(void);
 
 #define ds_start_measuring()  ds_write_byte(DS_CONVERT_TEMP)
-#define ds_measure_delay()    delay_us(480)
+#define ds_measure_delay()    delay_us(800)
 
 #endif

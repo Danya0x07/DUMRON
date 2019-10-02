@@ -3,12 +3,12 @@
 
 #include "main.h"
 
+#define TEMPERATURE_CONVERSION_TIME     800
+
 void temperature_init(void);
-int8_t temperature_get(uint64_t sensor_addr);
-
-#define temperature_get_environment()   temperature_get(DS_ADDR_ENVIRONMENT)
-#define temperatire_get_radiators()     temperatute_get(DS_ADDR_RADIATORS)
-
+void temperature_start_conversion(void);
+int8_t temperature_get_environment(void);
+int8_t temperature_get_radiatots(void);
 void temperature_print_addr(void);
 
 #endif
