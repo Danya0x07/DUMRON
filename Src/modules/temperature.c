@@ -2,12 +2,12 @@
 #include "modules/ds18b20.h"
 #include "modules/debug.h"
 
-static uint8_t address_environment[8] = {
-        0x08, 0xE1, 0x14, 0x48, 0xB1, 0xCE, 0xAA, 0x28};
-static uint8_t address_radiators[8] = {
-        0x08, 0xE1, 0x14, 0x48, 0xB1, 0xCE, 0xAA, 0x28};
+static const uint8_t sensor_environment_address[8] = {
+        0x8E, 0x01, 0x14, 0x48, 0xB1, 0xCE, 0xAA, 0x28};
+static const uint8_t sensor_radiators_address[8] = {
+        0x39, 0x02, 0x15, 0x92, 0x46, 0xFA, 0x77, 0x28};
 
-static int8_t temperature_get(uint8_t [8]);
+static int8_t temperature_get(const uint8_t sensor_address[8]);
 
 void temperature_init(void)
 {
@@ -28,12 +28,12 @@ void temperature_start_conversion(void)
 
 int8_t temperature_get_environment(void)
 {
-    return temperature_get(address_environment);
+    return temperature_get(sensor_environment_address);
 }
 
-int8_t temperature_get_radiatots(void)
+int8_t temperature_get_radiators(void)
 {
-    return temperature_get(address_radiators);
+    return temperature_get(sensor_radiators_address);
 }
 
 void temperature_print_addr(void)
@@ -42,21 +42,20 @@ void temperature_print_addr(void)
         debug_logs("ds not responding\n");
         return;
     }
-    uint8_t address[8];
-    ds_get_addr_of_single(address);
-    for (uint8_t i = 0; i < 8; i++)
-        debug_logx(address[i]);
+    uint8_t address_buff[8];
+    ds_get_addr_of_single(address_buff);
+    for (uint8_t i = 0; i < 8; i++) {
+        debug_logx(address_buff[i]);
+        debug_logs(" ");
+    }
     debug_logs("\n");
 }
 
-static int8_t temperature_get(uint8_t sensor_addr[8])
+static int8_t temperature_get(const uint8_t sensor_address[8])
 {
     DsOutputData data;
-    //ds_select_single(sensor_addr);
-    //ds_select_all();
+    ds_select_single(sensor_address);
     ds_read_data(&data);
-    int8_t temp = ((data.temp_msb & 0x0F) << 4) | ((data.temp_lsb & 0xF0) >> 4);
-    debug_logi(data.th);
-    debug_logs("\n");
-    return temp;
+    int8_t temperature = (data.temp_msb << 4) | (data.temp_lsb >> 4);
+    return temperature;
 }

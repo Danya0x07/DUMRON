@@ -106,7 +106,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   temperature_init();
-
+  temperature_print_addr();
   debug_led_set(1);
   delay_ms(3000);
   int temp = 0;
@@ -118,7 +118,8 @@ int main(void)
       debug_led_set(1);
       temperature_start_conversion();
       delay_ms(1000);
-      temp = temperature_get_environment();
+      //temp = temperature_get_environment();
+      temp = temperature_get_radiators();
       debug_logi(temp);
       debug_logs("\n");
     /* USER CODE END WHILE */

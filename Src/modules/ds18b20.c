@@ -1,4 +1,5 @@
 #include "modules/ds18b20.h"
+#include "modules/debug.h"
 
 #define ds_pin_1()      LL_GPIO_SetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
 #define ds_pin_0()      LL_GPIO_ResetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
@@ -11,12 +12,13 @@ static _Bool ds_read_bit(void);
  * @brief  Начинает общение с одним из датчиков на линии.
  * @param  addr: адрес устройства для начала сеанса.
  */
-void ds_select_single(uint8_t address_buff[8])
+void ds_select_single(const uint8_t address[8])
 {
     ds_reset_pulse();
     ds_write_byte(DS_MATCH_ROM);
-    for (uint8_t i = 0; i < 8; i++)
-        ds_write_byte(address_buff[i]);
+    for (uint8_t i = 0; i < 8; i++) {
+        ds_write_byte(address[7 - i]);
+    }
 }
 
 /**
@@ -32,12 +34,12 @@ void ds_select_all(void)
  * @brief  Считывает адрес единственного датчика на линии.
  * @retval полный ROM-адрес датчика.
  */
-void ds_get_addr_of_single(uint8_t addr_buff[8])
+void ds_get_addr_of_single(uint8_t address_buff[8])
 {
     ds_reset_pulse();
     ds_write_byte(DS_READ_ROM);
     for (uint8_t i = 0; i < 8; i++)
-        addr_buff[7 - i] = ds_read_byte();
+        address_buff[7 - i] = ds_read_byte();
 }
 
 /**
@@ -47,7 +49,7 @@ void ds_get_addr_of_single(uint8_t addr_buff[8])
  * @param  ds_config: указатель на структуру
  *         с настройками для датчика.
  */
-void ds_write_config(DsConfig* ds_config)
+void ds_write_config(const DsConfig* ds_config)
 {
     ds_write_byte(DS_W_SCRATCHPAD);
     ds_write_byte(ds_config->temp_lim_h);
@@ -75,7 +77,7 @@ void ds_read_data(DsOutputData* p_data)
  * @brief  Передаёт байт датчикам по 1-wire.
  * @param  byte: Байт для передачи.
  */
-void ds_write_byte(uint8_t byte)
+void ds_write_byte(const uint8_t byte)
 {
     for (uint8_t i = 0; i < 8; i++)
         ds_write_bit(byte & (1 << i));

@@ -49,14 +49,14 @@ typedef struct {
 } DsOutputData;
 
 void ds_select_all(void);
-void ds_select_single(uint8_t [8]);
-void ds_get_addr_of_single(uint8_t [8]);
+void ds_select_single(const uint8_t address[8]);
+void ds_get_addr_of_single(uint8_t address_buff[8]);
 
-void ds_write_config(DsConfig*);
+void ds_write_config(const DsConfig*);
 void ds_read_data(DsOutputData*);
 
 ErrorStatus ds_reset_pulse(void);
-void ds_write_byte(uint8_t);
+void ds_write_byte(const uint8_t);
 uint8_t ds_read_byte(void);
 
 #define ds_start_measuring()  ds_write_byte(DS_CONVERT_TEMP)
