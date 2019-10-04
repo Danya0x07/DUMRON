@@ -33,14 +33,14 @@ uint8_t nrf_cmd(NrfCommand cmd)
 
 /**
  * @brief  Читает значение из однобайтового регистра радиомодуля.
- * @param  reg_addr: Адрес регистра откуда читать.
+ * @param  reg_address: Адрес регистра откуда читать.
  * @retval Прочитанное значение.
  */
-uint8_t nrf_read_byte(NrfRegAddress reg_addr)
+uint8_t nrf_read_byte(NrfRegAddress reg_address)
 {
     uint8_t reg_value;
     nrf_csn_0();
-    nrf_spi_send_recv(R_REGISTER | (reg_addr & 0x1F));
+    nrf_spi_send_recv(R_REGISTER | (reg_address & 0x1F));
     reg_value = nrf_spi_send_recv(NOP);
     nrf_csn_1();
     return reg_value;
@@ -49,33 +49,32 @@ uint8_t nrf_read_byte(NrfRegAddress reg_addr)
 /**
  * @brief  Записывает значение в однобайтовый регистр радиомодуля.
  * @note   При этом предыдущее значение этого регистра перезаписывается.
- * @param  reg_addr: Адрес регистра куда писать.
- * @param  bit_flags: Новое значение для регистра.
+ * @param  reg_address: Адрес регистра куда писать.
+ * @param  bitmask: Новое значение для регистра.
  */
-void nrf_overwrite_byte(NrfRegAddress reg_addr, uint8_t bit_flags)
+void nrf_overwrite_byte(NrfRegAddress reg_address, uint8_t bitmask)
 {
     nrf_csn_0();
-    nrf_spi_send_recv(W_REGISTER | (reg_addr & 0x1F));
-    nrf_spi_send_recv(bit_flags);
+    nrf_spi_send_recv(W_REGISTER | (reg_address & 0x1F));
+    nrf_spi_send_recv(bitmask);
     nrf_csn_1();
 }
 
 /**
  * @brief  Делает read-modify-write с однобайтовым регистром радиомодуля.
- * @param  reg_addr: Адрес регистра для RMW-операции.
- * @param  bit_flags: Битовые флаги для применения к регистру.
- * @param  bit_status: Установить/сбросить указанные флаги.
+ * @param  reg_address: Адрес регистра для применения маски.
+ * @param  bitmask: Битовые флаги для применения к регистру.
+ * @param  mask_status: Установить/сбросить указанные флаги.
  */
-void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask,
-        FlagStatus bit_status)
+void nrf_apply_mask(NrfRegAddress reg_address, uint8_t bitmask, FlagStatus mask_status)
 {
     uint8_t reg_value;
-    nrf_read_to_buffer(reg_addr, &reg_value, 1);
-    if (bit_status == SET)
-        reg_value |= bit_mask;
-    else
-        reg_value &= ~bit_mask;
-    nrf_write_from_buffer(reg_addr, &reg_value, 1);
+    nrf_read_to_buffer(reg_address, &reg_value, 1);
+    if (mask_status == SET)
+        reg_value |= bitmask;
+    else  /* mask_status == RESET */
+        reg_value &= ~bitmask;
+    nrf_write_from_buffer(reg_address, &reg_value, 1);
 }
 
 /**

@@ -30,6 +30,7 @@
 /* USER CODE BEGIN Includes */
 #include "modules/temperature.h"
 #include "modules/debug.h"
+#include "modules/sonar.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -105,22 +106,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  temperature_init();
-  temperature_print_addr();
-  debug_led_set(1);
-  delay_ms(3000);
-  int temp = 0;
+
   while (1)
   {
       debug_led_set(0);
-      //temperature_print_addr();
       delay_ms(1000);
       debug_led_set(1);
-      temperature_start_conversion();
       delay_ms(1000);
-      //temp = temperature_get_environment();
-      temp = temperature_get_radiators();
-      debug_logi(temp);
+      debug_logi(sonar_scan());
       debug_logs("\n");
     /* USER CODE END WHILE */
 

@@ -1,13 +1,12 @@
 /**
  * Здесь интерфейс для взаимодействия с радиомодулем NRF24L01+.
  */
-
 #ifndef NRF24L01P_H_INCLUDED
 #define NRF24L01P_H_INCLUDED
 
 #include "main.h"
 
-/* Команды */
+/* Команды радиомодуля */
 typedef enum
 {
     R_REGISTER = 0x00,   /* + n Прочитать регистр n */
@@ -23,7 +22,7 @@ typedef enum
     NOP = 0xFF  /* Нет операции. Может быть использовано для чтения регистра статуса */
 } NrfCommand;
 
-/* Регистры */
+/* Регистры радуомодуля */
 typedef enum
 {
     CONFIG = 0x00,  /* Регистр настроек */
@@ -181,13 +180,13 @@ typedef enum {
 
 void nrf_init_gpio(void);
 uint8_t nrf_cmd(NrfCommand cmd);
-uint8_t nrf_read_byte(NrfRegAddress reg_addr);
-void nrf_overwrite_byte(NrfRegAddress reg_addr, uint8_t bit_flags);
+uint8_t nrf_read_byte(NrfRegAddress reg_address);
+void nrf_overwrite_byte(NrfRegAddress reg_address, uint8_t bitmask);
+void nrf_apply_mask(NrfRegAddress reg_address, uint8_t bitmask, FlagStatus mask_status);
 void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperation operation);
-void nrf_bitmask(NrfRegAddress reg_addr, uint8_t bit_mask, FlagStatus flag_status);
 
 #define nrf_get_status()  nrf_cmd(NOP)
-#define nrf_clear_interrupts()  nrf_bitmask(STATUS, 0, RESET)
+#define nrf_clear_interrupts()  nrf_apply_mask(STATUS, 0, RESET)
 
 #define nrf_csn_1() LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
 #define nrf_csn_0() LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)

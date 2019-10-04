@@ -1,10 +1,5 @@
 #include <modules/motors.h>
-/*
- * motors.c
- *
- *  Created on: Sep 20, 2019
- *      Author: danya
- */
+
 #define motors_pins_set(pinmask)    LL_GPIO_SetOutputPin(MOTOR_GPIO_Port, (pinmask))
 #define motors_pins_reset(pinmask)  LL_GPIO_ResetOutputPin(MOTOR_GPIO_Port, (pinmask))
 

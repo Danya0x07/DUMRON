@@ -33,7 +33,7 @@ void radio_init(void)
     delay_ms(5);
 
     /* Записываем настройки в модуль. */
-    nrf_bitmask(CONFIG, config, SET);
+    nrf_apply_mask(CONFIG, config, SET);
     nrf_overwrite_byte(RF_CH, rf_ch);
     nrf_overwrite_byte(RF_SETUP, rf_setup);
     nrf_overwrite_byte(SETUP_AW, setup_aw);
@@ -58,7 +58,7 @@ void radio_init(void)
     delay_ms(1);
 }
 
-void radio_take_incoming(DataToRobot* idata)
+void radio_take_incoming(DataToRobot* p_idata)
 {
     uint8_t status = nrf_get_status();
     if (status & RX_DR) {
@@ -70,7 +70,7 @@ void radio_take_incoming(DataToRobot* idata)
                 nrf_cmd(FLUSH_RX);
                 break;
             }
-            nrf_rw_buff(R_RX_PAYLOAD, (uint8_t*) idata,
+            nrf_rw_buff(R_RX_PAYLOAD, (uint8_t*) p_idata,
                         sizeof(DataToRobot), NRF_OPERATION_READ);
             nrf_clear_interrupts();
             fifo_status = nrf_read_byte(FIFO_STATUS);
@@ -79,12 +79,12 @@ void radio_take_incoming(DataToRobot* idata)
     }
 }
 
-void radio_put_outcoming(DataFromRobot* odata)
+void radio_put_outcoming(DataFromRobot* p_odata)
 {
     uint8_t status = nrf_get_status();
     if (status & TX_FULL_STATUS) {
         nrf_cmd(FLUSH_TX);
     }
-    nrf_rw_buff(W_ACK_PAYLOAD | 0, (uint8_t*) odata,
+    nrf_rw_buff(W_ACK_PAYLOAD | 0, (uint8_t*) p_odata,
                 sizeof(DataFromRobot), NRF_OPERATION_WRITE);
 }

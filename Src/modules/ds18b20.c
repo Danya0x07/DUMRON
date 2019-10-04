@@ -1,3 +1,8 @@
+/**
+ * Здесь функции для нискоуровневого взаимодействия
+ * с датчиками DS18B20 по шине 1-Wire.
+ */
+
 #include "modules/ds18b20.h"
 #include "modules/debug.h"
 
@@ -10,15 +15,14 @@ static _Bool ds_read_bit(void);
 
 /**
  * @brief  Начинает общение с одним из датчиков на линии.
- * @param  addr: адрес устройства для начала сеанса.
+ * @param  address: адрес устройства для начала сеанса связи.
  */
 void ds_select_single(const uint8_t address[8])
 {
     ds_reset_pulse();
     ds_write_byte(DS_MATCH_ROM);
-    for (uint8_t i = 0; i < 8; i++) {
+    for (uint8_t i = 0; i < 8; i++)
         ds_write_byte(address[7 - i]);
-    }
 }
 
 /**
@@ -32,7 +36,7 @@ void ds_select_all(void)
 
 /**
  * @brief  Считывает адрес единственного датчика на линии.
- * @retval полный ROM-адрес датчика.
+ * @param  address_buff: Буфер для сохранения адреса датчика.
  */
 void ds_get_addr_of_single(uint8_t address_buff[8])
 {
@@ -61,20 +65,20 @@ void ds_write_config(const DsConfig* ds_config)
  * @brief  Считывает данные из датчика.
  * @note   Перед этой функцией необходимо вызвать
  *         одну из функций ds_select_*.
- * @param  ds_config: указатель на структуру
+ * @param  p_odata: указатель на структуру
  *         для принимаемых данных.
  */
-void ds_read_data(DsOutputData* p_data)
+void ds_read_data(DsOutputData* p_odata)
 {
     ds_write_byte(DS_R_SCRATCHPAD);
-    p_data->temp_lsb = ds_read_byte();
-    p_data->temp_msb = ds_read_byte();
-    p_data->th = ds_read_byte();
+    p_odata->temp_lsb = ds_read_byte();
+    p_odata->temp_msb = ds_read_byte();
+    p_odata->th = ds_read_byte();
     ds_reset_pulse();
 }
 
 /**
- * @brief  Передаёт байт датчикам по 1-wire.
+ * @brief  Передаёт байт датчикам по шине 1-Wire.
  * @param  byte: Байт для передачи.
  */
 void ds_write_byte(const uint8_t byte)
@@ -84,7 +88,7 @@ void ds_write_byte(const uint8_t byte)
 }
 
 /**
- * @brief  Читает байт от датчиков по 1-wire.
+ * @brief  Читает байт от датчиков по шине 1-Wire.
  * @retval Прочитанный байт.
  */
 uint8_t ds_read_byte(void)
@@ -96,9 +100,8 @@ uint8_t ds_read_byte(void)
 }
 
 /**
- * @brief  Отпревляет перезагрузочный импульс
- *         для датчиков по 1-wire.
- * @retval Ответил ли кто-нибудь(SUCCESS) из датчиков
+ * @brief  Отпревляет импульс перезагрузки датчикам по 1-Wire.
+ * @retval Ответил ли кто-нибудь из датчиков (SUCCESS)
  *         или нет(ERROR).
  */
 ErrorStatus ds_reset_pulse(void)

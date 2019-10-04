@@ -1,6 +1,6 @@
 #include "modules/sonar.h"
 
-#define TRIGGER_PULSE_WIDTH    11
+#define TRIGGER_PULSE_WIDTH    13
 #define ECHO_RESPONSE_TIMEOUT  60
 #define MAX_ECHO_PULSE_WIDTH   300
 
@@ -11,6 +11,10 @@
 #define sonar_timer_reset()  LL_TIM_SetCounter(TIM3, 0)
 #define sonar_timer_get()    LL_TIM_GetCounter(TIM3)
 
+/**
+ * @brief  Опрашивает дальномер.
+ * @retval Расстояние до объекта в см.
+ */
 uint16_t sonar_scan(void)
 {
     sonar_trig_1();
@@ -22,5 +26,5 @@ uint16_t sonar_scan(void)
     sonar_timer_reset();
     while (sonar_echo_is_1() && sonar_timer_get() < MAX_ECHO_PULSE_WIDTH)
         ;
-    return sonar_timer_get() / 58;
+    return sonar_timer_get();
 }

@@ -2,7 +2,7 @@
 #include "modules/ds18b20.h"
 #include "modules/debug.h"
 
-static const uint8_t sensor_environment_address[8] = {
+static const uint8_t sensor_ambient_address[8] = {
         0x8E, 0x01, 0x14, 0x48, 0xB1, 0xCE, 0xAA, 0x28};
 static const uint8_t sensor_radiators_address[8] = {
         0x39, 0x02, 0x15, 0x92, 0x46, 0xFA, 0x77, 0x28};
@@ -26,9 +26,9 @@ void temperature_start_conversion(void)
     ds_start_measuring();
 }
 
-int8_t temperature_get_environment(void)
+int8_t temperature_get_ambient(void)
 {
-    return temperature_get(sensor_environment_address);
+    return temperature_get(sensor_ambient_address);
 }
 
 int8_t temperature_get_radiators(void)
@@ -36,7 +36,7 @@ int8_t temperature_get_radiators(void)
     return temperature_get(sensor_radiators_address);
 }
 
-void temperature_print_addr(void)
+void temperature_print_address(void)
 {
     if (ds_reset_pulse() == ERROR) {
         debug_logs("ds not responding\n");

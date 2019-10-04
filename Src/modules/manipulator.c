@@ -12,12 +12,12 @@
 #define CLAW_MAX_PULSE   230
 #define CLAW_PULSE_FADE  4
 
-static void constrain_pulse(uint32_t* pulse, uint32_t max, uint32_t min)
+static void constrain_pulse(uint32_t* pulse, uint32_t maxval, uint32_t minval)
 {
-    if (*pulse > max)
-        *pulse = max;
-    else if (*pulse < min)
-        *pulse = min;
+    if (*pulse > maxval)
+        *pulse = maxval;
+    else if (*pulse < minval)
+        *pulse = minval;
 }
 
 void manipulator_arm_move(ArmServoDirection dir)

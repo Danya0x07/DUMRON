@@ -1,22 +1,27 @@
+/**
+ * Здесь интерфейс для взаимодействия с датчиками DS18B20.
+ */
 #ifndef DS18B20_H_INCLUDED
 #define DS18B20_H_INCLUDED
 
 #include "main.h"
 
+/* Команды датчика */
 typedef enum {
-    DS_SEARCH_ROM = 0xF0,
-    DS_READ_ROM   = 0x33,
-    DS_MATCH_ROM  = 0x55,
-    DS_SKIP_ROM   = 0xCC,
-    DS_CONVERT_TEMP  = 0x44,
-    DS_W_SCRATCHPAD  = 0x4E,
-    DS_R_SCRATCHPAD  = 0XBE,
-    DS_CP_SCRATCHPAD = 0x48,
-    DS_ALARM_SEARCH  = 0xEC,
-    DS_R_PWR_SUPPLY  = 0xB4,
-    DS_RECALL_E2 = 0xB8,
+    DS_SEARCH_ROM = 0xF0,  // Провести цикл идентификации всех датчиков на линии.
+    DS_READ_ROM   = 0x33,  // Считать адрес датчика (применимо когда датчик один на линии).
+    DS_MATCH_ROM  = 0x55,  // Обратиться к конкретному датчику по его адресу.
+    DS_SKIP_ROM   = 0xCC,  // Обратиться ко всем датчикам на линии
+    DS_CONVERT_TEMP  = 0x44,  // Запустить преобразование температуры.
+    DS_W_SCRATCHPAD  = 0x4E,  // Записать настройки в память датчика.
+    DS_R_SCRATCHPAD  = 0XBE,  // Считать память датчика.
+    DS_CP_SCRATCHPAD = 0x48,  // Скопировать настройки датчика в его EEPROM.
+    DS_ALARM_SEARCH  = 0xEC,  // Провести цикл идентификации датчиков, у которых установден флаг тревоги.
+    DS_R_PWR_SUPPLY  = 0xB4,  // Проверить датчики на использование паразитного питания.
+    DS_RECALL_E2 = 0xB8,  // Восстановить сохранённые настройки датчика из его EEPROM.
 } DsCommands;
 
+/* Разрешения значения температуры */
 typedef enum {
     DS_RESOLUTION_9BIT  = 0x1F,
     DS_RESOLUTION_10BIT = 0x3F,
