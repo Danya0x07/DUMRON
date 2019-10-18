@@ -101,6 +101,7 @@ void Error_Handler(void);
 #define NRF_CE_GPIO_Port GPIOA
 #define NRF_IRQ_Pin LL_GPIO_PIN_5
 #define NRF_IRQ_GPIO_Port GPIOB
+#define NRF_IRQ_EXTI_IRQn EXTI9_5_IRQn
 #define LIGHTS_Pin LL_GPIO_PIN_8
 #define LIGHTS_GPIO_Port GPIOB
 #define BUZZER_Pin LL_GPIO_PIN_9

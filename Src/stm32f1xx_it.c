@@ -23,6 +23,10 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "modules/radio.h"
+#include "modules/motors.h"
+#include "modules/emmiters.h"
+#include "modules/manipulator.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,7 +46,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern volatile DataToRobot data_to_robot;
+extern volatile DataFromRobot data_from_robot;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -196,6 +201,30 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f1xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles EXTI line[9:5] interrupts.
+  */
+void EXTI9_5_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
+
+  /* USER CODE END EXTI9_5_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_5) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
+    /* USER CODE BEGIN LL_EXTI_LINE_5 */
+	  radio_take_incoming((DataToRobot*) &data_to_robot);
+	  motors_set_direction(data_to_robot.direction);
+	  motors_set_speed(data_to_robot.speed_left, data_to_robot.speed_right);
+	  lights_set(control_flag_is_set(ROBOT_CFLAG_LIGHTS_EN));
+	  buzzer_set(control_flag_is_set(ROBOT_CFLAG_LIGHTS_EN));
+    /* USER CODE END LL_EXTI_LINE_5 */
+  }
+  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
+
+  /* USER CODE END EXTI9_5_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

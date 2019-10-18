@@ -28,9 +28,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "robot_interface.h"
 #include "modules/temperature.h"
 #include "modules/debug.h"
 #include "modules/sonar.h"
+#include "modules/manipulator.h"
+#include "modules/radio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,7 +54,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+volatile DataToRobot data_to_robot;
+volatile DataFromRobot data_from_robot;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,7 +105,14 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  LL_TIM_CC_EnableChannel(MOTOR_TIM, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
+  LL_TIM_CC_EnableChannel(SERVO_TIM, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
+  LL_TIM_EnableCounter(TIM1);
+  LL_TIM_EnableCounter(TIM2);
   LL_TIM_EnableCounter(TIM3);
+
+  temperature_init();
+  radio_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -109,14 +120,19 @@ int main(void)
 
   while (1)
   {
-      debug_led_set(0);
-      delay_ms(1000);
-      debug_led_set(1);
-      delay_ms(1000);
-      debug_logi(sonar_scan());
-      debug_logs("\n");
-    /* USER CODE END WHILE */
 
+    /* USER CODE END WHILE */
+    if (control_flag_is_set(ROBOT_CFLAG_ARM_UP)) {
+    	manipulator_arm_move(ARM_UP);
+    } else if (control_flag_is_set(ROBOT_CFLAG_ARM_DOWN)) {
+    	manipulator_arm_move(ARM_DOWN);
+    }
+    if (control_flag_is_set(ROBOT_CFLAG_CLAW_SQUEEZE)) {
+		manipulator_claw_move(CLAW_SQUEESE);
+	} else if (control_flag_is_set(ROBOT_CFLAG_CLAW_RELEASE)) {
+		manipulator_claw_move(CLAW_RELEASE);
+	}
+    delay_ms(200);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

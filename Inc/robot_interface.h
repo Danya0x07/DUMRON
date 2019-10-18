@@ -27,6 +27,8 @@ typedef struct {
     uint8_t control_reg;  /* control register */
 } DataToRobot;
 
+#define control_flag_is_set(cflag)	(data_to_robot.control_reg & (cflag))
+
 typedef struct {
     uint8_t battery_brains;
     uint8_t battery_motors;
