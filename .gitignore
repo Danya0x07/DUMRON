@@ -1,4 +1,5 @@
 /Debug/
+/Release/
 /Drivers/
 /Middlewares/
 /Startup/
@@ -18,4 +19,6 @@ Src/sys*
 
 DUMRON.elf.*
 DUMRON.txt
-/Release/
+progflash.sh
+
+

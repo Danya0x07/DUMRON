@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under Ultimate Liberty license
+ * SLA0044, the "License"; You may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at:
+ *                             www.st.com/SLA0044
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -54,8 +54,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile DataToRobot data_to_robot;
-volatile DataFromRobot data_from_robot;
+volatile DataToRobot data_to_robot = {0};
+volatile DataFromRobot data_from_robot = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,36 +105,42 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  LL_TIM_CC_EnableChannel(MOTOR_TIM, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
-  LL_TIM_CC_EnableChannel(SERVO_TIM, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
+  LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
+  LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
   LL_TIM_EnableCounter(TIM1);
   LL_TIM_EnableCounter(TIM2);
   LL_TIM_EnableCounter(TIM3);
+  LL_SPI_Enable(SPI1);
 
   temperature_init();
   radio_init();
+  debug_logi(sizeof(RobotDirection));
+  debug_logi(sizeof(DataToRobot));
+  debug_logi(sizeof(DataFromRobot));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  while (1)
-  {
-
-    /* USER CODE END WHILE */
+  _Bool led_state = 0;
+  while (1) {
     if (control_flag_is_set(ROBOT_CFLAG_ARM_UP)) {
-    	manipulator_arm_move(ARM_UP);
+      manipulator_arm_move(ARM_UP);
     } else if (control_flag_is_set(ROBOT_CFLAG_ARM_DOWN)) {
-    	manipulator_arm_move(ARM_DOWN);
+      manipulator_arm_move(ARM_DOWN);
     }
+
     if (control_flag_is_set(ROBOT_CFLAG_CLAW_SQUEEZE)) {
-		manipulator_claw_move(CLAW_SQUEESE);
-	} else if (control_flag_is_set(ROBOT_CFLAG_CLAW_RELEASE)) {
-		manipulator_claw_move(CLAW_RELEASE);
-	}
-    delay_ms(200);
+      manipulator_claw_move(CLAW_SQUEESE);
+    } else if (control_flag_is_set(ROBOT_CFLAG_CLAW_RELEASE)) {
+      manipulator_claw_move(CLAW_RELEASE);
+    }
+    delay_ms(300);
+    debug_led_set(led_state = !led_state);
+    debug_logs("-------\n");
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
-  }
+    }
   /* USER CODE END 3 */
 }
 
@@ -190,7 +196,7 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+    /* User can add his own implementation to report the HAL error return state */
 
   /* USER CODE END Error_Handler_Debug */
 }
@@ -206,7 +212,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 { 
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+    /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }

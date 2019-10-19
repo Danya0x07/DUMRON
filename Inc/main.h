@@ -60,7 +60,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define delay_ms(ms)    LL_mDelay((ms) << 1)
+#define delay_ms(ms)    LL_mDelay((ms))
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

@@ -1,16 +1,16 @@
 #include "modules/manipulator.h"
 #include "main.h"
 
-#define SERVO_DEGREE_0      125
-#define SERVO_DEGREE_180    250
+#define SERVO_DEGREE_0
+#define SERVO_DEGREE_180    248
 
-#define ARM_MIN_PULSE   150
-#define ARM_MAX_PULSE   240
-#define ARM_PULSE_FADE  5
+#define ARM_MIN_PULSE   92
+#define ARM_MAX_PULSE   272
+#define ARM_PULSE_FADE  2
 
 #define CLAW_MIN_PULSE   160
 #define CLAW_MAX_PULSE   230
-#define CLAW_PULSE_FADE  4
+#define CLAW_PULSE_FADE  1
 
 static void constrain_pulse(uint32_t* pulse, uint32_t maxval, uint32_t minval)
 {
