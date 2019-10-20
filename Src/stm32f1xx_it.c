@@ -208,21 +208,16 @@ void SysTick_Handler(void)
 void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
-//#define DBG
   /* USER CODE END EXTI9_5_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_5) != RESET)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
     /* USER CODE BEGIN LL_EXTI_LINE_5 */
     radio_take_incoming((DataToRobot*) &data_to_robot);
-  #ifndef DBG
     motors_set_direction(data_to_robot.direction);
     motors_set_speed(data_to_robot.speed_left, data_to_robot.speed_right);
     lights_set(control_flag_is_set(ROBOT_CFLAG_LIGHTS_EN));
     buzzer_set(control_flag_is_set(ROBOT_CFLAG_KLAXON_EN));
-  #else
-    LL_TIM_WriteReg(SERVO_TIM, SERVO_ARM_PWM_Reg, data_to_robot.control_reg);
-  #endif
     /* USER CODE END LL_EXTI_LINE_5 */
   }
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */

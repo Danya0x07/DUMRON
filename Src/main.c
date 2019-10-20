@@ -61,7 +61,18 @@ volatile DataFromRobot data_from_robot = {0};
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+void tim1_init(void)
+{
+    RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
+    TIM1->CCER = 0;
+    TIM1->ARR = 255;
+    TIM1->PSC = 8191;
+    TIM1->BDTR |= TIM_BDTR_MOE;
+    TIM1->CCMR1 |= TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_2;
+    TIM1->CCER |= TIM_CCER_CC1E;
+    TIM1->CCMR1 |= TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2M_2;
+    TIM1->CCER |= TIM_CCER_CC2E;
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -105,9 +116,12 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
+  //tim1_init();
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  //LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
   LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
-  LL_TIM_EnableCounter(TIM1);
+  //LL_TIM_EnableCounter(TIM1);
   LL_TIM_EnableCounter(TIM2);
   LL_TIM_EnableCounter(TIM3);
   LL_SPI_Enable(SPI1);
@@ -121,6 +135,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  TIM1->CCR1 = 255;
+  TIM1->CCR2 = 128;
   _Bool led_state = 0;
   while (1) {
     if (control_flag_is_set(ROBOT_CFLAG_ARM_UP)) {
@@ -134,13 +150,15 @@ int main(void)
     } else if (control_flag_is_set(ROBOT_CFLAG_CLAW_RELEASE)) {
       manipulator_claw_move(CLAW_RELEASE);
     }
-    delay_ms(300);
+    delay_ms(700);
     debug_led_set(led_state = !led_state);
     debug_logs("-------\n");
+    //debug_logi(LL_TIM_GetCounter(TIM1));
+    //LL_GPIO_TogglePin(GPIOA, MOTOR_LPWM_Pin | MOTOR_RPWM_Pin);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    }
+  }
   /* USER CODE END 3 */
 }
 
@@ -197,7 +215,8 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
     /* User can add his own implementation to report the HAL error return state */
-
+  debug_led_set(1);
+  while (1);
   /* USER CODE END Error_Handler_Debug */
 }
 
