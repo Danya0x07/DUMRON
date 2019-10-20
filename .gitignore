@@ -16,6 +16,7 @@ Src/stm32*
 !Src/stm32f1xx_it.c
 
 Src/sys*
+Inc/sys*
 
 DUMRON.elf.*
 DUMRON.txt

@@ -53,7 +53,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(LED_DEBUG_GPIO_Port, LED_DEBUG_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOB, MOTOR_R2_Pin|MOTOR_R1_Pin|MOTOR_L2_Pin|MOTOR_L1_Pin 
+  LL_GPIO_ResetOutputPin(GPIOB, MOTOR_R1_Pin|MOTOR_R2_Pin|MOTOR_L1_Pin|MOTOR_L2_Pin 
                           |LIGHTS_Pin|BUZZER_Pin);
 
   /**/
@@ -77,7 +77,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = MOTOR_R2_Pin|MOTOR_R1_Pin|MOTOR_L2_Pin|MOTOR_L1_Pin;
+  GPIO_InitStruct.Pin = MOTOR_R1_Pin|MOTOR_R2_Pin|MOTOR_L1_Pin|MOTOR_L2_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_MEDIUM;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;

@@ -60,7 +60,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define delay_ms(ms)    LL_mDelay((ms))
+#define delay_ms(ms)    LL_mDelay((ms) << 1)  // баг библиотеки LL
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -79,14 +79,14 @@ void Error_Handler(void);
 #define SERVO_CLAW_GPIO_Port GPIOA
 #define NRF_CSN_Pin LL_GPIO_PIN_4
 #define NRF_CSN_GPIO_Port GPIOA
-#define MOTOR_R2_Pin LL_GPIO_PIN_12
-#define MOTOR_R2_GPIO_Port GPIOB
-#define MOTOR_R1_Pin LL_GPIO_PIN_13
+#define MOTOR_R1_Pin LL_GPIO_PIN_12
 #define MOTOR_R1_GPIO_Port GPIOB
-#define MOTOR_L2_Pin LL_GPIO_PIN_14
-#define MOTOR_L2_GPIO_Port GPIOB
-#define MOTOR_L1_Pin LL_GPIO_PIN_15
+#define MOTOR_R2_Pin LL_GPIO_PIN_13
+#define MOTOR_R2_GPIO_Port GPIOB
+#define MOTOR_L1_Pin LL_GPIO_PIN_14
 #define MOTOR_L1_GPIO_Port GPIOB
+#define MOTOR_L2_Pin LL_GPIO_PIN_15
+#define MOTOR_L2_GPIO_Port GPIOB
 #define MOTOR_RPWM_Pin LL_GPIO_PIN_8
 #define MOTOR_RPWM_GPIO_Port GPIOA
 #define MOTOR_LPWM_Pin LL_GPIO_PIN_9
@@ -109,8 +109,8 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 #define MOTOR_GPIO_Port   GPIOB
 #define MOTOR_TIM   TIM1
-#define MOTOR_L_PWM_Reg   CCR1
-#define MOTOR_R_PWM_Reg   CCR2
+#define MOTOR_L_PWM_Reg   CCR2
+#define MOTOR_R_PWM_Reg   CCR1
 
 #define SERVO_TIM   TIM2
 #define SERVO_ARM_PWM_Reg   CCR1
