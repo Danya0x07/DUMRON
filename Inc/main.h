@@ -60,7 +60,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define delay_ms(ms)    LL_mDelay((ms) << 1)  // баг библиотеки LL
+#define delay_ms(ms)    HAL_Delay((ms))  // баг библиотеки LL
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

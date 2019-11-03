@@ -7,7 +7,7 @@ static uint8_t battery_get_percentage(ADC_ChannelConfTypeDef* p_ch_conf)
     return percentage * 100 / 4095;
 }
 
-uint8_t battery_get_voltage_brains(void)
+uint8_t battery_get_percentage_brains(void)
 {
     static ADC_ChannelConfTypeDef brain_ch_config = {
         .Channel = BATTERY_BRAIN_Channel,
@@ -17,7 +17,7 @@ uint8_t battery_get_voltage_brains(void)
     return battery_get_percentage(&brain_ch_config);
 }
 
-uint8_t battery_get_voltage_radiators(void)
+uint8_t battery_get_percentage_motors(void)
 {
     static ADC_ChannelConfTypeDef radiators_ch_conf = {
         .Channel = BATTERY_RADIATORS_Channel,

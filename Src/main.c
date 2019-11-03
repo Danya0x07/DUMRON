@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "adc.h"
 #include "spi.h"
 #include "tim.h"
@@ -54,12 +55,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile DataToRobot data_to_robot = {0};
-volatile DataFromRobot data_from_robot = {0};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -114,29 +115,20 @@ int main(void)
 
   temperature_init();
   radio_init();
-  debug_logi(sizeof(RobotDirection));
-  debug_logi(sizeof(DataToRobot));
-  debug_logi(sizeof(DataFromRobot));
+
   /* USER CODE END 2 */
+
+  /* Call init function for freertos objects (in freertos.c) */
+  MX_FREERTOS_Init(); 
+
+  /* Start scheduler */
+  osKernelStart();
+  
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  _Bool led_state = 0;
   while (1) {
-    if (control_flag_is_set(ROBOT_CFLAG_ARM_UP)) {
-        manipulator_arm_move(ARM_UP);
-    } else if (control_flag_is_set(ROBOT_CFLAG_ARM_DOWN)) {
-        manipulator_arm_move(ARM_DOWN);
-    }
-
-    if (control_flag_is_set(ROBOT_CFLAG_CLAW_SQUEEZE)) {
-        manipulator_claw_move(CLAW_SQUEESE);
-    } else if (control_flag_is_set(ROBOT_CFLAG_CLAW_RELEASE)) {
-        manipulator_claw_move(CLAW_RELEASE);
-    }
-    delay_ms(1000);
-    debug_led_set(led_state = !led_state);
-    debug_logs("-------\n");
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -188,6 +180,27 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM4 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM4) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-uint8_t battery_get_voltage_brains(void);
-uint8_t battery_get_voltage_radiators(void);
+uint8_t battery_get_percentage_brains(void);
+uint8_t battery_get_percentage_motors(void);
 
 #endif
