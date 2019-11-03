@@ -461,9 +461,10 @@ void exchangeDataIO(void const * argument)
 void updateManipulator(void const * argument)
 {
   /* USER CODE BEGIN updateManipulator */
-    osMutexWait(inDataMutexHandle, 0);
-    manipulator_move();
-    osMutexRelease(inDataMutexHandle);
+    if (osMutexWait(inDataMutexHandle, 0) != osErrorOS) {
+        manipulator_move();
+        osMutexRelease(inDataMutexHandle);
+    }
   /* USER CODE END updateManipulator */
 }
 
