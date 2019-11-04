@@ -40,7 +40,6 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
-
 typedef struct {
     enum {
         BATTERY_BRAINS,

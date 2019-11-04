@@ -112,8 +112,9 @@ uint16_t ADC1_Measure(ADC_ChannelConfTypeDef* pChannelConfig)
     HAL_ADC_ConfigChannel(&hadc1, pChannelConfig);
     HAL_ADC_Start(&hadc1);
     HAL_ADC_PollForConversion(&hadc1, 100);
+    uint16_t conv_result = HAL_ADC_GetValue(&hadc1);
     HAL_ADC_Stop(&hadc1);
-    return HAL_ADC_GetValue(&hadc1);
+    return conv_result;
 }
 /* USER CODE END 1 */
 

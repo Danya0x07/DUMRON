@@ -60,7 +60,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define delay_ms(ms)    HAL_Delay((ms))  // баг библиотеки LL
+#define delay_ms(ms)    HAL_Delay((ms))
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -116,8 +116,8 @@ void Error_Handler(void);
 #define SERVO_ARM_PWM_Reg   CCR1
 #define SERVO_CLAW_PWM_Reg  CCR2
 
-#define BATTERY_BRAIN_Channel       ADC_CHANNEL_8
-#define BATTERY_RADIATORS_Channel   ADC_CHANNEL_9
+#define BATTERY_BRAIN_Channel       ADC_CHANNEL_9
+#define BATTERY_RADIATORS_Channel   ADC_CHANNEL_8
 
 #define SONAR_GPIO_Port   GPIOA
 /* USER CODE END Private defines */
