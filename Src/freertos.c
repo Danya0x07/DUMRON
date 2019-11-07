@@ -60,9 +60,21 @@ typedef struct {
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-osMailQId outDataQueueHandle;
 
+/**
+  * Дескриптор очереди выходных данных.
+  * Используется задачами, получающими данные с датчиков
+  * и задачей обновления выходных данных.
+  */
+osMailQId outDataQueueHandle;
+/**
+  * Глобальная переменная, которую используют только 2 задачи:
+  * задача обновления выходных данных updateOutData и
+  * задача обмена информацией с пультом exchangeDataIO.
+  * Защищена мьютексом по дескриптору outDataMutexHandle.
+  */
 DataFromRobot data_from_robot;
+
 /* USER CODE END Variables */
 osThreadId _blinkLedHandle;
 uint32_t blinkLedBuffer[ 128 ];
@@ -209,7 +221,7 @@ void MX_FREERTOS_Init(void) {
 
   /* definition and creation of _updateOData */
   osThreadStaticDef(_updateOData, updateOutData, osPriorityBelowNormal, 0, 128, updateODataBuffer, &updateODataControlBlock);
-  _updateODataHandle = osThreadCreate(osThread(_updateOData), NULL);
+  _updateODataHandle = osThreadCreate(osThread(_updateOData), (void*) &data_from_robot);
 
   /* definition and creation of _checkDistance */
   osThreadStaticDef(_checkDistance, checkDistance, osPriorityBelowNormal, 0, 128, checkDistanceBuffer, &checkDistanceControlBlock);
@@ -225,7 +237,7 @@ void MX_FREERTOS_Init(void) {
 
   /* definition and creation of _exchangeData */
   osThreadStaticDef(_exchangeData, exchangeDataIO, osPriorityNormal, 0, 128, exchangeDataBuffer, &exchangeDataControlBlock);
-  _exchangeDataHandle = osThreadCreate(osThread(_exchangeData), NULL);
+  _exchangeDataHandle = osThreadCreate(osThread(_exchangeData), (void*) &data_from_robot);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -264,6 +276,7 @@ void blinkLed(void const * argument)
 void updateOutData(void const * argument)
 {
   /* USER CODE BEGIN updateOutData */
+    DataFromRobot* p_out_data = (DataFromRobot*) argument;
     osEvent event;
     OutDataElement* data;
 
@@ -275,19 +288,19 @@ void updateOutData(void const * argument)
             osMutexWait(outDataMutexHandle, osWaitForever);
             switch (data->kind) {
                 case BATTERY_BRAINS:
-                    data_from_robot.battery_brains = data->ub_data;
+                    p_out_data->battery_brains = data->ub_data;
                     break;
                 case BATTERY_MOTORS:
-                    data_from_robot.battery_motors = data->ub_data;
+                    p_out_data->battery_motors = data->ub_data;
                     break;
                 case BACK_DISTANCE:
-                    data_from_robot.back_distance = data->ub_data;
+                    p_out_data->back_distance = data->ub_data;
                     break;
                 case TEMP_AMBIENT:
-                    data_from_robot.temperature_ambient = data->sb_data;
+                    p_out_data->temperature_ambient = data->sb_data;
                     break;
                 case TEMP_RADIATORS:
-                    data_from_robot.temperature_radiators = data->sb_data;
+                    p_out_data->temperature_radiators = data->sb_data;
                     break;
             }
             osMutexRelease(outDataMutexHandle);
@@ -398,6 +411,7 @@ void exchangeDataIO(void const * argument)
 {
   /* USER CODE BEGIN exchangeDataIO */
     static DataToRobot data_to_robot;
+    DataFromRobot* p_out_data = (DataFromRobot*) argument;
     ArmServoDirection arm_servo_dir;
     ClawServoDirection claw_servo_dir;
 
@@ -431,7 +445,7 @@ void exchangeDataIO(void const * argument)
         osMutexRelease(inDataMutexHandle);
 
         osMutexWait(outDataMutexHandle, osWaitForever);
-        radio_put_outcoming(&data_from_robot);
+        radio_put_outcoming(p_out_data);
         osMutexRelease(outDataMutexHandle);
         /* Включаем прерывание по спаду напряжение на IRQ пине радиомодуля
            которое мы выключили в обработчике прерывания. */
@@ -455,7 +469,6 @@ void updateManipulator(void const * argument)
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-     
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

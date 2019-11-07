@@ -79,6 +79,10 @@ void Error_Handler(void);
 #define SERVO_CLAW_GPIO_Port GPIOA
 #define NRF_CSN_Pin LL_GPIO_PIN_4
 #define NRF_CSN_GPIO_Port GPIOA
+#define BATTERY_MOTORS_Pin LL_GPIO_PIN_0
+#define BATTERY_MOTORS_GPIO_Port GPIOB
+#define BATTERY_BRAINS_Pin LL_GPIO_PIN_1
+#define BATTERY_BRAINS_GPIO_Port GPIOB
 #define MOTOR_R1_Pin LL_GPIO_PIN_12
 #define MOTOR_R1_GPIO_Port GPIOB
 #define MOTOR_R2_Pin LL_GPIO_PIN_13
