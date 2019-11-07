@@ -36,6 +36,7 @@ int8_t temperature_get_radiators(void)
     return temperature_get(sensor_radiators_address);
 }
 
+#ifdef DEBUG
 void temperature_print_address(void)
 {
     if (ds_reset_pulse() == ERROR) {
@@ -50,6 +51,7 @@ void temperature_print_address(void)
     }
     debug_logs("\n");
 }
+#endif
 
 static int8_t temperature_get(const uint8_t sensor_address[8])
 {

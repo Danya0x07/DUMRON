@@ -1,20 +1,8 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * File Name          : freertos.c
-  * Description        : Code for freertos applications
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
-  *
-  ******************************************************************************
+  * Здесь описана основная "бизнес-логика" прошивки.
+  * Задачи выполняются в режиме вытесняющей многозадачности.
+  * Используемая ОС - FreeRTOS с обёрткой CMSIS-RTOS.
   */
 /* USER CODE END Header */
 
@@ -39,7 +27,13 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+/**
+  * Структура, описывающая формат посылок в очереди выходных данных.
+  * Подразумевается, что задачи, взаимодействующие с датчиками должны
+  * упаковывать добытые данные в эту структуру, и класть в очередь по
+  * дескриптору outDataQueueHandle, откуда эти данные считает
+  * задача-сторож updateOutData.
+  */
 typedef struct {
     enum {
         BATTERY_BRAINS,
@@ -58,17 +52,16 @@ typedef struct {
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 osMailQId outDataQueueHandle;
+
 DataFromRobot data_from_robot;
 /* USER CODE END Variables */
 osThreadId _blinkLedHandle;
@@ -102,7 +95,6 @@ osStaticSemaphoreDef_t adcConvReadySemControlBlock;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-   
 /* USER CODE END FunctionPrototypes */
 
 void blinkLed(void const * argument);
@@ -127,15 +119,8 @@ void vApplicationIdleHook(void);
 /* USER CODE BEGIN 2 */
 __weak void vApplicationIdleHook( void )
 {
-   /* vApplicationIdleHook() will only be called if configUSE_IDLE_HOOK is set
-   to 1 in FreeRTOSConfig.h. It will be called on each iteration of the idle
-   task. It is essential that code added to this hook function never attempts
-   to block in any way (for example, call xQueueReceive() with a block time
-   specified, or call vTaskDelay()). If the application makes use of the
-   vTaskDelete() API function (as this demo application does) then it is also
-   important that vApplicationIdleHook() is permitted to return to its calling
-   function, because it is the responsibility of the idle task to clean up
-   memory allocated by the kernel to any task that has since been deleted. */
+    /* Для экономии энергии, когда нет готовых
+       к выполнению задач, переводимся в спящий режим. */
     HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
 }
 /* USER CODE END 2 */
@@ -251,9 +236,8 @@ void MX_FREERTOS_Init(void) {
 
 /* USER CODE BEGIN Header_blinkLed */
 /**
-  * @brief  Function implementing the blink_a_led thread.
-  * @param  argument: Not used 
-  * @retval None
+  * Задача мигания отладочным светодиодом,
+  * показывающая, что робот вообще живой.
   */
 /* USER CODE END Header_blinkLed */
 void blinkLed(void const * argument)
@@ -264,17 +248,18 @@ void blinkLed(void const * argument)
     for(;;)
     {
         debug_led_set(led_state = !led_state);
-        osDelay(500);
+        osDelay(1000);
     }
   /* USER CODE END blinkLed */
 }
 
 /* USER CODE BEGIN Header_updateOutData */
 /**
-* @brief Function implementing the _updateOData thread.
-* @param argument: Not used
-* @retval None
-*/
+  * Задача-сторож для данных, исходящих от робота к пульту.
+  * Считывает посылки из очереди по дескриптору outDataQueueHandle
+  * и обновляет поля структуры data_from_robot, которая потом будет
+  * отправлена через радиомодуль на управляющую сторону.
+  */
 /* USER CODE END Header_updateOutData */
 void updateOutData(void const * argument)
 {
@@ -315,10 +300,9 @@ void updateOutData(void const * argument)
 
 /* USER CODE BEGIN Header_checkDistance */
 /**
-* @brief Function implementing the _checkDistance thread.
-* @param argument: Not used
-* @retval None
-*/
+  * Задача, проверяющая расстояние от бампера робота до поверхности.
+  * Если расстояние > 20см: обрыв, если оно < 5см: препятствие.
+  */
 /* USER CODE END Header_checkDistance */
 void checkDistance(void const * argument)
 {
@@ -340,10 +324,9 @@ void checkDistance(void const * argument)
 
 /* USER CODE BEGIN Header_checkTemp */
 /**
-* @brief Function implementing the _checkTemp thread.
-* @param argument: Not used
-* @retval None
-*/
+  * Задача, считывающая значение температуры внутренних радиаторов
+  * и окружающей среды.
+  */
 /* USER CODE END Header_checkTemp */
 void checkTemp(void const * argument)
 {
@@ -353,7 +336,7 @@ void checkTemp(void const * argument)
     for(;;)
     {
         temperature_start_conversion();
-        osDelay(2000);
+        osDelay(TEMPERATURE_CONVERSION_TIME);
 
         data = osMailAlloc(outDataQueueHandle, osWaitForever);
         *data = (OutDataElement) {
@@ -374,10 +357,9 @@ void checkTemp(void const * argument)
 
 /* USER CODE BEGIN Header_checkBatteries */
 /**
-* @brief Function implementing the _checkBats thread.
-* @param argument: Not used
-* @retval None
-*/
+  * Задача, считывающая значение заряда аккумуляторов робота
+  * с выходных узлов делителей напряжения.
+  */
 /* USER CODE END Header_checkBatteries */
 void checkBatteries(void const * argument)
 {
@@ -407,10 +389,10 @@ void checkBatteries(void const * argument)
 
 /* USER CODE BEGIN Header_exchangeDataIO */
 /**
-* @brief Function implementing the _exchangeData thread.
-* @param argument: Not used
-* @retval None
-*/
+  * Задача, осуществляющая обмен информацией между роботом и пультом.
+  * Срабатывает, когда обработчик прерывания по спаду напряжения
+  * на IRQ пине радиомодуля отдаёт семафор по дескриптору inDataSemHandle.
+  */
 /* USER CODE END Header_exchangeDataIO */
 void exchangeDataIO(void const * argument)
 {
@@ -451,7 +433,8 @@ void exchangeDataIO(void const * argument)
         osMutexWait(outDataMutexHandle, osWaitForever);
         radio_put_outcoming(&data_from_robot);
         osMutexRelease(outDataMutexHandle);
-
+        /* Включаем прерывание по спаду напряжение на IRQ пине радиомодуля
+           которое мы выключили в обработчике прерывания. */
         LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_5);
     }
   /* USER CODE END exchangeDataIO */
@@ -461,6 +444,8 @@ void exchangeDataIO(void const * argument)
 void updateManipulator(void const * argument)
 {
   /* USER CODE BEGIN updateManipulator */
+    /* Чтобы не вызывать сильные просадки напряжения силового аккумулятора,
+       положение манипулятора обновляется плавно, шагами. */
     if (osMutexWait(inDataMutexHandle, 0) != osErrorOS) {
         manipulator_move();
         osMutexRelease(inDataMutexHandle);

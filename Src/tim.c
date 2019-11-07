@@ -213,6 +213,9 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+/**
+  * Функция микросекундной задержки на таймере 3.
+  */
 void delay_us(uint16_t us)
 {
     LL_TIM_SetCounter(TIM3, 0);

@@ -1,7 +1,7 @@
 #include "modules/manipulator.h"
 #include "main.h"
 
-#define SERVO_DEGREE_0
+#define SERVO_DEGREE_0      63
 #define SERVO_DEGREE_180    248
 
 #define ARM_MIN_PULSE   92

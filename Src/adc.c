@@ -21,7 +21,6 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -63,7 +62,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
   if(adcHandle->Instance==ADC1)
   {
   /* USER CODE BEGIN ADC1_MspInit 0 */
-
   /* USER CODE END ADC1_MspInit 0 */
     /* ADC1 clock enable */
     __HAL_RCC_ADC1_CLK_ENABLE();
@@ -78,7 +76,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* USER CODE BEGIN ADC1_MspInit 1 */
-
   /* USER CODE END ADC1_MspInit 1 */
   }
 }
@@ -89,7 +86,6 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
   if(adcHandle->Instance==ADC1)
   {
   /* USER CODE BEGIN ADC1_MspDeInit 0 */
-
   /* USER CODE END ADC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC1_CLK_DISABLE();
@@ -101,15 +97,18 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
 
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
-
   /* USER CODE END ADC1_MspDeInit 1 */
   }
 } 
 
 /* USER CODE BEGIN 1 */
-uint16_t ADC1_Measure(ADC_ChannelConfTypeDef* pChannelConfig)
+/**
+  * Функция простого однократного считывания аналогового значения
+  * с канала АЦП, заданного в HAL-овской структуре ADC_ChannelConfTypeDef.
+  */
+uint16_t ADC1_Measure(ADC_ChannelConfTypeDef* p_ch_conf)
 {
-    HAL_ADC_ConfigChannel(&hadc1, pChannelConfig);
+    HAL_ADC_ConfigChannel(&hadc1, p_ch_conf);
     HAL_ADC_Start(&hadc1);
     HAL_ADC_PollForConversion(&hadc1, 100);
     uint16_t conv_result = HAL_ADC_GetValue(&hadc1);
