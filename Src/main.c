@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   * Точка входа прошивки робота: инициализация периферии и
-  * запуск ядра ОС FreeRTOS.
+  * запуск ядра FreeRTOS.
   */
 /* USER CODE END Header */
 
