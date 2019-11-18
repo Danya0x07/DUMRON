@@ -1,4 +1,5 @@
 #include "modules/emmiters.h"
+#include "main.h"
 
 void lights_set(_Bool state)
 {

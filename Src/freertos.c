@@ -73,7 +73,7 @@ osMailQId outDataQueueHandle;
   * задача обмена информацией с пультом exchangeDataIO.
   * Защищена мьютексом по дескриптору outDataMutexHandle.
   */
-DataFromRobot data_from_robot;
+static DataFromRobot data_from_robot;
 
 /* USER CODE END Variables */
 osThreadId _blinkLedHandle;
@@ -241,7 +241,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  osTimerStart(manipTimerHandle, 200);
+  osTimerStart(manipTimerHandle, 100);
   /* USER CODE END RTOS_THREADS */
 
 }

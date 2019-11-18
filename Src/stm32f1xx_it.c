@@ -26,10 +26,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
-#include "modules/radio.h"
-#include "modules/motors.h"
-#include "modules/emmiters.h"
-#include "modules/manipulator.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,8 +42,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-extern volatile DataToRobot data_to_robot;
-extern volatile DataFromRobot data_from_robot;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -165,12 +159,10 @@ void EXTI9_5_IRQHandler(void)
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
     /* USER CODE BEGIN LL_EXTI_LINE_5 */
     osSemaphoreRelease(inDataReadySemHandle);
-    /*
-     * Поскольку радиомодуль поднимет IRQ пин обратно только тогда,
-     * когда мы считаем принятые данные функцией radio_take_incoming,
-     * прерывание по спаду напряжения на пине необходимо выключить,
-     * иначе по выходу из обработчика мы опять в него попадём.
-     */
+    /* Поскольку радиомодуль поднимет IRQ пин обратно только тогда,
+       когда мы считаем принятые данные функцией radio_take_incoming,
+       прерывание по спаду напряжения на пине необходимо выключить,
+       иначе по выходу из обработчика мы опять в него попадём. */
     LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_5);
     /* USER CODE END LL_EXTI_LINE_5 */
   }

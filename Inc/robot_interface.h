@@ -19,7 +19,7 @@ typedef enum {
 #define ROBOT_CFLAG_ARM_UP   (1 << 1)
 #define ROBOT_CFLAG_CLAW_SQUEEZE (1 << 2)
 #define ROBOT_CFLAG_CLAW_RELEASE (1 << 3)
-//#define ROBOT_CFLAG_ARM_FOLD  (1 << 4)
+// #define ROBOT_CFLAG_ARM_FOLD  (1 << 4)
 #define ROBOT_CFLAG_LIGHTS_EN (1 << 5)
 #define ROBOT_CFLAG_KLAXON_EN (1 << 6)
 

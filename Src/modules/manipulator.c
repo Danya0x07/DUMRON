@@ -1,16 +1,16 @@
 #include "modules/manipulator.h"
 #include "main.h"
 
-#define SERVO_DEGREE_0      63
-#define SERVO_DEGREE_180    248
+// #define SERVO_DEGREE_0      63
+// #define SERVO_DEGREE_180    248
 
 #define ARM_MIN_PULSE   92
 #define ARM_MAX_PULSE   272
 #define ARM_PULSE_FADE  2
 
-#define CLAW_MIN_PULSE   160
-#define CLAW_MAX_PULSE   230
-#define CLAW_PULSE_FADE  1
+#define CLAW_MIN_PULSE   195
+#define CLAW_MAX_PULSE   270
+#define CLAW_PULSE_FADE  2
 
 static ArmServoDirection arm_servo_dir = ARM_STOP;
 static ClawServoDirection claw_servo_dir = CLAW_STOP;
