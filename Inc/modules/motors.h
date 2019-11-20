@@ -6,5 +6,6 @@
 
 void motors_set_direction(RobotDirection);
 void motors_set_speed(uint8_t, uint8_t);
+RobotDirection motors_get_direction(void);
 
 #endif

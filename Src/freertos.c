@@ -52,6 +52,7 @@ typedef struct {
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define MAX_SAFE_TO_FALL_DISTANCE    12
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -66,7 +67,7 @@ typedef struct {
   * Используется задачами, получающими данные с датчиков
   * и задачей обновления выходных данных.
   */
-osMailQId outDataQueueHandle;
+static osMailQId outDataQueueHandle;
 /**
   * Глобальная переменная, которую используют только 2 задачи:
   * задача обновления выходных данных updateOutData и
@@ -74,6 +75,12 @@ osMailQId outDataQueueHandle;
   * Защищена мьютексом по дескриптору outDataMutexHandle.
   */
 static DataFromRobot data_from_robot;
+/**
+ * Глобальная переменная, хранящая факт наличия обрыва позади робота.
+ * Используется задачами checkDistance и exchangeDataIO.
+ * Защищена мьютексом по дескриптору outDataMutexHandle.
+ */
+static _Bool about_to_fall = 0;
 
 /* USER CODE END Variables */
 osThreadId _blinkLedHandle;
@@ -241,7 +248,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  osTimerStart(manipTimerHandle, 100);
+  osTimerStart(manipTimerHandle, 70);
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -321,13 +328,25 @@ void checkDistance(void const * argument)
 {
   /* USER CODE BEGIN checkDistance */
     OutDataElement* data;
+    uint16_t distance;
 
     for(;;)
     {
+        distance = sonar_scan();
+        osMutexWait(inDataMutexHandle, osWaitForever);
+        if (motors_get_direction() == ROBOT_DIRECTION_BACKWARD
+                && distance > MAX_SAFE_TO_FALL_DISTANCE) {
+            about_to_fall = 1;
+            motors_set_speed(0, 0);
+        } else {
+            about_to_fall = 0;
+        }
+        osMutexRelease(inDataMutexHandle);
+
         data = osMailAlloc(outDataQueueHandle, osWaitForever);
         *data = (OutDataElement) {
             .kind = BACK_DISTANCE,
-            .ub_data = sonar_scan(),
+            .ub_data = distance,
         };
         osMailPut(outDataQueueHandle, data);
         osDelay(300);
@@ -357,6 +376,7 @@ void checkTemp(void const * argument)
             .sb_data = temperature_get_radiators()
         };
         osMailPut(outDataQueueHandle, data);
+        osDelay(10);
 
         data = osMailAlloc(outDataQueueHandle, osWaitForever);
         *data = (OutDataElement) {
@@ -422,7 +442,8 @@ void exchangeDataIO(void const * argument)
 
         osMutexWait(inDataMutexHandle, osWaitForever);
         motors_set_direction(data_to_robot.direction);
-        motors_set_speed(data_to_robot.speed_left, data_to_robot.speed_right);
+        if (!about_to_fall)
+            motors_set_speed(data_to_robot.speed_left, data_to_robot.speed_right);
 
         if (data_to_robot.control_reg & ROBOT_CFLAG_ARM_UP)
             arm_servo_dir = ARM_UP;
