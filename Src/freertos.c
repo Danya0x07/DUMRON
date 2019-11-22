@@ -321,7 +321,7 @@ void updateOutData(void const * argument)
 /* USER CODE BEGIN Header_checkDistance */
 /**
   * Задача, проверяющая расстояние от бампера робота до поверхности.
-  * Если расстояние > 20см: обрыв, если оно < 5см: препятствие.
+  * Если расстояние > MAX_SAFE_TO_FALL_DISTANCE: сзади робота обрыв.
   */
 /* USER CODE END Header_checkDistance */
 void checkDistance(void const * argument)
