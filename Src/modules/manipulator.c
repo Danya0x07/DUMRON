@@ -5,7 +5,7 @@
 // #define MG_SERVO_DEGREE_180    248
 
 #define ARM_MIN_PULSE   92
-#define ARM_MAX_PULSE   272
+#define ARM_MAX_PULSE   270
 #define ARM_PULSE_FADE  2
 
 #define CLAW_MIN_PULSE   195

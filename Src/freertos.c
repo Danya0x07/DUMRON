@@ -80,7 +80,7 @@ static DataFromRobot data_from_robot;
  * Используется задачами checkDistance и exchangeDataIO.
  * Защищена мьютексом по дескриптору outDataMutexHandle.
  */
-static _Bool about_to_fall = 0;
+static _Bool cliff_behind_robot = 0;
 
 /* USER CODE END Variables */
 osThreadId _blinkLedHandle;
@@ -334,12 +334,12 @@ void checkDistance(void const * argument)
     {
         distance = sonar_scan();
         osMutexWait(inDataMutexHandle, osWaitForever);
-        if (motors_get_direction() == ROBOT_DIRECTION_BACKWARD
-                && distance > MAX_SAFE_TO_FALL_DISTANCE) {
-            about_to_fall = 1;
-            motors_set_speed(0, 0);
+        if (distance > MAX_SAFE_TO_FALL_DISTANCE) {
+            cliff_behind_robot = 1;
+            if (motors_get_direction() == ROBOT_DIRECTION_BACKWARD)
+                motors_set_speed(0, 0);
         } else {
-            about_to_fall = 0;
+            cliff_behind_robot = 0;
         }
         osMutexRelease(inDataMutexHandle);
 
@@ -349,7 +349,7 @@ void checkDistance(void const * argument)
             .ub_data = distance,
         };
         osMailPut(outDataQueueHandle, data);
-        osDelay(300);
+        osDelay(200);
     }
   /* USER CODE END checkDistance */
 }
@@ -442,7 +442,7 @@ void exchangeDataIO(void const * argument)
 
         osMutexWait(inDataMutexHandle, osWaitForever);
         motors_set_direction(data_to_robot.direction);
-        if (!about_to_fall)
+        if (!cliff_behind_robot || data_to_robot.direction != ROBOT_DIRECTION_BACKWARD)
             motors_set_speed(data_to_robot.speed_left, data_to_robot.speed_right);
 
         if (data_to_robot.control_reg & ROBOT_CFLAG_ARM_UP)

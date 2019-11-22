@@ -6,7 +6,7 @@ void radio_init(void)
 {
     uint8_t address[4] = { 0xC7, 0x68, 0xAC, 0x35 };
     /* Включаем проверку контрольной суммы
-     и переводимся в режим приёмника. */
+       и переводимся в режим приёмника. */
     const uint8_t config = PWR_UP | PRIM_RX | EN_CRC | MASK_TX_DS | MASK_MAX_RT;
     /* Выбираем частотный канал. */
     const uint8_t rf_ch = 112;
@@ -19,7 +19,7 @@ void radio_init(void)
     /* Включаем автоподтверждение на канале 0. */
     const uint8_t en_aa = ENAA_P0;
     /* Включаем возможность слать данные вместе с пакетами подтверждения
-     и не указывать размер полезной нагрузки. */
+       и не указывать размер полезной нагрузки. */
     const uint8_t feature = EN_DPL | EN_ACK_PAY;
     /* Включаем динамическую длину полезной нагрузки на канале 0. */
     const uint8_t dynpd = DPL_P0;
@@ -53,7 +53,7 @@ void radio_init(void)
     nrf_cmd(FLUSH_TX);
     nrf_cmd(FLUSH_RX);
     /* Начинаем слушать эфир.
-     Standby_1 --> Rx mode. */
+       Standby_1 --> Rx mode. */
     nrf_ce_1();
     delay_ms(1);
 }
@@ -63,11 +63,11 @@ void radio_take_incoming(DataToRobot* p_idata)
     uint8_t status = nrf_get_status();
     if (status & RX_DR) {
         uint8_t fifo_status, data_size;
-        nrf_ce_0();
         do {
             nrf_rw_buff(R_RX_PL_WID, &data_size, 1, NRF_OPERATION_READ);
             if (data_size != sizeof(DataToRobot)) {
                 nrf_cmd(FLUSH_RX);
+                nrf_clear_interrupts();
                 break;
             }
             nrf_rw_buff(R_RX_PAYLOAD, (uint8_t*) p_idata,
@@ -75,7 +75,6 @@ void radio_take_incoming(DataToRobot* p_idata)
             nrf_clear_interrupts();
             fifo_status = nrf_read_byte(FIFO_STATUS);
         } while (!(fifo_status & RX_EMPTY));
-        nrf_ce_1();
     }
 }
 
