@@ -84,16 +84,20 @@ int main(void)
   // ШИМ для моторов;
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+
   // ШИМ для сервомоторов манипулятора;
   LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
   LL_TIM_EnableCounter(TIM2);
+
   // Таймер для отсчёта микросекунд;
   LL_TIM_EnableCounter(TIM3);
+
   // Шина для общения с радиомодулем;
   LL_SPI_Enable(SPI1);
 
   // Настройка датчиков температуры;
   temperature_init();
+
   // Настройка радиомодуля; 
   radio_init();
 
@@ -107,11 +111,10 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+  return 0;
   /* USER CODE END 3 */
 }
 

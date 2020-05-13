@@ -138,14 +138,29 @@ void vApplicationIdleHook( void )
 /* USER CODE BEGIN 4 */
 void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
 {
+    _Bool buzzer_state = 0;
+    debug_led_set(1);
 
+    debug_logs("SO:");
+    debug_logs((char*) pcTaskName);
+    for (;;) {
+        buzzer_set((buzzer_state = !buzzer_state));
+        delay_ms(200);
+    }
 }
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN 5 */
 void vApplicationMallocFailedHook(void)
 {
+    _Bool buzzer_state = 0;
+    debug_led_set(0);
 
+    debug_logs("MF\n");
+    for (;;) {
+        buzzer_set((buzzer_state = !buzzer_state));
+        delay_ms(500);
+    }
 }
 /* USER CODE END 5 */
 

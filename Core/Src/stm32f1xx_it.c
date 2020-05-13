@@ -26,6 +26,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
+#include "emmiters.h"
+#include "debug.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -79,10 +81,14 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
+  _Bool led_state = 0;
+  buzzer_set(1);
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+    debug_led_set((led_state = !led_state));
+    delay_ms(100);
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
@@ -93,10 +99,14 @@ void HardFault_Handler(void)
 void MemManage_Handler(void)
 {
   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
+  _Bool led_state = 0;
+  buzzer_set(1);
   /* USER CODE END MemoryManagement_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+    debug_led_set((led_state = !led_state));
+    delay_ms(500);
     /* USER CODE END W1_MemoryManagement_IRQn 0 */
   }
 }
@@ -111,6 +121,10 @@ void BusFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
+    debug_led_set(1);
+    delay_ms(2000);
+    debug_led_set(0);
+    delay_ms(1000);
     /* USER CODE END W1_BusFault_IRQn 0 */
   }
 }
@@ -125,6 +139,10 @@ void UsageFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+    debug_led_set(1);
+    delay_ms(2000);
+    debug_led_set(0);
+    delay_ms(500);
     /* USER CODE END W1_UsageFault_IRQn 0 */
   }
 }
