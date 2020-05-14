@@ -1,21 +1,4 @@
 /* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file    stm32f1xx_it.c
-  * @brief   Interrupt Service Routines.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
-  *
-  ******************************************************************************
-  */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -117,6 +100,7 @@ void MemManage_Handler(void)
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
+  buzzer_set(0);
   /* USER CODE END BusFault_IRQn 0 */
   while (1)
   {
@@ -135,6 +119,7 @@ void BusFault_Handler(void)
 void UsageFault_Handler(void)
 {
   /* USER CODE BEGIN UsageFault_IRQn 0 */
+  buzzer_set(0);
   /* USER CODE END UsageFault_IRQn 0 */
   while (1)
   {
@@ -165,12 +150,17 @@ void EXTI9_5_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
     /* USER CODE BEGIN LL_EXTI_LINE_5 */
+
     osSemaphoreRelease(inDataReadySemHandle);
-    /* Поскольку радиомодуль поднимет IRQ пин обратно только тогда,
-       когда мы считаем принятые данные функцией radio_take_incoming,
-       прерывание по спаду напряжения на пине необходимо выключить,
-       иначе по выходу из обработчика мы опять в него попадём. */
+
+    /*
+     * Поскольку радиомодуль поднимет IRQ пин обратно только тогда,
+     * когда мы считаем принятые данные функцией radio_take_incoming,
+     * прерывание по спаду напряжения на пине необходимо выключить,
+     * иначе по выходу из обработчика мы опять в него попадём.
+     */
     LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_5);
+
     /* USER CODE END LL_EXTI_LINE_5 */
   }
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */

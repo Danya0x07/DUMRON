@@ -1,9 +1,12 @@
 /* USER CODE BEGIN Header */
-/*
- * Здесь описана основная "бизнес-логика" прошивки.
- * Задачи выполняются в режиме вытесняющей многозадачности.
- * Используемая ОС - FreeRTOS с обёрткой CMSIS-RTOS.
- */
+/**
+  * Основная "бизнес-логика", представленная в виде задач.
+  * Задачи выполняются в режиме вытесняющей многозадачности.
+  * Используемая ОС - FreeRTOS с обёрткой CMSIS-RTOS.
+  * Обёртка так себе, но выбора не было, STM32CubeIDE по другому не умеет.
+  * В callback-ах по обнаружению ошибок издаём звуковые сигналы пьезобуззером
+  * при включённом/выключенном отладочном светодиоде.
+  */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -28,12 +31,12 @@
 /* USER CODE BEGIN PTD */
 
 /**
- * Структура, описывающая формат посылок в очереди выходных данных.
- * Подразумевается, что задачи, взаимодействующие с датчиками должны
- * упаковывать добытые данные в эту структуру, и класть в очередь по
- * дескриптору outDataQueueHandle, откуда эти данные считает
- * задача-сторож updateOutData.
- */
+  * Структура, описывающая формат посылок в очереди выходных данных.
+  * Подразумевается, что задачи, взаимодействующие с датчиками должны
+  * упаковывать добытые данные в эту структуру, и класть в очередь по
+  * дескриптору outDataQueueHandle, откуда эти данные считает
+  * задача-сторож updateOutData.
+  */
 typedef struct {
     enum {
         BATTERY_BRAINS,
@@ -63,25 +66,25 @@ typedef struct {
 /* USER CODE BEGIN Variables */
 
 /**
- * Дескриптор очереди выходных данных.
- * Используется задачами, получающими данные с датчиков
- * и задачей обновления выходных данных.
- */
+  * Дескриптор очереди выходных данных.
+  * Используется задачами, получающими данные с датчиков
+  * и задачей обновления выходных данных.
+  */
 static osMailQId outDataQueueHandle;
 
 /**
- * Глобальная переменная, которую используют только 2 задачи:
- * задача обновления выходных данных updateOutData и
- * задача обмена информацией с пультом exchangeDataIO.
- * Защищена мьютексом по дескриптору outDataMutexHandle.
- */
+  * Глобальная переменная, которую используют только 2 задачи:
+  * задача обновления выходных данных updateOutData и
+  * задача обмена информацией с пультом exchangeDataIO.
+  * Защищена мьютексом по дескриптору outDataMutexHandle.
+  */
 static DataFromRobot data_from_robot;
 
 /**
- * Глобальная переменная, хранящая факт наличия обрыва позади робота.
- * Используется задачами checkDistance и exchangeDataIO.
- * Защищена мьютексом по дескриптору outDataMutexHandle.
- */
+  * Глобальная переменная, хранящая факт наличия обрыва позади робота.
+  * Используется задачами checkDistance и exchangeDataIO.
+  * Защищена мьютексом по дескриптору outDataMutexHandle.
+  */
 static _Bool cliff_behind_robot = 0;
 
 /* USER CODE END Variables */
@@ -125,20 +128,22 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName);
 void vApplicationMallocFailedHook(void);
 
 /* USER CODE BEGIN 2 */
+
+/** Когда нет готовых к выполнению задач. */
 void vApplicationIdleHook( void )
 {
-    /*
-     * Для экономии энергии, когда нет готовых
-     * к выполнению задач, переводимся в спящий режим.
-     */
-    HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
+    HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);  // переводимся в спящий режим
 }
 /* USER CODE END 2 */
 
 /* USER CODE BEGIN 4 */
+
+/** Если обнаружено переполнение стека. */
 void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
 {
     _Bool buzzer_state = 0;
+
+    /* Издаём звуковые сигналы при включённом светодиоде. */
     debug_led_set(1);
 
     debug_logs("SO:");
@@ -151,9 +156,13 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN 5 */
+
+/** Если не хватило памяти в куче. */
 void vApplicationMallocFailedHook(void)
 {
     _Bool buzzer_state = 0;
+
+    /* Издаём звуковые сигналы при выключённом светодиоде. */
     debug_led_set(0);
 
     debug_logs("MF\n");
@@ -274,9 +283,9 @@ void MX_FREERTOS_Init(void) {
 
 /* USER CODE BEGIN Header_blinkLedTask */
 /**
- * Задача, мигающая отладочным светодиодом.
- * Показывает, что робот в состоянии хотя бы помигать светодиодом.
- */
+  * Задача, мигающая отладочным светодиодом.
+  * Показывает, что робот в состоянии хотя бы помигать светодиодом.
+  */
 /* USER CODE END Header_blinkLedTask */
 void blinkLedTask(void const * argument)
 {
@@ -288,16 +297,17 @@ void blinkLedTask(void const * argument)
         debug_led_set((led_state = !led_state));
         osDelay(1000);
     }
+
   /* USER CODE END blinkLedTask */
 }
 
 /* USER CODE BEGIN Header_updateOutData */
 /**
- * Задача-сторож для данных, исходящих от робота к пульту.
- * Считывает посылки из очереди по дескриптору outDataQueueHandle
- * и обновляет поля структуры data_from_robot, которая потом будет
- * отправлена через радиомодуль на управляющую сторону.
- */
+  * Задача-сторож для данных, исходящих от робота к пульту.
+  * Считывает посылки из очереди по дескриптору outDataQueueHandle
+  * и обновляет поля структуры data_from_robot, которая потом будет
+  * отправлена через радиомодуль на управляющую сторону.
+  */
 /* USER CODE END Header_updateOutData */
 void updateOutData(void const * argument)
 {
@@ -341,9 +351,9 @@ void updateOutData(void const * argument)
 
 /* USER CODE BEGIN Header_checkDistance */
 /**
- * Задача, проверяющая расстояние от бампера робота до поверхности.
- * Если расстояние > MAX_SAFE_TO_FALL_DISTANCE: сзади робота обрыв.
- */
+  * Задача, проверяющая расстояние от бампера робота до поверхности.
+  * Если расстояние > MAX_SAFE_TO_FALL_DISTANCE: сзади робота обрыв.
+  */
 /* USER CODE END Header_checkDistance */
 void checkDistance(void const * argument)
 {
@@ -377,9 +387,9 @@ void checkDistance(void const * argument)
 
 /* USER CODE BEGIN Header_checkTemp */
 /**
- * Задача, считывающая значение температуры внутренних радиаторов
- * и окружающей среды.
- */
+  * Задача, считывающая значение температуры внутренних радиаторов
+  * и окружающей среды.
+  */
 /* USER CODE END Header_checkTemp */
 void checkTemp(void const * argument)
 {
@@ -409,9 +419,9 @@ void checkTemp(void const * argument)
 
 /* USER CODE BEGIN Header_checkBatteries */
 /**
- * Задача, считывающая значение заряда аккумуляторов робота
- * с выходных узлов делителей напряжения.
- */
+  * Задача, считывающая значение заряда аккумуляторов робота
+  * с выходных узлов делителей напряжения.
+  */
 /* USER CODE END Header_checkBatteries */
 void checkBatteries(void const * argument)
 {
@@ -438,10 +448,10 @@ void checkBatteries(void const * argument)
 
 /* USER CODE BEGIN Header_exchangeDataIO */
 /**
- * Задача, осуществляющая обмен информацией между роботом и пультом.
- * Срабатывает, когда обработчик прерывания по спаду напряжения
- * на IRQ пине радиомодуля отдаёт семафор по дескриптору inDataSemHandle.
- */
+  * Задача, осуществляющая обмен информацией между роботом и пультом.
+  * Срабатывает, когда обработчик прерывания по спаду напряжения
+  * на IRQ пине радиомодуля отдаёт семафор по дескриптору inDataSemHandle.
+  */
 /* USER CODE END Header_exchangeDataIO */
 void exchangeDataIO(void const * argument)
 {
