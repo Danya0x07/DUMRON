@@ -1,1 +1,1 @@
-st-flash --reset write Debug/DUMRON.bin 0x8000000
+st-flash --reset write Release/DUMRON.bin 0x8000000

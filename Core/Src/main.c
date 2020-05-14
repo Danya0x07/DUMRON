@@ -17,6 +17,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "debug.h"
+#include "emmiters.h"
 #include "temperature.h"
 #include "radio.h"
 /* USER CODE END Includes */
@@ -197,13 +198,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  // В случае критической ошибки быстро мигаем встроенным светодиодом.
-  while (1) {
-      debug_led_set(1);
-      delay_ms(200);
-      debug_led_set(0);
-      delay_ms(200);
-  }
+  /*
+   * В случае ошибки на стадии инициализации просто орём пьезобуззером.
+   * Вообще, такая ситуация крайне маловероятна, но ... бла бла бла...
+   */
+  debug_led_set(0);
+  buzzer_set(1);
+  while (1) {}
   /* USER CODE END Error_Handler_Debug */
 }
 

@@ -31,6 +31,13 @@
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
+
+/**
+  * Топорная неубиваемая реализация приблизительной миллисекундной задержки
+  * для использования в обработчиках критических ошибок, где стандартная
+  * HAL_Delay может оказаться неработоспособной.
+  */
+static void delay_ms_clumsy(uint32_t ms);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -71,7 +78,7 @@ void HardFault_Handler(void)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
     debug_led_set((led_state = !led_state));
-    delay_ms(100);
+    delay_ms_clumsy(100);
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
@@ -89,7 +96,7 @@ void MemManage_Handler(void)
   {
     /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
     debug_led_set((led_state = !led_state));
-    delay_ms(500);
+    delay_ms_clumsy(500);
     /* USER CODE END W1_MemoryManagement_IRQn 0 */
   }
 }
@@ -106,9 +113,9 @@ void BusFault_Handler(void)
   {
     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
     debug_led_set(1);
-    delay_ms(2000);
+    delay_ms_clumsy(2000);
     debug_led_set(0);
-    delay_ms(1000);
+    delay_ms_clumsy(1000);
     /* USER CODE END W1_BusFault_IRQn 0 */
   }
 }
@@ -125,9 +132,9 @@ void UsageFault_Handler(void)
   {
     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
     debug_led_set(1);
-    delay_ms(2000);
+    delay_ms_clumsy(2000);
     debug_led_set(0);
-    delay_ms(500);
+    delay_ms_clumsy(500);
     /* USER CODE END W1_UsageFault_IRQn 0 */
   }
 }
@@ -180,6 +187,10 @@ void TIM4_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+static void delay_ms_clumsy(uint32_t ms)
+{
+    for (uint32_t i = 0; i < 2000000U; i++)
+        __NOP();
+}
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
