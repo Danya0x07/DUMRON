@@ -1,12 +1,14 @@
 #ifndef DEBUG_H_INCLUDED
 #define DEBUG_H_INCLUDED
 
-#include <stdint.h>
-
-void debug_led_set(_Bool state);
-void debug_uart_send_byte(uint8_t);
-void debug_logs(char*);
+#ifdef DEBUG
+void debug_logs(char *);
 void debug_logi(int);
-void debug_logx(uint64_t);
+void debug_logx(int);
+#else
+static inline void debug_logs(char *str) { }
+static inline void debug_logi(int n) { }
+static inline void debug_logx(int n) { }
+#endif
 
 #endif

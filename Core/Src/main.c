@@ -202,9 +202,10 @@ void Error_Handler(void)
    * В случае ошибки на стадии инициализации просто орём пьезобуззером.
    * Вообще, такая ситуация крайне маловероятна, но ... бла бла бла...
    */
-  debug_led_set(0);
+  led_set(0);
   buzzer_set(1);
-  while (1) {}
+  for (;;)
+      ;
   /* USER CODE END Error_Handler_Debug */
 }
 

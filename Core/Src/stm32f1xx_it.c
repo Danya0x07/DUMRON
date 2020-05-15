@@ -77,7 +77,7 @@ void HardFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
-    debug_led_set((led_state = !led_state));
+    led_set((led_state = !led_state));
     delay_ms_clumsy(100);
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
@@ -95,7 +95,7 @@ void MemManage_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
-    debug_led_set((led_state = !led_state));
+    led_set((led_state = !led_state));
     delay_ms_clumsy(500);
     /* USER CODE END W1_MemoryManagement_IRQn 0 */
   }
@@ -112,9 +112,9 @@ void BusFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
-    debug_led_set(1);
+    led_set(1);
     delay_ms_clumsy(2000);
-    debug_led_set(0);
+    led_set(0);
     delay_ms_clumsy(1000);
     /* USER CODE END W1_BusFault_IRQn 0 */
   }
@@ -131,9 +131,9 @@ void UsageFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
-    debug_led_set(1);
+    led_set(1);
     delay_ms_clumsy(2000);
-    debug_led_set(0);
+    led_set(0);
     delay_ms_clumsy(500);
     /* USER CODE END W1_UsageFault_IRQn 0 */
   }

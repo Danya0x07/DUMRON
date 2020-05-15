@@ -1,6 +1,14 @@
 #include "emmiters.h"
 #include "main.h"
 
+void led_set(_Bool state)
+{
+    if (state)
+        LL_GPIO_ResetOutputPin(LED_DEBUG_GPIO_Port, LED_DEBUG_Pin);
+    else
+        LL_GPIO_SetOutputPin(LED_DEBUG_GPIO_Port, LED_DEBUG_Pin);
+}
+
 void lights_set(_Bool state)
 {
     if (state)

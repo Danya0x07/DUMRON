@@ -17,7 +17,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
-#include "debug.h"
 #include "battery.h"
 #include "motors.h"
 #include "manipulator.h"
@@ -25,6 +24,7 @@
 #include "hcsr04/sonar.h"
 #include "temperature.h"
 #include "emmiters.h"
+#include "debug.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +55,12 @@ typedef struct {
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define MAX_SAFE_TO_FALL_DISTANCE    12
+
+/**
+  * Максимальное расстояние от кормы робота до поверхности,
+  * при котором не блокируется движение назад.
+  */
+#define MAX_SAFE_TO_FALL_DISTANCE_CM    12
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -130,9 +135,10 @@ void vApplicationMallocFailedHook(void);
 /* USER CODE BEGIN 2 */
 
 /** Когда нет готовых к выполнению задач. */
-void vApplicationIdleHook( void )
+void vApplicationIdleHook(void)
 {
-    HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);  // переводимся в спящий режим
+    /* Переводимся в спящий режим. */
+    HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
 }
 /* USER CODE END 2 */
 
@@ -144,10 +150,10 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
     _Bool buzzer_state = 0;
 
     /* Издаём звуковые сигналы при включённом светодиоде. */
-    debug_led_set(1);
+    led_set(1);
 
-    debug_logs("SO:");
     debug_logs((char*) pcTaskName);
+    debug_logs(" : stack overflow\n");
     for (;;) {
         buzzer_set((buzzer_state = !buzzer_state));
         delay_ms(200);
@@ -163,9 +169,9 @@ void vApplicationMallocFailedHook(void)
     _Bool buzzer_state = 0;
 
     /* Издаём звуковые сигналы при выключённом светодиоде. */
-    debug_led_set(0);
+    led_set(0);
 
-    debug_logs("MF\n");
+    debug_logs("malloc failed\n");
     for (;;) {
         buzzer_set((buzzer_state = !buzzer_state));
         delay_ms(500);
@@ -294,7 +300,7 @@ void blinkLedTask(void const * argument)
     _Bool led_state = 0;
 
     for(;;) {
-        debug_led_set((led_state = !led_state));
+        led_set((led_state = !led_state));
         osDelay(1000);
     }
 
@@ -313,34 +319,37 @@ void updateOutData(void const * argument)
 {
   /* USER CODE BEGIN updateOutData */
 
-    DataFromRobot* p_out_data = (DataFromRobot*) argument;
+    DataFromRobot *p_out_data = (DataFromRobot *)argument;
     osEvent event;
-    OutDataElement* data;
+    OutDataElement *data;
 
     for(;;) {
         event = osMailGet(outDataQueueHandle, osWaitForever);
         if (event.status == osEventMail) {
             data = event.value.p;
-            osMutexWait(outDataMutexHandle, osWaitForever);
-            switch (data->kind)
-            {
-            case BATTERY_BRAINS:
-                p_out_data->battery_brains = data->ub_data;
-                break;
-            case BATTERY_MOTORS:
-                p_out_data->battery_motors = data->ub_data;
-                break;
-            case BACK_DISTANCE:
-                p_out_data->back_distance = data->ub_data;
-                break;
-            case TEMP_AMBIENT:
-                p_out_data->temperature_ambient = data->sb_data;
-                break;
-            case TEMP_RADIATORS:
-                p_out_data->temperature_radiators = data->sb_data;
-                break;
+            if (osMutexWait(outDataMutexHandle, osWaitForever) == osOK) {
+                switch (data->kind)
+                {
+                case BATTERY_BRAINS:
+                    p_out_data->battery_brains = data->ub_data;
+                    break;
+                case BATTERY_MOTORS:
+                    p_out_data->battery_motors = data->ub_data;
+                    break;
+                case BACK_DISTANCE:
+                    p_out_data->back_distance = data->ub_data;
+                    break;
+                case TEMP_AMBIENT:
+                    p_out_data->temperature_ambient = data->sb_data;
+                    break;
+                case TEMP_RADIATORS:
+                    p_out_data->temperature_radiators = data->sb_data;
+                    break;
+                }
+                osMutexRelease(outDataMutexHandle);
+            } else {
+                debug_logs("");
             }
-            osMutexRelease(outDataMutexHandle);
             osMailFree(outDataQueueHandle, data);
         }
 
@@ -364,20 +373,27 @@ void checkDistance(void const * argument)
 
     for(;;) {
         distance = sonar_scan();
-        data = osMailAlloc(outDataQueueHandle, osWaitForever);
-        data->kind = BACK_DISTANCE;
-        data->ub_data = distance;
-        osMailPut(outDataQueueHandle, data);
 
-        osMutexWait(inDataMutexHandle, osWaitForever);
-        if (distance > MAX_SAFE_TO_FALL_DISTANCE) {
-            cliff_behind_robot = 1;
-            if (motors_get_direction() == ROBOT_DIRECTION_BACKWARD)
-                motors_set_speed(0, 0);
+        if ((data = osMailAlloc(outDataQueueHandle, 0)) != NULL) {
+            data->kind = BACK_DISTANCE;
+            data->ub_data = distance;
+            osMailPut(outDataQueueHandle, data);
         } else {
-            cliff_behind_robot = 0;
+            debug_logs("");
         }
-        osMutexRelease(inDataMutexHandle);
+
+        if (osMutexWait(inDataMutexHandle, 100) == osOK) {
+            if (distance > MAX_SAFE_TO_FALL_DISTANCE_CM) {
+                cliff_behind_robot = 1;
+                if (motors_get_direction() == ROBOT_DIRECTION_BACKWARD)
+                    motors_set_speed(0, 0);
+            } else {
+                cliff_behind_robot = 0;
+            }
+            osMutexRelease(inDataMutexHandle);
+        } else {
+            debug_logs("");
+        }
 
         osDelay(200);
     }
@@ -401,17 +417,23 @@ void checkTemp(void const * argument)
         temperature_start_conversion();
         osDelay(TEMPERATURE_CONVERSION_TIME);
 
-        data = osMailAlloc(outDataQueueHandle, osWaitForever);
-        data->kind = TEMP_RADIATORS;
-        data->sb_data = temperature_get_radiators();
-        osMailPut(outDataQueueHandle, data);
+        if ((data = osMailAlloc(outDataQueueHandle, 0)) != NULL) {
+            data->kind = TEMP_RADIATORS;
+            data->sb_data = temperature_get_radiators();
+            osMailPut(outDataQueueHandle, data);
+        } else {
+            debug_logs("");
+        }
 
         osDelay(10);
 
-        data = osMailAlloc(outDataQueueHandle, osWaitForever);
-        data->kind = TEMP_AMBIENT;
-        data->sb_data = temperature_get_ambient();
-        osMailPut(outDataQueueHandle, data);
+        if ((data = osMailAlloc(outDataQueueHandle, 0)) != NULL) {
+            data->kind = TEMP_AMBIENT;
+            data->sb_data = temperature_get_ambient();
+            osMailPut(outDataQueueHandle, data);
+        } else {
+            debug_logs("");
+        }
     }
 
   /* USER CODE END checkTemp */
@@ -430,16 +452,22 @@ void checkBatteries(void const * argument)
     OutDataElement* data;
 
     for(;;) {
-        data = osMailAlloc(outDataQueueHandle, osWaitForever);
-        data->kind = BATTERY_BRAINS;
-        data->ub_data = battery_get_percentage_brains();
-        osMailPut(outDataQueueHandle, data);
+        if ((data = osMailAlloc(outDataQueueHandle, 0)) != NULL) {
+            data->kind = BATTERY_BRAINS;
+            data->ub_data = battery_get_percentage_brains();
+            osMailPut(outDataQueueHandle, data);
+        } else {
+            debug_logs("");
+        }
         osDelay(2000);
 
-        data = osMailAlloc(outDataQueueHandle, osWaitForever);
-        data->kind = BATTERY_MOTORS;
-        data->ub_data = battery_get_percentage_motors();
-        osMailPut(outDataQueueHandle, data);
+        if ((data = osMailAlloc(outDataQueueHandle, 0)) != NULL) {
+            data->kind = BATTERY_MOTORS;
+            data->ub_data = battery_get_percentage_motors();
+            osMailPut(outDataQueueHandle, data);
+        } else {
+            debug_logs("");
+        }
         osDelay(2000);
     }
 
@@ -466,35 +494,43 @@ void exchangeDataIO(void const * argument)
         osSemaphoreWait(inDataReadySemHandle, osWaitForever);
         radio_take_incoming(&data_to_robot);
 
-        osMutexWait(inDataMutexHandle, osWaitForever);
-        motors_set_direction(data_to_robot.direction);
+        if (osMutexWait(inDataMutexHandle, 100) == osOK) {
+            motors_set_direction(data_to_robot.direction);
 
-        if (!cliff_behind_robot || data_to_robot.direction != ROBOT_DIRECTION_BACKWARD)
-            motors_set_speed(data_to_robot.speed_left, data_to_robot.speed_right);
+            if (!cliff_behind_robot
+                    || data_to_robot.direction != ROBOT_DIRECTION_BACKWARD)
+                motors_set_speed(data_to_robot.speed_left,
+                                 data_to_robot.speed_right);
 
-        if (data_to_robot.control_reg & ROBOT_CFLAG_ARM_UP)
-            arm_servo_dir = ARM_UP;
-        else if (data_to_robot.control_reg & ROBOT_CFLAG_ARM_DOWN)
-            arm_servo_dir = ARM_DOWN;
-        else
-            arm_servo_dir = ARM_STOP;
+            if (data_to_robot.control_reg & ROBOT_CFLAG_ARM_UP)
+                arm_servo_dir = ARM_UP;
+            else if (data_to_robot.control_reg & ROBOT_CFLAG_ARM_DOWN)
+                arm_servo_dir = ARM_DOWN;
+            else
+                arm_servo_dir = ARM_STOP;
 
-        if (data_to_robot.control_reg & ROBOT_CFLAG_CLAW_SQUEEZE)
-            claw_servo_dir = CLAW_SQUEESE;
-        else if (data_to_robot.control_reg & ROBOT_CFLAG_CLAW_RELEASE)
-            claw_servo_dir = CLAW_RELEASE;
-        else
-            claw_servo_dir = CLAW_STOP;
+            if (data_to_robot.control_reg & ROBOT_CFLAG_CLAW_SQUEEZE)
+                claw_servo_dir = CLAW_SQUEESE;
+            else if (data_to_robot.control_reg & ROBOT_CFLAG_CLAW_RELEASE)
+                claw_servo_dir = CLAW_RELEASE;
+            else
+                claw_servo_dir = CLAW_STOP;
 
-        manipulator_set_directions(arm_servo_dir, claw_servo_dir);
+            manipulator_set_directions(arm_servo_dir, claw_servo_dir);
 
-        lights_set(data_to_robot.control_reg & ROBOT_CFLAG_LIGHTS_EN);
-        buzzer_set(data_to_robot.control_reg & ROBOT_CFLAG_KLAXON_EN);
-        osMutexRelease(inDataMutexHandle);
+            lights_set(data_to_robot.control_reg & ROBOT_CFLAG_LIGHTS_EN);
+            buzzer_set(data_to_robot.control_reg & ROBOT_CFLAG_KLAXON_EN);
+            osMutexRelease(inDataMutexHandle);
+        } else {
+            debug_logs("");
+        }
 
-        osMutexWait(outDataMutexHandle, osWaitForever);
-        radio_put_outcoming(p_out_data);
-        osMutexRelease(outDataMutexHandle);
+        if (osMutexWait(outDataMutexHandle, 50) == osOK) {
+            radio_put_outcoming(p_out_data);
+            osMutexRelease(outDataMutexHandle);
+        } else {
+             debug_logs("");
+        }
 
         /*
          * Включаем прерывание по спаду напряжение на IRQ пине радиомодуля
@@ -515,9 +551,11 @@ void updateManipulator(void const * argument)
      * Чтобы не вызывать сильные просадки напряжения силового аккумулятора,
      * положение манипулятора обновляется плавно, шагами.
      */
-    if (osMutexWait(inDataMutexHandle, 0) != osErrorOS) {
+    if (osMutexWait(inDataMutexHandle, 100) != osErrorOS) {
         manipulator_move();
         osMutexRelease(inDataMutexHandle);
+    } else {
+         debug_logs("");
     }
 
   /* USER CODE END updateManipulator */
