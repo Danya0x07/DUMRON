@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-uint16_t sonar_scan(void);
+uint16_t hcsr04_measure(void);
 
 #endif

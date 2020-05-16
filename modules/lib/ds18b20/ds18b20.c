@@ -22,7 +22,7 @@ void ds_select_single(const uint8_t address[8])
 {
     ds_reset_pulse();
     ds_write_byte(DS_MATCH_ROM);
-    for (uint8_t i = 0; i < 8; i++)
+    for (uint_fast8_t i = 0; i < 8; i++)
         ds_write_byte(address[7 - i]);
 }
 
@@ -43,7 +43,7 @@ void ds_get_addr_of_single(uint8_t address_buff[8])
 {
     ds_reset_pulse();
     ds_write_byte(DS_READ_ROM);
-    for (uint8_t i = 0; i < 8; i++)
+    for (uint_fast8_t i = 0; i < 8; i++)
         address_buff[7 - i] = ds_read_byte();
 }
 
@@ -84,7 +84,7 @@ void ds_read_data(DsOutputData* p_odata)
  */
 void ds_write_byte(const uint8_t byte)
 {
-    for (uint8_t i = 0; i < 8; i++)
+    for (uint_fast8_t i = 0; i < 8; i++)
         ds_write_bit(byte & (1 << i));
 }
 
@@ -95,7 +95,7 @@ void ds_write_byte(const uint8_t byte)
 uint8_t ds_read_byte(void)
 {
     uint8_t byte = 0;
-    for (uint8_t i = 0; i < 8; i++)
+    for (uint_fast8_t i = 0; i < 8; i++)
         byte |= ds_read_bit() << i;
     return byte;
 }

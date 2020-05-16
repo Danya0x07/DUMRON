@@ -10,6 +10,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <hcsr04/hcsr04.h>
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
@@ -21,7 +22,6 @@
 #include "motors.h"
 #include "manipulator.h"
 #include "radio.h"
-#include "hcsr04/sonar.h"
 #include "temperature.h"
 #include "emmiters.h"
 #include "debug.h"
@@ -259,7 +259,7 @@ void Task_BlinkLed(void const * argument)
   /* USER CODE BEGIN Task_BlinkLed */
 
     for(;;) {
-        for (int i = 0; i < 2; i++) {
+        for (int_fast8_t i = 0; i < 2; i++) {
             Led_SetState(true);
             osDelay(140);
             Led_SetState(false);
@@ -335,7 +335,7 @@ void Task_CheckDistance(void const * argument)
     uint16_t distance;
 
     for(;;) {
-        distance = sonar_scan();
+        distance = hcsr04_measure();
 
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = BACK_DISTANCE;

@@ -91,12 +91,12 @@ void nrf_rw_buff(uint8_t composite_cmd, uint8_t* buff, uint8_t size, NrfOperatio
 {
     nrf_csn_0();
     nrf_spi_send_recv(composite_cmd);
-    while (size--) {
-        if (operation == NRF_OPERATION_READ)
+    if (operation == NRF_OPERATION_READ)
+        while (size--)
             *buff++ = nrf_spi_send_recv(NOP);
-        else if (operation == NRF_OPERATION_WRITE)
+    else if (operation == NRF_OPERATION_WRITE)
+        while (size--)
             nrf_spi_send_recv(*buff++);
-    }
     nrf_csn_1();
 }
 

@@ -1,6 +1,5 @@
+#include <hcsr04/hcsr04.h>
 #include "main.h"
-
-#include "sonar.h"
 
 #define TRIGGER_PULSE_WIDTH    12
 #define ECHO_RESPONSE_TIMEOUT  500
@@ -17,7 +16,7 @@
  * @brief  Опрашивает дальномер.
  * @retval Расстояние до объекта в см.
  */
-uint16_t sonar_scan(void)
+uint16_t hcsr04_measure(void)
 {
     sonar_trig_1();
     delay_us(TRIGGER_PULSE_WIDTH);

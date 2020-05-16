@@ -181,7 +181,6 @@ typedef enum {
 #define SET     1
 #define RESET   0
 
-void nrf_init_gpio(void);
 uint8_t nrf_cmd(NrfCommand cmd);
 uint8_t nrf_read_byte(NrfRegAddress reg_address);
 void nrf_overwrite_byte(NrfRegAddress reg_address, uint8_t bitmask);
