@@ -45,7 +45,6 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define delay_ms(ms)    HAL_Delay((ms))
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -56,8 +55,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_DEBUG_Pin LL_GPIO_PIN_13
-#define LED_DEBUG_GPIO_Port GPIOC
+#define LED_BUILTIN_Pin LL_GPIO_PIN_13
+#define LED_BUILTIN_GPIO_Port GPIOC
 #define SERVO_ARM_Pin LL_GPIO_PIN_0
 #define SERVO_ARM_GPIO_Port GPIOA
 #define SERVO_CLAW_Pin LL_GPIO_PIN_1

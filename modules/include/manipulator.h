@@ -1,3 +1,8 @@
+/**
+ * Модуль управления манипулятором робота.
+ *
+ * Манипулятор состоит из плеча(Arm) и клешни(Claw).
+ */
 #ifndef MANIPULATOR_H_INCLUDED
 #define MANIPULATOR_H_INCLUDED
 
@@ -5,15 +10,15 @@ typedef enum {
     ARM_STOP = 0,
     ARM_UP = 1,
     ARM_DOWN = -1
-} ArmServoDirection;
+} ArmDirection_e;
 
 typedef enum {
     CLAW_STOP = 0,
     CLAW_SQUEESE = 1,
     CLAW_RELEASE = -1
-} ClawServoDirection;
+} ClawDirection_e;
 
-void manipulator_set_directions(ArmServoDirection, ClawServoDirection);
-void manipulator_move(void);
+void Manipulator_SetDirections(ArmDirection_e, ClawDirection_e);
+void Manipulator_Move(void);
 
 #endif

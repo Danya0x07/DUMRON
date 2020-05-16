@@ -9,7 +9,7 @@ static void debug_uart_send_byte(uint8_t byte)
     LL_USART_TransmitData8(USART1, byte);
 }
 
-void debug_logs(char* str)
+void debug_logs(char *str)
 {
     while (*str)
         debug_uart_send_byte(*str++);

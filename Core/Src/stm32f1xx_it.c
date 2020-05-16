@@ -10,7 +10,6 @@
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
 #include "emmiters.h"
-#include "debug.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,7 +36,7 @@
   * для использования в обработчиках критических ошибок, где стандартная
   * HAL_Delay может оказаться неработоспособной.
   */
-static void delay_ms_clumsy(uint32_t ms);
+static void Clumsy_DelayMs(uint32_t ms);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -48,7 +47,7 @@ static void delay_ms_clumsy(uint32_t ms);
 extern TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN EV */
-extern osSemaphoreId inDataReadySemHandle;
+extern osSemaphoreId dataRecieveSemaphoreHandle;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -71,14 +70,14 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-  _Bool led_state = 0;
-  buzzer_set(1);
+  bool ledState = false;
+  Buzzer_SetState(true);
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
-    led_set((led_state = !led_state));
-    delay_ms_clumsy(100);
+    Led_SetState((ledState = !ledState));
+    Clumsy_DelayMs(100);
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
@@ -89,14 +88,14 @@ void HardFault_Handler(void)
 void MemManage_Handler(void)
 {
   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
-  _Bool led_state = 0;
-  buzzer_set(1);
+  bool ledState = false;
+  Buzzer_SetState(true);
   /* USER CODE END MemoryManagement_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
-    led_set((led_state = !led_state));
-    delay_ms_clumsy(500);
+    Led_SetState((ledState = !ledState));
+    Clumsy_DelayMs(500);
     /* USER CODE END W1_MemoryManagement_IRQn 0 */
   }
 }
@@ -107,15 +106,15 @@ void MemManage_Handler(void)
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
-  buzzer_set(0);
+  Buzzer_SetState(false);
   /* USER CODE END BusFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
-    led_set(1);
-    delay_ms_clumsy(2000);
-    led_set(0);
-    delay_ms_clumsy(1000);
+    Led_SetState(true);
+    Clumsy_DelayMs(2000);
+    Led_SetState(false);
+    Clumsy_DelayMs(1000);
     /* USER CODE END W1_BusFault_IRQn 0 */
   }
 }
@@ -126,15 +125,15 @@ void BusFault_Handler(void)
 void UsageFault_Handler(void)
 {
   /* USER CODE BEGIN UsageFault_IRQn 0 */
-  buzzer_set(0);
+  Buzzer_SetState(false);
   /* USER CODE END UsageFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
-    led_set(1);
-    delay_ms_clumsy(2000);
-    led_set(0);
-    delay_ms_clumsy(500);
+    Led_SetState(true);
+    Clumsy_DelayMs(2000);
+    Led_SetState(false);
+    Clumsy_DelayMs(500);
     /* USER CODE END W1_UsageFault_IRQn 0 */
   }
 }
@@ -158,7 +157,7 @@ void EXTI9_5_IRQHandler(void)
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
     /* USER CODE BEGIN LL_EXTI_LINE_5 */
 
-    osSemaphoreRelease(inDataReadySemHandle);
+    osSemaphoreRelease(dataRecieveSemaphoreHandle);
 
     /*
      * Поскольку радиомодуль поднимет IRQ пин обратно только тогда,
@@ -187,10 +186,11 @@ void TIM4_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-static void delay_ms_clumsy(uint32_t ms)
+static void Clumsy_DelayMs(uint32_t ms)
 {
-    for (uint32_t i = 0; i < 2000000U; i++)
-        __NOP();
+    for (uint_fast32_t i = 0; i < ms; i++)
+        for (uint_fast16_t j = 0; j < 2000; j++)
+            __NOP();
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

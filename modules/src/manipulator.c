@@ -1,6 +1,10 @@
-#include "manipulator.h"
 #include "main.h"
+#include "manipulator.h"
 
+/*
+ * Длительности импульсов в относительных единицах,
+ * соответствующие крайним положениям вала для сервомоторов семейства MG.
+ */
 // #define MG_SERVO_DEGREE_0      63
 // #define MG_SERVO_DEGREE_180    248
 
@@ -12,42 +16,43 @@
 #define CLAW_MAX_PULSE   270
 #define CLAW_PULSE_FADE  3
 
-static ArmServoDirection arm_servo_dir = ARM_STOP;
-static ClawServoDirection claw_servo_dir = CLAW_STOP;
+static ArmDirection_e armServoDirection = ARM_STOP;
+static ClawDirection_e clawServoDirection = CLAW_STOP;
 
-static void manipulator_arm_move(ArmServoDirection dir);
-static void manipulator_claw_move(ClawServoDirection dir);
-static void constrain_pulse(uint32_t* pulse, uint32_t maxval, uint32_t minval);
+static void ArmMove(ArmDirection_e direction);
+static void ClawMove(ClawDirection_e direction);
+static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval);
 
-void manipulator_set_directions(ArmServoDirection arm_dir, ClawServoDirection claw_dir)
+void Manipulator_SetDirections(ArmDirection_e armDir,
+                               ClawDirection_e clawDir)
 {
-    arm_servo_dir = arm_dir;
-    claw_servo_dir = claw_dir;
+    armServoDirection = armDir;
+    clawServoDirection = clawDir;
 }
 
-void manipulator_move(void)
+void Manipulator_Move(void)
 {
-    manipulator_arm_move(arm_servo_dir);
-    manipulator_claw_move(claw_servo_dir);
+    ArmMove(armServoDirection);
+    ClawMove(clawServoDirection);
 }
 
-static void manipulator_arm_move(ArmServoDirection dir)
+static void ArmMove(ArmDirection_e direction)
 {
     uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_ARM_PWM_Reg);
-    pulse += ARM_PULSE_FADE * dir;
-    constrain_pulse(&pulse, ARM_MAX_PULSE, ARM_MIN_PULSE);
+    pulse += ARM_PULSE_FADE * direction;
+    ConstrainPulse(&pulse, ARM_MAX_PULSE, ARM_MIN_PULSE);
     LL_TIM_WriteReg(SERVO_TIM, SERVO_ARM_PWM_Reg, pulse);
 }
 
-static void manipulator_claw_move(ClawServoDirection dir)
+static void ClawMove(ClawDirection_e direction)
 {
     uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_CLAW_PWM_Reg);
-    pulse += CLAW_PULSE_FADE * dir;
-    constrain_pulse(&pulse, CLAW_MAX_PULSE, CLAW_MIN_PULSE);
+    pulse += CLAW_PULSE_FADE * direction;
+    ConstrainPulse(&pulse, CLAW_MAX_PULSE, CLAW_MIN_PULSE);
     LL_TIM_WriteReg(SERVO_TIM, SERVO_CLAW_PWM_Reg, pulse);
 }
 
-static void constrain_pulse(uint32_t* pulse, uint32_t maxval, uint32_t minval)
+static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval)
 {
     if (*pulse > maxval)
         *pulse = maxval;

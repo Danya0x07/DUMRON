@@ -3,8 +3,8 @@
 
 #include <protocol.h>
 
-void radio_init(void);
-void radio_take_incoming(DataToRobot*);
-void radio_put_outcoming(DataFromRobot*);
+void Radio_Init(void);
+void Radio_TakeIncoming(DataToRobot_s *);
+void Radio_PutOutcoming(DataFromRobot_s *);
 
 #endif

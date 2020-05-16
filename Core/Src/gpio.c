@@ -50,7 +50,7 @@ void MX_GPIO_Init(void)
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
   /**/
-  LL_GPIO_ResetOutputPin(LED_DEBUG_GPIO_Port, LED_DEBUG_Pin);
+  LL_GPIO_ResetOutputPin(LED_BUILTIN_GPIO_Port, LED_BUILTIN_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOB, MOTOR_R1_Pin|MOTOR_R2_Pin|MOTOR_L1_Pin|MOTOR_L2_Pin 
@@ -63,11 +63,11 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetOutputPin(GPIOA, NRF_CSN_Pin|ONEWIRE_Pin);
 
   /**/
-  GPIO_InitStruct.Pin = LED_DEBUG_Pin;
+  GPIO_InitStruct.Pin = LED_BUILTIN_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(LED_DEBUG_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(LED_BUILTIN_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = NRF_CSN_Pin|NRF_CE_Pin;

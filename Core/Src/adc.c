@@ -104,14 +104,14 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 /* USER CODE BEGIN 1 */
 /**
   * Функция простого однократного считывания аналогового значения
-  * с канала АЦП, заданного в HAL-овской структуре ADC_ChannelConfTypeDef.
+  * с канала АЦП, заданного в HAL-овской структуре по адресу config.
   */
-uint16_t ADC1_Measure(ADC_ChannelConfTypeDef* p_ch_conf)
+uint32_t ADC1_Measure(ADC_ChannelConfTypeDef *config)
 {
-    HAL_ADC_ConfigChannel(&hadc1, p_ch_conf);
+    HAL_ADC_ConfigChannel(&hadc1, config);
     HAL_ADC_Start(&hadc1);
     HAL_ADC_PollForConversion(&hadc1, 100);
-    uint16_t conv_result = HAL_ADC_GetValue(&hadc1);
+    uint32_t conv_result = HAL_ADC_GetValue(&hadc1);
     HAL_ADC_Stop(&hadc1);
     return conv_result;
 }

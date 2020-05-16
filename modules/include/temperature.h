@@ -1,17 +1,23 @@
+/**
+ * Модуль измерения температуры.
+ *
+ * Принцип использования такой: вызываем Temperature_StartMeasurement()
+ * и после этого, не ранее чем через TEMPERATURE_MEASURE_TIME_MS
+ * можно вызывать Temperature_GetAmbient() и Temperature_GetRadiators().
+ *
+ * Честно говоря, измерение температуры роботу совершенно не нужно,
+ * просто исторически сложилось так, что у него есть датчики температуры.
+ */
 #ifndef TEMPERATURE_H_INCLUDED
 #define TEMPERATURE_H_INCLUDED
 
 #include <stdint.h>
 
-#define TEMPERATURE_CONVERSION_TIME     1000
+#define TEMPERATURE_MEASURE_TIME_MS     1000
 
-void temperature_init(void);
-void temperature_start_conversion(void);
-int8_t temperature_get_ambient(void);
-int8_t temperature_get_radiators(void);
-
-#ifdef DEBUG
-void temperature_print_address(void);
-#endif
+void Temperature_Init(void);
+void Temperature_StartMeasurement(void);
+int8_t Temperature_GetAmbient(void);
+int8_t Temperature_GetInternal(void);
 
 #endif

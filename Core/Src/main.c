@@ -16,7 +16,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "debug.h"
 #include "emmiters.h"
 #include "temperature.h"
 #include "radio.h"
@@ -97,10 +96,10 @@ int main(void)
   LL_SPI_Enable(SPI1);
 
   // Настройка датчиков температуры;
-  temperature_init();
+  Temperature_Init();
 
   // Настройка радиомодуля; 
-  radio_init();
+  Radio_Init();
 
   /* USER CODE END 2 */
 
@@ -202,8 +201,8 @@ void Error_Handler(void)
    * В случае ошибки на стадии инициализации просто орём пьезобуззером.
    * Вообще, такая ситуация крайне маловероятна, но ... бла бла бла...
    */
-  led_set(0);
-  buzzer_set(1);
+  Led_SetState(0);
+  Buzzer_SetState(1);
   for (;;)
       ;
   /* USER CODE END Error_Handler_Debug */
