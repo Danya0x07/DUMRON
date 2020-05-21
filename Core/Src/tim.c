@@ -213,7 +213,7 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 } 
 
 /* USER CODE BEGIN 1 */
-void delay_us(uint16_t us)
+void delay_us(unsigned int us)
 {
     LL_TIM_SetCounter(TIM3, 0);
     while (LL_TIM_GetCounter(TIM3) < us)

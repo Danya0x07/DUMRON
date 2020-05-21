@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Библиотека DS18B20 для микрононтроллеров: Файл ds18b20.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Библиотека DS18B20 для микрононтроллеров
+   &#160;<span id="projectnumber">0.1.0</span>
+   </div>
+   <div id="projectbrief">простая как угол дома</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('ds18b20_8h.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Структуры данных</a> &#124;
+<a href="#enum-members">Перечисления</a> &#124;
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle">
+<div class="title">Файл ds18b20.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Драйвер температурных датчиков DS18B20.  
+<a href="#details">Подробнее...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Граф включаемых заголовочных файлов для ds18b20.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="ds18b20_8h__incl.png" border="0" usemap="#ds18b20_8h" alt=""/></div>
+<map name="ds18b20_8h" id="ds18b20_8h">
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+Граф файлов, в которые включается этот файл:</div>
+<div class="dyncontent">
+<div class="center"><img src="ds18b20_8h__dep__incl.png" border="0" usemap="#ds18b20_8hdep" alt=""/></div>
+<map name="ds18b20_8hdep" id="ds18b20_8hdep">
+</map>
+</div>
+</div>
+<p><a href="ds18b20_8h_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Структуры данных</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structds18b20__config.html">ds18b20_config</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Структура настроек датчика.  <a href="structds18b20__config.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Макросы</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Статусы успешности операций с датчиками.</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><dl class="section attention"><dt>Внимание</dt><dd>Функционал проверки CRC ещё не реализован. </dd></dl>
+</div></td></tr>
+<tr class="memitem:a0fe4c904641c1a8bb5cdb738442b2f02"><td class="memItemLeft" align="right" valign="top"><a id="a0fe4c904641c1a8bb5cdb738442b2f02"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_OK</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:a0fe4c904641c1a8bb5cdb738442b2f02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30d8e479d6d790464c5262e093b5421d"><td class="memItemLeft" align="right" valign="top"><a id="a30d8e479d6d790464c5262e093b5421d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_ABSENSE</b>&#160;&#160;&#160;(-1)</td></tr>
+<tr class="separator:a30d8e479d6d790464c5262e093b5421d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae807bdba659a34d5d86af568ede0b456"><td class="memItemLeft" align="right" valign="top"><a id="ae807bdba659a34d5d86af568ede0b456"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_BUSY</b>&#160;&#160;&#160;(-2)</td></tr>
+<tr class="separator:ae807bdba659a34d5d86af568ede0b456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa16b9fc9c06c32d21eabff739fddb6c1"><td class="memItemLeft" align="right" valign="top"><a id="aa16b9fc9c06c32d21eabff739fddb6c1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_CRC_MISMATCH</b>&#160;&#160;&#160;(-3)</td></tr>
+<tr class="separator:aa16b9fc9c06c32d21eabff739fddb6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Длительности процесса измерения для различных разрешений</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>в миллисекундах. </p>
+</div></td></tr>
+<tr class="memitem:a5f8bd6d4ce7f65fbf189f107699cacb6"><td class="memItemLeft" align="right" valign="top"><a id="a5f8bd6d4ce7f65fbf189f107699cacb6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_MEASURE_TIME_MS_9BIT</b>&#160;&#160;&#160;(94)</td></tr>
+<tr class="separator:a5f8bd6d4ce7f65fbf189f107699cacb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5ac0205955075fce392eb60d304f7d4"><td class="memItemLeft" align="right" valign="top"><a id="ab5ac0205955075fce392eb60d304f7d4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_MEASURE_TIME_MS_10BIT</b>&#160;&#160;&#160;(188)</td></tr>
+<tr class="separator:ab5ac0205955075fce392eb60d304f7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12af6e8f729b92e1cc785232e50402b"><td class="memItemLeft" align="right" valign="top"><a id="ab12af6e8f729b92e1cc785232e50402b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_MEASURE_TIME_MS_11BIT</b>&#160;&#160;&#160;(375)</td></tr>
+<tr class="separator:ab12af6e8f729b92e1cc785232e50402b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad593cc59c36028788aa38d1ddf288b69"><td class="memItemLeft" align="right" valign="top"><a id="ad593cc59c36028788aa38d1ddf288b69"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DS18B20_MEASURE_TIME_MS_12BIT</b>&#160;&#160;&#160;(750)</td></tr>
+<tr class="separator:ad593cc59c36028788aa38d1ddf288b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Перечисления</h2></td></tr>
+<tr class="memitem:af0a4e8b10a2f59b531eb057a07fcb6d5"><td class="memItemLeft" align="right" valign="top"><a id="af0a4e8b10a2f59b531eb057a07fcb6d5"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5">ds18b20_resolution</a> { <b>DS18B20_RESOLUTION_9BIT</b> = 0x1F, 
+<b>DS18B20_RESOLUTION_10BIT</b> = 0x3F, 
+<b>DS18B20_RESOLUTION_11BIT</b> = 0x5F, 
+<b>DS18B20_RESOLUTION_12BIT</b> = 0x7F
+ }<tr class="memdesc:af0a4e8b10a2f59b531eb057a07fcb6d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возможные разрешения значения температуры. <br /></td></tr>
+</td></tr>
+<tr class="separator:af0a4e8b10a2f59b531eb057a07fcb6d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:a51a1bc5e72b12af7e90e01aabf4e61bd"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20_8h.html#a51a1bc5e72b12af7e90e01aabf4e61bd">ds18b20_check_presense</a> (void)</td></tr>
+<tr class="memdesc:a51a1bc5e72b12af7e90e01aabf4e61bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отправляет импульс перезагрузки по линии 1-Wire.  <a href="#a51a1bc5e72b12af7e90e01aabf4e61bd">Подробнее...</a><br /></td></tr>
+<tr class="separator:a51a1bc5e72b12af7e90e01aabf4e61bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a965d76fe92c64cb9349b57a2f8ec05bb"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20_8h.html#a965d76fe92c64cb9349b57a2f8ec05bb">ds18b20_read_address</a> (uint8_t address[8])</td></tr>
+<tr class="memdesc:a965d76fe92c64cb9349b57a2f8ec05bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Считывает адрес датчика на линии.  <a href="#a965d76fe92c64cb9349b57a2f8ec05bb">Подробнее...</a><br /></td></tr>
+<tr class="separator:a965d76fe92c64cb9349b57a2f8ec05bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18032c476bbe10481964c0c47eb50d11"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20_8h.html#a18032c476bbe10481964c0c47eb50d11">ds18b20_configure</a> (const uint8_t *address, const struct <a class="el" href="structds18b20__config.html">ds18b20_config</a> *config)</td></tr>
+<tr class="memdesc:a18032c476bbe10481964c0c47eb50d11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает настройки в DS18B20.  <a href="#a18032c476bbe10481964c0c47eb50d11">Подробнее...</a><br /></td></tr>
+<tr class="separator:a18032c476bbe10481964c0c47eb50d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a083093a48dbb33463a16aa16237c0fed"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20_8h.html#a083093a48dbb33463a16aa16237c0fed">ds18b20_start_measurement</a> (const uint8_t *address)</td></tr>
+<tr class="memdesc:a083093a48dbb33463a16aa16237c0fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запускает измерение температуры.  <a href="#a083093a48dbb33463a16aa16237c0fed">Подробнее...</a><br /></td></tr>
+<tr class="separator:a083093a48dbb33463a16aa16237c0fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d588b6b1d8b12d76d6eeb611257779"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20_8h.html#a75d588b6b1d8b12d76d6eeb611257779">ds18b20_get_result</a> (const uint8_t *address, int32_t *result)</td></tr>
+<tr class="memdesc:a75d588b6b1d8b12d76d6eeb611257779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Считывает результат измерения температуры.  <a href="#a75d588b6b1d8b12d76d6eeb611257779">Подробнее...</a><br /></td></tr>
+<tr class="separator:a75d588b6b1d8b12d76d6eeb611257779"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44aaec53cd8eda5f80ed976333fa2bd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20_8h.html#a44aaec53cd8eda5f80ed976333fa2bd9">ds18b20_parse_result</a> (int32_t result, int8_t *integer, uint16_t *fractional)</td></tr>
+<tr class="memdesc:a44aaec53cd8eda5f80ed976333fa2bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Парсит результат измерения на целую и дробную части.  <a href="#a44aaec53cd8eda5f80ed976333fa2bd9">Подробнее...</a><br /></td></tr>
+<tr class="separator:a44aaec53cd8eda5f80ed976333fa2bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Драйвер температурных датчиков DS18B20. </p>
+<dl class="section author"><dt>Автор</dt><dd>Danya0x07</dd></dl>
+<p>На текущий момент поддерживается работа только с одной линией 1-Wire.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Необходимо сделать:</a></b></dt><dd><p class="startdd">Реализовать проверку контрольной суммы. </p>
+<p>Реализовать динамический поиск датчиков на линии. </p>
+<p class="enddd">Реализовать поиск датчиков по тревоге (Alarm search). </p>
+</dd></dl>
+</div><h2 class="groupheader">Функции</h2>
+<a id="a51a1bc5e72b12af7e90e01aabf4e61bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51a1bc5e72b12af7e90e01aabf4e61bd">&#9670;&nbsp;</a></span>ds18b20_check_presense()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t ds18b20_check_presense </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отправляет импульс перезагрузки по линии 1-Wire. </p>
+<p>Предполагается, что данная функция будет использоваться в качестве проверки до вызова остальных API-функций обращения с датчиками.</p>
+<dl class="section return"><dt>Возвращает</dt><dd><code>DS18B20_OK</code>, если был получен импульс присутствия от датчиков, </dd>
+<dd>
+<code>DS18B20_ABSENSE</code>, если не был получен импульс присутствия. </dd></dl>
+
+</div>
+</div>
+<a id="a18032c476bbe10481964c0c47eb50d11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18032c476bbe10481964c0c47eb50d11">&#9670;&nbsp;</a></span>ds18b20_configure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t ds18b20_configure </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const struct <a class="el" href="structds18b20__config.html">ds18b20_config</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Записывает настройки в DS18B20. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>8-байтовый массив с адресом целевого датчика или NULL, если действие относится ко всем датчикам на линии. </td></tr>
+    <tr><td class="paramname">config</td><td>Указатель на структуру с настройками.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>DS18B20_OK</code>, если всё прошло успешно, </dd>
+<dd>
+<code>DS18B20_ABSENSE</code>, если если не был получен импульс присутствия. </dd></dl>
+
+</div>
+</div>
+<a id="a75d588b6b1d8b12d76d6eeb611257779"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75d588b6b1d8b12d76d6eeb611257779">&#9670;&nbsp;</a></span>ds18b20_get_result()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t ds18b20_get_result </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Считывает результат измерения температуры. </p>
+<dl class="section attention"><dt>Внимание</dt><dd>Эту функцию можно вызывать не ранее чем через соответствующее выбранному разрешению температуры время после вызова <code>ds18b20_start_measurement(address)</code>.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>8-байтовый массив с адресом опрашиваемого датчика или NULL, если на линии один единственный датчик. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>Указатель на переменную, в которую будет записан результат измерения.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Результат записывается в градусах Цельсия в "сыром" виде, т.е. 4 младших десятичных разряда отведены под дробную часть. Например, для 10.0625 результат будет 100625, а для -52.5 результат будет -525000.</p>
+<dl class="section return"><dt>Возвращает</dt><dd><code>DS18B20_OK</code>, если всё прошло успешно, </dd>
+<dd>
+<code>DS18B20_ABSENSE</code>, если если не был получен импульс присутствия, </dd>
+<dd>
+<code>DS18B20_CRC_MISMATCH</code> если не совпали контрольные суммы. </dd></dl>
+
+</div>
+</div>
+<a id="a44aaec53cd8eda5f80ed976333fa2bd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44aaec53cd8eda5f80ed976333fa2bd9">&#9670;&nbsp;</a></span>ds18b20_parse_result()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ds18b20_parse_result </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t *&#160;</td>
+          <td class="paramname"><em>integer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>fractional</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Парсит результат измерения на целую и дробную части. </p>
+<p>Вообще, распарсить результат измерения температуры может понадобиться в том случае, если его нужно отобразить на каком-нибудь дисплее, либо если нужна именно целая его часть. Если нужно сравнить результаты измерений, то делать это гораздо удобнее в "сыром" виде.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>Результат измерения, полученный вызовом функции <code>ds18b20_get_result(address, &amp;result)</code> </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">integer</td><td>Указатель на переменную, в которую будет записана целая часть результата *(с учётом знака)*, или NULL, если она не нужна. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">fractional</td><td>Указатель на переменную, в которую будет записана дробная часть результата *(без учёта знака)*, или NULL, если она не нужна.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="ds18b20_8h.html#a75d588b6b1d8b12d76d6eeb611257779" title="Считывает результат измерения температуры. ">ds18b20_get_result(const uint8_t *address, int32_t *result)</a> </dd></dl>
+
+</div>
+</div>
+<a id="a965d76fe92c64cb9349b57a2f8ec05bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a965d76fe92c64cb9349b57a2f8ec05bb">&#9670;&nbsp;</a></span>ds18b20_read_address()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t ds18b20_read_address </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>[8]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Считывает адрес датчика на линии. </p>
+<dl class="section attention"><dt>Внимание</dt><dd>Работает только когда на линии один единственный датчик.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">address</td><td>8-байтовый массив для принимаемого адреса.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>DS18B20_OK</code>, если всё прошло успешно, </dd>
+<dd>
+<code>DS18B20_ABSENSE</code>, если если не был получен импульс присутствия, </dd>
+<dd>
+<code>DS18B20_CRC_MISMATCH</code> если не совпали контрольные суммы. </dd></dl>
+
+</div>
+</div>
+<a id="a083093a48dbb33463a16aa16237c0fed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a083093a48dbb33463a16aa16237c0fed">&#9670;&nbsp;</a></span>ds18b20_start_measurement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t ds18b20_start_measurement </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Запускает измерение температуры. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>8-байтовый массив с адресом целевого датчика или NULL, если действие относится ко всем датчикам на линии.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>DS18B20_OK</code>, если всё прошло успешно, </dd>
+<dd>
+<code>DS18B20_ABSENSE</code>, если если не был получен импульс присутствия, </dd>
+<dd>
+<code>DS18B20_BUSY</code>, если предыдущее измерение ещё в процессе. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="ds18b20_8h.html">ds18b20.h</a></li>
+    <li class="footer">Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>

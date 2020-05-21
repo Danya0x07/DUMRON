@@ -1,136 +1,187 @@
 /**
- * Функции для нискоуровневого взаимодействия
- * с датчиками DS18B20 по шине 1-Wire.
+ * @file
+ * @brief   Реализация драйвера температурных датчиков DS18B20.
  */
-#include "main.h"
-
+#include "ds18b20_conf.h"
 #include "ds18b20.h"
-#include "debug.h"
 
-#define ds_pin_1()      LL_GPIO_SetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
-#define ds_pin_0()      LL_GPIO_ResetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
-#define ds_pin_is_1()   LL_GPIO_IsInputPinSet(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
+enum ds18b20_commands {
+    SEARCH_ROM   = 0xF0,
+    ALARM_SEARCH = 0xEC,
+    READ_ROM   = 0x33,
+    MATCH_ROM  = 0x55,
+    SKIP_ROM   = 0xCC,
+    W_SCRATCHPAD  = 0x4E,
+    R_SCRATCHPAD  = 0XBE,
+    CP_SCRATCHPAD = 0x48,
+    RECALL_E2  = 0xB8,
+    CONVERT_T  = 0x44,
+    R_PWR_SUPPLY  = 0xB4,
+};
 
-static void ds_write_bit(_Bool bit);
-static _Bool ds_read_bit(void);
+struct ds18b20_scratchpad {
+    uint8_t temp_lsb;
+    uint8_t temp_msb;
+    uint8_t temp_lim_h;
+    uint8_t temp_lim_l;
+    uint8_t resolution;
+    uint8_t _reserved1;
+    uint8_t _reserved2;
+    uint8_t _reserved3;
+    uint8_t crc;
+};
 
-/**
- * @brief  Начинает общение с одним из датчиков на линии.
- * @param  address: адрес устройства для начала сеанса связи.
- */
-void ds_select_single(const uint8_t address[8])
+static void onewire_write_bit(uint_fast8_t bit)
 {
-    ds_reset_pulse();
-    ds_write_byte(DS_MATCH_ROM);
-    for (uint_fast8_t i = 0; i < 8; i++)
-        ds_write_byte(address[7 - i]);
-}
-
-/**
- * @brief  Начинает общение со всеми датчиками на линии.
- */
-void ds_select_all(void)
-{
-    ds_reset_pulse();
-    ds_write_byte(DS_SKIP_ROM);
-}
-
-/**
- * @brief  Считывает адрес единственного датчика на линии.
- * @param  address_buff: Буфер для сохранения адреса датчика.
- */
-void ds_get_addr_of_single(uint8_t address_buff[8])
-{
-    ds_reset_pulse();
-    ds_write_byte(DS_READ_ROM);
-    for (uint_fast8_t i = 0; i < 8; i++)
-        address_buff[7 - i] = ds_read_byte();
-}
-
-/**
- * @brief  Записывает настройки в память датчика.
- * @note   Перед этой функцией необходимо вызвать
- *         одну из функций ds_select_*.
- * @param  ds_config: указатель на структуру
- *         с настройками для датчика.
- */
-void ds_write_config(const DsConfig* ds_config)
-{
-    ds_write_byte(DS_W_SCRATCHPAD);
-    ds_write_byte(ds_config->temp_lim_h);
-    ds_write_byte(ds_config->temp_lim_l);
-    ds_write_byte(ds_config->resolution);
-}
-
-/**
- * @brief  Считывает данные из датчика.
- * @note   Перед этой функцией необходимо вызвать
- *         одну из функций ds_select_*.
- * @param  p_odata: указатель на структуру
- *         для принимаемых данных.
- */
-void ds_read_data(DsOutputData* p_odata)
-{
-    ds_write_byte(DS_R_SCRATCHPAD);
-    p_odata->temp_lsb = ds_read_byte();
-    p_odata->temp_msb = ds_read_byte();
-    p_odata->th = ds_read_byte();
-    ds_reset_pulse();
-}
-
-/**
- * @brief  Передаёт байт датчикам по шине 1-Wire.
- * @param  byte: Байт для передачи.
- */
-void ds_write_byte(const uint8_t byte)
-{
-    for (uint_fast8_t i = 0; i < 8; i++)
-        ds_write_bit(byte & (1 << i));
-}
-
-/**
- * @brief  Читает байт от датчиков по шине 1-Wire.
- * @retval Прочитанный байт.
- */
-uint8_t ds_read_byte(void)
-{
-    uint8_t byte = 0;
-    for (uint_fast8_t i = 0; i < 8; i++)
-        byte |= ds_read_bit() << i;
-    return byte;
-}
-
-/**
- * @brief  Отпревляет импульс перезагрузки датчикам по 1-Wire.
- * @retval Ответил ли кто-нибудь из датчиков (0)
- *         или нет(-1).
- */
-int ds_reset_pulse(void)
-{
-    ds_pin_0();
-    delay_us(490);
-    ds_pin_1();
-    delay_us(70);
-    int ds_status = ds_pin_is_1() ? -1 : 0;
-    delay_us(250);
-    return ds_status;
-}
-
-static void ds_write_bit(_Bool bit)
-{
-    ds_pin_0();
+    onewire_pin_0();
     delay_us(bit ? 3 : 65);
-    ds_pin_1();
+    onewire_pin_1();
     delay_us(bit ? 65 : 3);
 }
 
-static _Bool ds_read_bit(void)
+static uint_fast8_t onewire_read_bit(void)
 {
-    ds_pin_0();
+    onewire_pin_0();
     delay_us(2);
-    ds_pin_1();
+    onewire_pin_1();
     delay_us(10);
-    _Bool bit = ds_pin_is_1();
+    uint_fast8_t bit = onewire_pin_is_1();
     delay_us(55);
     return bit;
+}
+
+static void onewire_write_byte(uint8_t byte)
+{
+    for (uint_fast8_t i = 0; i < 8; i++)
+        onewire_write_bit(byte & (1 << i));
+}
+
+static uint8_t onewire_read_byte(void)
+{
+    uint8_t byte = 0;
+    for (uint_fast8_t i = 0; i < 8; i++)
+        byte |= onewire_read_bit() << i;
+    return byte;
+}
+
+static uint_fast8_t onewire_perform_reset(void)
+{
+    onewire_pin_0();
+    delay_us(490);
+    onewire_pin_1();
+    delay_us(70);
+    uint_fast8_t wire_status = onewire_pin_is_1();
+    delay_us(250);
+    return wire_status;
+}
+
+int8_t ds18b20_check_presense(void)
+{
+    uint_fast8_t presense = onewire_perform_reset() == 0;
+    return presense ? DS18B20_OK : DS18B20_ABSENSE;
+}
+
+static int8_t ds18b20_select(const uint8_t *address)
+{
+    int8_t status;
+
+    if ((status = ds18b20_check_presense()) == DS18B20_OK) {
+        if (address) {
+            onewire_write_byte(MATCH_ROM);
+            for (uint_fast8_t i = 0; i < 8; i++)
+                onewire_write_byte(address[7 - i]);
+        } else {
+            onewire_write_byte(SKIP_ROM);
+        }
+    }
+    return status;
+}
+
+int8_t ds18b20_read_address(uint8_t address[8])
+{
+    int8_t status;
+
+    if ((status = ds18b20_check_presense()) == DS18B20_OK) {
+        onewire_write_byte(READ_ROM);
+        for (uint_fast8_t i = 0; i < 8; i++)
+            address[7 - i] = onewire_read_byte();
+    }
+    return status;
+}
+
+int8_t ds18b20_configure(const uint8_t *address,
+                         const struct ds18b20_config *config)
+{
+    int8_t status;
+
+    if ((status = ds18b20_select(address)) == DS18B20_OK) {
+        onewire_write_byte(W_SCRATCHPAD);
+        onewire_write_byte(config->temp_lim_h);
+        onewire_write_byte(config->temp_lim_l);
+        onewire_write_byte(config->resolution);
+    }
+    return status;
+}
+
+int8_t ds18b20_start_measurement(const uint8_t *address)
+{
+    int8_t status;
+
+    if ((status = ds18b20_select(address)) == DS18B20_OK) {
+        onewire_write_byte(CONVERT_T);
+        if (onewire_read_bit() == 0)
+            status = DS18B20_BUSY;
+    }
+    return status;
+}
+
+int8_t ds18b20_get_result(const uint8_t *address, int32_t *result)
+{
+    int8_t status;
+    struct ds18b20_scratchpad scratchpad;
+
+    if ((status = ds18b20_select(address)) == DS18B20_OK) {
+        uint8_t *data = (uint8_t *)&scratchpad;
+        onewire_write_byte(R_SCRATCHPAD);
+        for (uint_fast8_t i = 0; i < sizeof(scratchpad); i++)
+            *data++ = onewire_read_byte();
+
+        int8_t temp_int = ((scratchpad.temp_msb << 4) |
+                           (scratchpad.temp_lsb >> 4)) & 0x7F;
+
+        int8_t temp_sign = (scratchpad.temp_msb & 0x80) ? -1 : 1;
+
+        uint16_t temp_fract = 0;
+        if (scratchpad.temp_lsb & 0x08)
+            temp_fract += 5000;
+        if (scratchpad.temp_lsb & 0x04)
+            temp_fract += 2500;
+        if (scratchpad.temp_lsb & 0x02)
+            temp_fract += 1250;
+        if (scratchpad.temp_lsb & 0x01)
+            temp_fract += 625;
+
+        *result = temp_sign * ((int32_t)temp_int * 10000 + temp_fract);
+    }
+    return status;
+}
+
+void ds18b20_parse_result(int32_t result, int8_t *integer,
+                          uint16_t *fractional)
+{
+    int32_t result_abs, integer_abs;
+    int8_t tmp_integer = result / 10000;
+
+    if (result < 0) {
+        result_abs = -result;
+        integer_abs = -tmp_integer;
+    } else {
+        result_abs = result;
+        integer_abs = tmp_integer;
+    }
+
+    if (integer)
+        *integer = tmp_integer;
+    if (fractional)
+        *fractional = result_abs - integer_abs * 10000;
 }

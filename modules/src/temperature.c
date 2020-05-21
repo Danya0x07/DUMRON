@@ -1,34 +1,34 @@
 #include "temperature.h"
 #include "ds18b20/ds18b20.h"
 
-static const uint8_t internalSensorAddress[8] = {
-        0x8E, 0x01, 0x14, 0x48, 0xB1, 0xCE, 0xAA, 0x28};
-static const uint8_t ambientSensorAddress[8] = {
-        0xEF, 0x03, 0x14, 0x97, 0x79, 0xA7, 0x0A, 0x28};
+static const uint8_t internalSensorAddress[8] =
+        {0x8E, 0x01, 0x14, 0x48, 0xB1, 0xCE, 0xAA, 0x28};
+static const uint8_t ambientSensorAddress[8] =
+        {0xEF, 0x03, 0x14, 0x97, 0x79, 0xA7, 0x0A, 0x28};
 
-static int8_t Temperature_Get(const uint8_t sensorAddress[8])
+static int8_t Temperature_Get(const uint8_t *sensorAddress)
 {
-    DsOutputData data;
-    ds_select_single(sensorAddress);
-    ds_read_data(&data);
-    return (int8_t)((data.temp_msb << 4) | (data.temp_lsb >> 4));
+    int32_t result;
+    int8_t res_integer;
+    ds18b20_get_result(sensorAddress, &result);
+    ds18b20_parse_result(result, &res_integer, NULL);
+    return res_integer;
 }
 
 void Temperature_Init(void)
 {
-    DsConfig config = {
+    struct ds18b20_config config = {
         .temp_lim_h = 80,
         .temp_lim_l = 10,
-        .resolution = DS_RESOLUTION_9BIT
+        .resolution = DS18B20_RESOLUTION_9BIT
     };
-    ds_select_all();
-    ds_write_config(&config);
+
+    ds18b20_configure(NULL, &config);
 }
 
 void Temperature_StartMeasurement(void)
 {
-    ds_select_all();
-    ds_start_measuring();
+    ds18b20_start_measurement(NULL);
 }
 
 int8_t Temperature_GetAmbient(void)

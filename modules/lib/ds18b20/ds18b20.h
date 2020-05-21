@@ -1,70 +1,154 @@
 /**
- * Интерфейс для взаимодействия с датчиками DS18B20.
+ * @file
+ * @brief   Драйвер температурных датчиков DS18B20.
+ * @author  Danya0x07
+ *
+ * На текущий момент поддерживается работа только с одной линией 1-Wire.
+ *
+ * @todo    Реализовать проверку контрольной суммы.
+ * @todo    Реализовать динамический поиск датчиков на линии.
+ * @todo    Реализовать поиск датчиков по тревоге (Alarm search).
  */
+
 #ifndef DS18B20_H_INCLUDED
 #define DS18B20_H_INCLUDED
 
 #include <stdint.h>
-
-/* Команды датчика */
-typedef enum {
-    DS_SEARCH_ROM = 0xF0,  // Провести цикл идентификации всех датчиков на линии.
-    DS_READ_ROM   = 0x33,  // Считать адрес датчика (применимо когда датчик один на линии).
-    DS_MATCH_ROM  = 0x55,  // Обратиться к конкретному датчику по его адресу.
-    DS_SKIP_ROM   = 0xCC,  // Обратиться ко всем датчикам на линии
-    DS_CONVERT_TEMP  = 0x44,  // Запустить преобразование температуры.
-    DS_W_SCRATCHPAD  = 0x4E,  // Записать настройки в память датчика.
-    DS_R_SCRATCHPAD  = 0XBE,  // Считать память датчика.
-    DS_CP_SCRATCHPAD = 0x48,  // Скопировать настройки датчика в его EEPROM.
-    DS_ALARM_SEARCH  = 0xEC,  // Провести цикл идентификации датчиков, у которых установден флаг тревоги.
-    DS_R_PWR_SUPPLY  = 0xB4,  // Проверить датчики на использование паразитного питания.
-    DS_RECALL_E2 = 0xB8,  // Восстановить сохранённые настройки датчика из его EEPROM.
-} DsCommands;
-
-/* Разрешения значения температуры */
-typedef enum {
-    DS_RESOLUTION_9BIT  = 0x1F,
-    DS_RESOLUTION_10BIT = 0x3F,
-    DS_RESOLUTION_11BIT = 0x5F,
-    DS_RESOLUTION_12BIT = 0x7F
-} DsResulution;
+#include <stddef.h>
 
 /**
- * Структура, описывающая настройки датчика,
- * которые могут быть установлены пользователем.
+ * @brief Возможные разрешения значения температуры.
  */
-typedef struct {
-    uint8_t temp_lim_h;
-    uint8_t temp_lim_l;
-    DsResulution resolution;
-} DsConfig;
+enum ds18b20_resolution {
+    DS18B20_RESOLUTION_9BIT  = 0x1F,
+    DS18B20_RESOLUTION_10BIT = 0x3F,
+    DS18B20_RESOLUTION_11BIT = 0x5F,
+    DS18B20_RESOLUTION_12BIT = 0x7F
+};
 
 /**
- * Структура, описывающая выходные данные с датчика.
- * Помимо двух байтов с температурой, из того, что
- * может интересоввать пользователя, датчик ещё
- * выдаёт девятым байтом контрольную сумму для
- * предыдущих восьми, но функционал её проверки
- * ещё не реализован.
+ * @brief   Структура настроек датчика.
  */
-typedef struct {
-    uint8_t temp_lsb;
-    uint8_t temp_msb;
-    uint8_t th;
-} DsOutputData;
+struct ds18b20_config {
+    uint8_t temp_lim_h;  ///< Верхняя температурная граница.
+    uint8_t temp_lim_l;  ///< Нижняя температурная граница.
+    enum ds18b20_resolution resolution;  ///< Разрешение значения температуры.
+};
 
-void ds_select_all(void);
-void ds_select_single(const uint8_t address[8]);
-void ds_get_addr_of_single(uint8_t address_buff[8]);
+/**
+ * @name    Статусы успешности операций с датчиками.
+ * @attention   Функционал проверки CRC ещё не реализован.
+ * @{
+ */
+#define DS18B20_OK      (0)
+#define DS18B20_ABSENSE (-1)
+#define DS18B20_BUSY    (-2)
+#define DS18B20_CRC_MISMATCH    (-3)
+/** @} */
 
-void ds_write_config(const DsConfig*);
-void ds_read_data(DsOutputData*);
+/**
+ * @name    Длительности процесса измерения для различных разрешений
+ * @details в миллисекундах.
+ * @{
+ */
+#define DS18B20_MEASURE_TIME_MS_9BIT    (94)
+#define DS18B20_MEASURE_TIME_MS_10BIT   (188)
+#define DS18B20_MEASURE_TIME_MS_11BIT   (375)
+#define DS18B20_MEASURE_TIME_MS_12BIT   (750)
+/** @} */
 
-int ds_reset_pulse(void);
-void ds_write_byte(const uint8_t);
-uint8_t ds_read_byte(void);
+/**
+ * @brief   Отправляет импульс перезагрузки по линии 1-Wire
+ *
+ * Предполагается, что данная функция будет использоваться в качестве проверки
+ * до вызова остальных API-функций обращения с датчиками.
+ *
+ * @return  `DS18B20_OK`, если был получен импульс присутствия от датчиков,
+ * @return  `DS18B20_ABSENSE`, если не был получен импульс присутствия.
+ */
+int8_t ds18b20_check_presense(void);
 
-#define ds_start_measuring()  ds_write_byte(DS_CONVERT_TEMP)
-#define ds_measure_delay()    delay_us(800)
+/**
+ * @brief   Считывает адрес датчика на линии.
+ * @attention   Работает только когда на линии один единственный датчик.
+ *
+ * @param[out] address  8-байтовый массив для принимаемого адреса.
+ *
+ * @return  `DS18B20_OK`, если всё прошло успешно,
+ * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия,
+ * @return  `DS18B20_CRC_MISMATCH` если не совпали контрольные суммы.
+ */
+int8_t ds18b20_read_address(uint8_t address[8]);
 
-#endif
+/**
+ * @brief   Записывает настройки в DS18B20.
+ *
+ * @param address   8-байтовый массив с адресом целевого датчика
+ *                  или NULL, если действие относится ко всем датчикам на линии.
+ * @param config    Указатель на структуру с настройками.
+ *
+ * @return  `DS18B20_OK`, если всё прошло успешно,
+ * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия.
+ */
+int8_t ds18b20_configure(const uint8_t *address,
+                         const struct ds18b20_config *config);
+
+/**
+ * @brief   Запускает измерение температуры.
+ *
+ * @param address   8-байтовый массив с адресом целевого датчика
+ *                  или NULL, если действие относится ко всем датчикам на линии.
+ *
+ * @return  `DS18B20_OK`, если всё прошло успешно,
+ * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия,
+ * @return  `DS18B20_BUSY`, если предыдущее измерение ещё в процессе.
+ */
+int8_t ds18b20_start_measurement(const uint8_t *address);
+
+/**
+ * @brief   Считывает результат измерения температуры.
+ *
+ * @attention   Эту функцию можно вызывать не ранее чем через
+ *              соответствующее выбранному разрешению температуры
+ *              время после вызова @c ds18b20_start_measurement(address).
+ *
+ * @param[in] address   8-байтовый массив с адресом опрашиваемого датчика
+ *                      или NULL, если на линии один единственный датчик.
+ * @param[out] result   Указатель на переменную, в которую будет записан
+ *                      результат измерения.
+ *
+ * Результат записывается в градусах Цельсия в "сыром" виде,
+ * т.е. 4 младших десятичных разряда отведены под дробную часть.
+ * Например, для 10.0625 результат будет 100625,
+ * а для -52.5 результат будет -525000.
+ *
+ * @return  `DS18B20_OK`, если всё прошло успешно,
+ * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия,
+ * @return  `DS18B20_CRC_MISMATCH` если не совпали контрольные суммы.
+ */
+int8_t ds18b20_get_result(const uint8_t *address, int32_t *result);
+
+/**
+ * @brief   Парсит результат измерения на целую и дробную части.
+ *
+ * Вообще, распарсить результат измерения температуры может понадобиться
+ * в том случае, если его нужно отобразить на каком-нибудь дисплее,
+ * либо если нужна именно целая его часть.
+ * Если нужно сравнить результаты измерений, то делать это гораздо удобнее
+ * в "сыром" виде.
+ *
+ * @param[in] result    Результат измерения, полученный вызовом функции
+ *                      @c ds18b20_get_result(address, &result)
+ * @param[out] integer      Указатель на переменную, в которую будет записана
+ *                          целая часть результата *(с учётом знака)*, или NULL,
+ *                          если она не нужна.
+ * @param[out] fractional   Указатель на переменную, в которую будет записана
+ *                          дробная часть результата *(без учёта знака)*,
+ *                          или NULL,  если она не нужна.
+ *
+ * @see ds18b20_get_result(const uint8_t *address, int32_t *result)
+ */
+void ds18b20_parse_result(int32_t result, int8_t *integer,
+                          uint16_t *fractional);
+
+#endif  /* DS18B20_H_INCLUDED */

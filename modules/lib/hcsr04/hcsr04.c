@@ -1,16 +1,16 @@
-#include <hcsr04/hcsr04.h>
 #include "main.h"
+#include "hcsr04.h"
 
-#define TRIGGER_PULSE_WIDTH    12
-#define ECHO_RESPONSE_TIMEOUT  500
-#define MAX_ECHO_PULSE_WIDTH   11600
+#define TRIGGER_PULSE_WIDTH_US    12
+#define ECHO_RESPONSE_TIMEOUT_US  500
+#define MAX_ECHO_PULSE_WIDTH_US   11600
 
 #define sonar_trig_1()     LL_GPIO_SetOutputPin(SONAR_GPIO_Port, SONAR_TRIG_Pin)
 #define sonar_trig_0()     LL_GPIO_ResetOutputPin(SONAR_GPIO_Port, SONAR_TRIG_Pin)
 #define sonar_echo_is_1()  LL_GPIO_IsInputPinSet(SONAR_GPIO_Port, SONAR_ECHO_Pin)
 
-#define sonar_timer_reset()  LL_TIM_SetCounter(TIM3, 0)
-#define sonar_timer_get()    LL_TIM_GetCounter(TIM3)
+#define tim_us_reset_counter()  LL_TIM_SetCounter(TIM3, 0)
+#define tim_us_get_counter()    LL_TIM_GetCounter(TIM3)
 
 /**
  * @brief  Опрашивает дальномер.
@@ -19,13 +19,13 @@
 uint16_t hcsr04_measure(void)
 {
     sonar_trig_1();
-    delay_us(TRIGGER_PULSE_WIDTH);
+    delay_us(TRIGGER_PULSE_WIDTH_US);
     sonar_trig_0();
-    sonar_timer_reset();
-    while (!sonar_echo_is_1() && sonar_timer_get() < ECHO_RESPONSE_TIMEOUT)
+    tim_us_reset_counter();
+    while (!sonar_echo_is_1() && tim_us_get_counter() < ECHO_RESPONSE_TIMEOUT_US)
         ;
-    sonar_timer_reset();
-    while (sonar_echo_is_1() && sonar_timer_get() < MAX_ECHO_PULSE_WIDTH)
+    tim_us_reset_counter();
+    while (sonar_echo_is_1() && tim_us_get_counter() < MAX_ECHO_PULSE_WIDTH_US)
         ;
-    return sonar_timer_get() / 58;
+    return tim_us_get_counter() / 58;
 }

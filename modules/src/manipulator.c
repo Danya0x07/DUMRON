@@ -16,24 +16,23 @@
 #define CLAW_MAX_PULSE   270
 #define CLAW_PULSE_FADE  3
 
-static ArmDirection_e armServoDirection = ARM_STOP;
-static ClawDirection_e clawServoDirection = CLAW_STOP;
+static ArmDirection_e armDirection = ARM_STOP;
+static ClawDirection_e clawDirection = CLAW_STOP;
 
 static void ArmMove(ArmDirection_e direction);
 static void ClawMove(ClawDirection_e direction);
 static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval);
 
-void Manipulator_SetDirections(ArmDirection_e armDir,
-                               ClawDirection_e clawDir)
+void Manipulator_SetDirections(ArmDirection_e armDir, ClawDirection_e clawDir)
 {
-    armServoDirection = armDir;
-    clawServoDirection = clawDir;
+    armDirection = armDir;
+    clawDirection = clawDir;
 }
 
 void Manipulator_Move(void)
 {
-    ArmMove(armServoDirection);
-    ClawMove(clawServoDirection);
+    ArmMove(armDirection);
+    ClawMove(clawDirection);
 }
 
 static void ArmMove(ArmDirection_e direction)

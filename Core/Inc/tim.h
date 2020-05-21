@@ -45,7 +45,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 /* USER CODE BEGIN Prototypes */
 
 /** Функция микросекундной задержки на таймере 3. */
-void delay_us(uint16_t);
+void delay_us(unsigned int);
 
 /* USER CODE END Prototypes */
 
