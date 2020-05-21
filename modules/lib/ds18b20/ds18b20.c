@@ -81,6 +81,18 @@ int8_t ds18b20_check_presense(void)
     return presense ? DS18B20_OK : DS18B20_ABSENSE;
 }
 
+int8_t ds18b20_read_address(uint8_t address[8])
+{
+    int8_t status;
+
+    if ((status = ds18b20_check_presense()) == DS18B20_OK) {
+        onewire_write_byte(READ_ROM);
+        for (uint_fast8_t i = 0; i < 8; i++)
+            address[i] = onewire_read_byte();
+    }
+    return status;
+}
+
 static int8_t ds18b20_select(const uint8_t *address)
 {
     int8_t status;
@@ -89,22 +101,10 @@ static int8_t ds18b20_select(const uint8_t *address)
         if (address) {
             onewire_write_byte(MATCH_ROM);
             for (uint_fast8_t i = 0; i < 8; i++)
-                onewire_write_byte(address[7 - i]);
+                onewire_write_byte(address[i]);
         } else {
             onewire_write_byte(SKIP_ROM);
         }
-    }
-    return status;
-}
-
-int8_t ds18b20_read_address(uint8_t address[8])
-{
-    int8_t status;
-
-    if ((status = ds18b20_check_presense()) == DS18B20_OK) {
-        onewire_write_byte(READ_ROM);
-        for (uint_fast8_t i = 0; i < 8; i++)
-            address[7 - i] = onewire_read_byte();
     }
     return status;
 }
