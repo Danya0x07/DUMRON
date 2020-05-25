@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['r_5fregister',['R_REGISTER',['../nrf24l01_8c.html#a59b355f41a60fb19c53a2ae903691821aced8435babe885607301881f73d86e3b',1,'nrf24l01.c']]],
+  ['r_5frx_5fpayload',['R_RX_PAYLOAD',['../nrf24l01_8c.html#a59b355f41a60fb19c53a2ae903691821aa81ef1916a0c2318c10448bf80cb2050',1,'nrf24l01.c']]],
+  ['r_5frx_5fpl_5fwid',['R_RX_PL_WID',['../nrf24l01_8c.html#a59b355f41a60fb19c53a2ae903691821af4aa594796afebbdf04e03ae9fed96ad',1,'nrf24l01.c']]],
+  ['reuse_5ftx_5fpl',['REUSE_TX_PL',['../nrf24l01_8c.html#a59b355f41a60fb19c53a2ae903691821a395c5ba291f82aa352bb6c723f4a7c4a',1,'nrf24l01.c']]],
+  ['rf_5fch',['RF_CH',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea4b2de80b2b609658cd2f30bc623f38f3',1,'nrf24l01.c']]],
+  ['rf_5fsetup',['RF_SETUP',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea45592edb2294a6b0c9a0795666c26344',1,'nrf24l01.c']]],
+  ['rpd_5fcd',['RPD_CD',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea10f8b59eb6ab071e813f996dbbdce11f',1,'nrf24l01.c']]],
+  ['rx_5faddr_5fp0',['RX_ADDR_P0',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea4622766d6569e423552747e785579a1d',1,'nrf24l01.c']]],
+  ['rx_5faddr_5fp1',['RX_ADDR_P1',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea43f5813341b61953a4ebb46a132ff91e',1,'nrf24l01.c']]],
+  ['rx_5faddr_5fp2',['RX_ADDR_P2',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163eaf18ce3d8a17ed09938d35c0aa57ffdd2',1,'nrf24l01.c']]],
+  ['rx_5faddr_5fp3',['RX_ADDR_P3',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea0e1be4f609973931224d31a100f713ae',1,'nrf24l01.c']]],
+  ['rx_5faddr_5fp4',['RX_ADDR_P4',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ead9a7bc9dd4d733ea7583820d25bce5ec',1,'nrf24l01.c']]],
+  ['rx_5faddr_5fp5',['RX_ADDR_P5',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163eaf01a5ec916c55df55a9bd2a05e9371b9',1,'nrf24l01.c']]],
+  ['rx_5fpw_5fp0',['RX_PW_P0',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea334b59bbb849f7c0fd108b62e8169eb8',1,'nrf24l01.c']]],
+  ['rx_5fpw_5fp1',['RX_PW_P1',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163eac00f0e9797fdb68bda74eab3be9adb0e',1,'nrf24l01.c']]],
+  ['rx_5fpw_5fp2',['RX_PW_P2',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163eae7de0bc91c69460173ffd9686d04dd6e',1,'nrf24l01.c']]],
+  ['rx_5fpw_5fp3',['RX_PW_P3',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea33911e502abdf45728c853faea5eefac',1,'nrf24l01.c']]],
+  ['rx_5fpw_5fp4',['RX_PW_P4',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea5cfdad64b8da97c53bb47bfda30864be',1,'nrf24l01.c']]],
+  ['rx_5fpw_5fp5',['RX_PW_P5',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea9839f29511f7a3c81a2cfca86f691a93',1,'nrf24l01.c']]]
+];

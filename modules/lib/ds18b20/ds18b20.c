@@ -34,19 +34,19 @@ struct ds18b20_scratchpad {
 static void onewire_write_bit(uint_fast8_t bit)
 {
     onewire_pin_0();
-    delay_us(bit ? 3 : 65);
+    onewire_delay_us(bit ? 3 : 65);
     onewire_pin_1();
-    delay_us(bit ? 65 : 3);
+    onewire_delay_us(bit ? 65 : 3);
 }
 
 static uint_fast8_t onewire_read_bit(void)
 {
     onewire_pin_0();
-    delay_us(2);
+    onewire_delay_us(2);
     onewire_pin_1();
-    delay_us(10);
+    onewire_delay_us(10);
     uint_fast8_t bit = onewire_pin_is_1();
-    delay_us(55);
+    onewire_delay_us(55);
     return bit;
 }
 
@@ -67,11 +67,11 @@ static uint8_t onewire_read_byte(void)
 static uint_fast8_t onewire_perform_reset(void)
 {
     onewire_pin_0();
-    delay_us(490);
+    onewire_delay_us(490);
     onewire_pin_1();
-    delay_us(70);
+    onewire_delay_us(70);
     uint_fast8_t wire_status = onewire_pin_is_1();
-    delay_us(250);
+    onewire_delay_us(250);
     return wire_status;
 }
 

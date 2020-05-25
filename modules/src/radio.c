@@ -1,5 +1,5 @@
+#include <nrf24l01/nrf24l01.h>
 #include "radio.h"
-#include "nrf24l01p/nrf24l01p.h"
 #include "debug.h"
 
 #define delay_ms(ms)    HAL_Delay((ms))  // временное решение
