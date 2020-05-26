@@ -24,7 +24,8 @@ var menudata={children:[
 {text:"s",url:"globals.html#index_s"},
 {text:"t",url:"globals.html#index_t"},
 {text:"w",url:"globals.html#index_w"}]},
-{text:"Функции",url:"globals_func.html"},
+{text:"Функции",url:"globals_func.html",children:[
+{text:"n",url:"globals_func.html#index_n"}]},
 {text:"Перечисления",url:"globals_enum.html"},
 {text:"Элементы перечислений",url:"globals_eval.html",children:[
 {text:"c",url:"globals_eval.html#index_c"},

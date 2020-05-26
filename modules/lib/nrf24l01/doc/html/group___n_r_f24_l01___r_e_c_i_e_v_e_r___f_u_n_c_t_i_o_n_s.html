@@ -98,6 +98,15 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___r_e_c_i_e_v_e_r_
 <tr class="memitem:ga855f6bdb7bb8b504b366efa28743ea3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga855f6bdb7bb8b504b366efa28743ea3f">nrf24l01_rx_setup_pipe</a> (struct <a class="el" href="structnrf24l01__pipe__config.html">nrf24l01_pipe_config</a> *config)</td></tr>
 <tr class="memdesc:ga855f6bdb7bb8b504b366efa28743ea3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Включает и настраивает входящее соединение.  <a href="#ga855f6bdb7bb8b504b366efa28743ea3f">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga855f6bdb7bb8b504b366efa28743ea3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga857f18ce512b5e081e40b5fe4c88fc9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga857f18ce512b5e081e40b5fe4c88fc9f">nrf24l01_rx_start_listening</a> (void)</td></tr>
+<tr class="memdesc:ga857f18ce512b5e081e40b5fe4c88fc9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Включает прослушивание эфира на предмет валидных пакетов.  <a href="#ga857f18ce512b5e081e40b5fe4c88fc9f">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga857f18ce512b5e081e40b5fe4c88fc9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga881e6619382637d1c59e5c8570be465f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga881e6619382637d1c59e5c8570be465f">nrf24l01_rx_stop_listening</a> (void)</td></tr>
+<tr class="memdesc:ga881e6619382637d1c59e5c8570be465f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает прослушивание эфира на предмет валидных пакетов.  <a href="#ga881e6619382637d1c59e5c8570be465f">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga881e6619382637d1c59e5c8570be465f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5bfdb3a0e33e5a31518063f36c43adfb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga5bfdb3a0e33e5a31518063f36c43adfb">nrf24l01_rx_get_pld_pipe_no</a> (void)</td></tr>
+<tr class="memdesc:ga5bfdb3a0e33e5a31518063f36c43adfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получает номер соединения, полезная нагрузка для которого находится первой в очереди приёма.  <a href="#ga5bfdb3a0e33e5a31518063f36c43adfb">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga5bfdb3a0e33e5a31518063f36c43adfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8ed83848875eef028695f1012b0d5413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga8ed83848875eef028695f1012b0d5413">nrf24l01_rx_write_ack_pld</a> (enum <a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587b">nrf24l01_pipe_number</a> pipeno, const void *pld, uint8_t size)</td></tr>
 <tr class="memdesc:ga8ed83848875eef028695f1012b0d5413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает в очередь полезную нагрузку, для отправки вместе с пакетом автоподтверждения.  <a href="#ga8ed83848875eef028695f1012b0d5413">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga8ed83848875eef028695f1012b0d5413"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,6 +169,29 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___r_e_c_i_e_v_e_r_
 
 </div>
 </div>
+<a id="ga5bfdb3a0e33e5a31518063f36c43adfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5bfdb3a0e33e5a31518063f36c43adfb">&#9670;&nbsp;</a></span>nrf24l01_rx_get_pld_pipe_no()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nrf24l01_rx_get_pld_pipe_no </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Получает номер соединения, полезная нагрузка для которого находится первой в очереди приёма. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Номер соединения из <a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587b">nrf24l01_pipe_number</a>, </dd>
+<dd>
+-1, если очередь приёма пуста. </dd></dl>
+
+</div>
+</div>
 <a id="ga855f6bdb7bb8b504b366efa28743ea3f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga855f6bdb7bb8b504b366efa28743ea3f">&#9670;&nbsp;</a></span>nrf24l01_rx_setup_pipe()</h2>
 
@@ -183,6 +215,47 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___r_e_c_i_e_v_e_r_
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga857f18ce512b5e081e40b5fe4c88fc9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga857f18ce512b5e081e40b5fe4c88fc9f">&#9670;&nbsp;</a></span>nrf24l01_rx_start_listening()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf24l01_rx_start_listening </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Включает прослушивание эфира на предмет валидных пакетов. </p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga881e6619382637d1c59e5c8570be465f" title="Выключает прослушивание эфира на предмет валидных пакетов. ">nrf24l01_rx_stop_listening()</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga881e6619382637d1c59e5c8570be465f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga881e6619382637d1c59e5c8570be465f">&#9670;&nbsp;</a></span>nrf24l01_rx_stop_listening()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf24l01_rx_stop_listening </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Выключает прослушивание эфира на предмет валидных пакетов. </p>
 
 </div>
 </div>
@@ -219,7 +292,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___r_e_c_i_e_v_e_r_
 </div><div class="memdoc">
 
 <p>Записывает в очередь полезную нагрузку, для отправки вместе с пакетом автоподтверждения. </p>
-<dl class="section note"><dt>Заметки</dt><dd>У полезных нагрузок для автоподтверждений своя очередь длиной в 3 элемента.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Запись производится в очередь отправки, как если бы это был передатчик.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeno</td><td>Номер соединения, для автоподтверждения пакетов по которому будет записана полезная нагрузка. </td></tr>

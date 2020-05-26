@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
 <p>Прерывания трансивера NRF24L01/+.</p>
 <p>У данных радиомодулей есть 3 прерывания: по приёму пакета(RX_DR), по успешной отправке пакета(TX_DS) и по истечению максимального количества повторных попыток отправки(MAX_RT). С помощью битовой маски можно выбирать, на какие их них реагировать, а на какие нет. Реакция заключается в спаде напряжения на пине IRQ трансивера.</p>
 <dl class="section note"><dt>Заметки</dt><dd>Для приёмника обычно характерно только прерывание RX_DR. Для передатчика, в случае с трансивером NRF24L01 - TX_DS и MAX_RT, а в случае с NRF24L01+ - ещё и RX_DR (если используется возможность прикрепления полезной нагрузки к пакетам автоподтверждения).</dd></dl>
-<dl class="section attention"><dt>Внимание</dt><dd>В случае происхождения прерывания MAX_RT, дальнейшая отправка данных блокируется до тех пор, пока флаг прерывание не будет сброшен. </dd></dl>
+<dl class="section attention"><dt>Внимание</dt><dd>В случае происхождения прерывания MAX_RT, дальнейшая отправка данных блокируется до тех пор, пока флаг прерывание не будет сброшен вызовом <a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#gafb9e361b525599ebdb8e34352c13fd7d" title="Сбрасывает флаги произошедших событий трансивера. ">nrf24l01_clear_interrupts()</a>. </dd></dl>
 <h2 class="groupheader">Макросы</h2>
 <a id="ga4643d84db44a4a9f6275aa06a51853e3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga4643d84db44a4a9f6275aa06a51853e3">&#9670;&nbsp;</a></span>NRF24L01_IRQ_MAX_RT</h2>
@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00157">157</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00158">158</a></p>
 
 </div>
 </div>
@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00155">155</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00156">156</a></p>
 
 </div>
 </div>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00156">156</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00157">157</a></p>
 
 </div>
 </div>

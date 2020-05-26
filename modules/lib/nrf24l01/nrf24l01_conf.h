@@ -7,8 +7,8 @@
  * могут быть заменены на локальные в проекте.
  */
 
-#ifndef NRF24L01P_CONF_H_INCLUDED
-#define NRF24L01P_CONF_H_INCLUDED
+#ifndef NRF24L01_CONF_H_INCLUDED
+#define NRF24L01_CONF_H_INCLUDED
 
 #include <stdint.h>
 #include <stddef.h>
@@ -20,4 +20,4 @@
  */
 #define NRF24L01_PLUS
 
-#endif /* NRF24L01P_CONF_H_INCLUDED */
+#endif /* NRF24L01_CONF_H_INCLUDED */
