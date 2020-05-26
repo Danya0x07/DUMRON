@@ -91,12 +91,31 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___f_e_a_t_u_r_e_s.
 Макросы</h2></td></tr>
 <tr class="memitem:ga6e0e6c1f8971ce7e40f05fb4ee861079"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___f_e_a_t_u_r_e_s.html#ga6e0e6c1f8971ce7e40f05fb4ee861079">NRF24L01_FEATURE_DYNPL</a>&#160;&#160;&#160;0x04</td></tr>
 <tr class="separator:ga6e0e6c1f8971ce7e40f05fb4ee861079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8542550c0ab9183cdf4cca3c772409c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___f_e_a_t_u_r_e_s.html#gae8542550c0ab9183cdf4cca3c772409c">NRF24L01_FEATURE_ACK</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gae8542550c0ab9183cdf4cca3c772409c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga972a14db21888eb8f3ad68b6387c8fe6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___f_e_a_t_u_r_e_s.html#ga972a14db21888eb8f3ad68b6387c8fe6">NRF24L01_FEATURE_ACK_PLD</a>&#160;&#160;&#160;0x07</td></tr>
 <tr class="separator:ga972a14db21888eb8f3ad68b6387c8fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <p>Битовые маски для включения расширенных возможностей трансивера NRF24L01/+. Предназначены для заполнения атрибута <a class="el" href="structnrf24l01__tx__config.html#aa6b1dd1bb9c0c2e9967e4a7f61644db1">nrf24l01_tx_config::features</a> или <a class="el" href="structnrf24l01__rx__config.html#aa6b1dd1bb9c0c2e9967e4a7f61644db1">nrf24l01_rx_config::features</a>. </p>
 <h2 class="groupheader">Макросы</h2>
+<a id="gae8542550c0ab9183cdf4cca3c772409c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae8542550c0ab9183cdf4cca3c772409c">&#9670;&nbsp;</a></span>NRF24L01_FEATURE_ACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NRF24L01_FEATURE_ACK&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Включает у передатчика ожидание подтверждения после отправки пакета. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00181">181</a></p>
+
+</div>
+</div>
 <a id="ga972a14db21888eb8f3ad68b6387c8fe6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga972a14db21888eb8f3ad68b6387c8fe6">&#9670;&nbsp;</a></span>NRF24L01_FEATURE_ACK_PLD</h2>
 
@@ -108,9 +127,10 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___f_e_a_t_u_r_e_s.
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Если требуется возможность прикреплять полезную нагрузку к пакетам автоподтверждения либо принимать такие пакеты. </p>
+<p>Если требуется возможность прикреплять полезную нагрузку к пакетам автоподтверждения либо принимать такие пакеты.</p>
+<dl class="section attention"><dt>Внимание</dt><dd>Использование полезной нагрузки с пакетами автоподтверждения автоматически подразумевает использование <a class="el" href="group___n_r_f24_l01___f_e_a_t_u_r_e_s.html#ga6e0e6c1f8971ce7e40f05fb4ee861079">NRF24L01_FEATURE_DYNPL</a>. Передатчик должен проверять размер принятой полезной нагрузки вызовом <a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#gab48b66e48dd208479797f291d9576638">nrf24l01_read_pld_size</a> перед считыванием, чтобы убедиться в её валидности. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00192">192</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00194">194</a></p>
 
 </div>
 </div>
@@ -127,7 +147,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___f_e_a_t_u_r_e_s.
 </div><div class="memdoc">
 <p>Если требуется работать с пакетами непостоянной длины. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00186">186</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00178">178</a></p>
 
 </div>
 </div>
