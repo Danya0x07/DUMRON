@@ -1,7 +1,7 @@
 var searchData=
 [
   ['nrf24l01_5fchannels',['NRF24L01_CHANNELS',['../nrf24l01_8h.html#aab7d9eebe2ca5fafa967a084a051f3e7',1,'nrf24l01.h']]],
-  ['nrf24l01_5febus',['NRF24L01_EBUS',['../nrf24l01_8h.html#a786bf2038405516121b7197638c311af',1,'nrf24l01.h']]],
+  ['nrf24l01_5ferr_5fbus',['NRF24L01_ERR_BUS',['../nrf24l01_8h.html#a24ba4f9f46e2577251cc03e2b3eaccf5',1,'nrf24l01.h']]],
   ['nrf24l01_5fok',['NRF24L01_OK',['../nrf24l01_8h.html#a67fb8542a07dd96402a19ab507f5a79f',1,'nrf24l01.h']]],
   ['nrf24l01_5fplus',['NRF24L01_PLUS',['../nrf24l01__conf_8h.html#a416d6b21ffa837c378760a52367c75f4',1,'nrf24l01_conf.h']]],
   ['nrf_5fce_5f0',['nrf_ce_0',['../nrf24l01__port_8h.html#ac15d146a2edcdc728d594d09a29645c5',1,'nrf24l01_port.h']]],

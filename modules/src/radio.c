@@ -44,30 +44,30 @@ void Radio_Init(void)
     delay_ms(100);
 
     /* Power down --> Standby_1 */
-    nrf_overwrite_byte(CONFIG, PWR_UP);
+    nrf24l01_write_reg(CONFIG, PWR_UP);
     delay_ms(5);
 
     /* Записываем настройки в модуль. */
     nrf_apply_mask(CONFIG, config, SET);
-    nrf_overwrite_byte(RF_CH, rf_ch);
-    nrf_overwrite_byte(RF_SETUP, rf_setup);
-    nrf_overwrite_byte(SETUP_AW, setup_aw);
-    nrf_overwrite_byte(EN_RXADDR, en_rxaddr);
-    nrf_overwrite_byte(EN_AA, en_aa);
-    nrf_overwrite_byte(FEATURE, feature);
-    nrf_overwrite_byte(DYNPD, dynpd);
+    nrf24l01_write_reg(RF_CH, rf_ch);
+    nrf24l01_write_reg(RF_SETUP, rf_setup);
+    nrf24l01_write_reg(SETUP_AW, setup_aw);
+    nrf24l01_write_reg(EN_RXADDR, en_rxaddr);
+    nrf24l01_write_reg(EN_AA, en_aa);
+    nrf24l01_write_reg(FEATURE, feature);
+    nrf24l01_write_reg(DYNPD, dynpd);
 
     /* Записываем адрес канала. */
     nrf_rw_buff(W_REGISTER | RX_ADDR_P0, address, 4, NRF_OPERATION_WRITE);
 
     /* Проверяем, что модуль всё понял. */
-    if (nrf_read_byte(CONFIG) != config) {
+    if (nrf24l01_read_reg(CONFIG) != config) {
         debug_logs("nrf not responding\n");
     }
 
     /* Чистим буферы на всякий случай. */
-    nrf_cmd(FLUSH_TX);
-    nrf_cmd(FLUSH_RX);
+    nrf24l01_cmd(FLUSH_TX);
+    nrf24l01_cmd(FLUSH_RX);
 
     /*
      * Начинаем слушать эфир.
@@ -85,14 +85,14 @@ void Radio_TakeIncoming(DataToRobot_s *incoming)
         do {
             nrf_rw_buff(R_RX_PL_WID, &data_size, 1, NRF_OPERATION_READ);
             if (data_size != sizeof(DataToRobot_s)) {
-                nrf_cmd(FLUSH_RX);
+                nrf24l01_cmd(FLUSH_RX);
                 nrf_clear_interrupts();
                 break;
             }
             nrf_rw_buff(R_RX_PAYLOAD, (uint8_t *)incoming,
                         sizeof(DataToRobot_s), NRF_OPERATION_READ);
             nrf_clear_interrupts();
-            fifo_status = nrf_read_byte(FIFO_STATUS);
+            fifo_status = nrf24l01_read_reg(FIFO_STATUS);
         } while (!(fifo_status & RX_EMPTY));
     }
 }
@@ -101,7 +101,7 @@ void Radio_PutOutcoming(DataFromRobot_s *outcoming)
 {
     uint8_t status = nrf_get_status();
     if (status & TX_FULL_STATUS) {
-        nrf_cmd(FLUSH_TX);
+        nrf24l01_cmd(FLUSH_TX);
     }
     nrf_rw_buff(W_ACK_PAYLOAD | 0, (uint8_t *)outcoming,
                 sizeof(DataFromRobot_s), NRF_OPERATION_WRITE);

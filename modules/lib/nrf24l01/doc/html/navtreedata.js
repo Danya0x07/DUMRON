@@ -26,7 +26,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structnrf24l01__pipe__config.html#aa6b1dd1bb9c0c2e9967e4a7f61644db1"
+"structnrf24l01__pipe__config.html#a66aad0e47d287324bb22181544162746"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

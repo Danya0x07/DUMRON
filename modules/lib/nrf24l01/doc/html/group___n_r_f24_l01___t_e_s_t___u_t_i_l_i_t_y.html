@@ -95,6 +95,9 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_e_s_t___u_t_i_
 <tr class="memitem:ga16f634e1946960ee6129f50ef1133884"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_e_s_t___u_t_i_l_i_t_y.html#ga16f634e1946960ee6129f50ef1133884">nrf24l01_measure_noise</a> (uint8_t *snapshot_buff, uint8_t start_ch, uint8_t end_ch)</td></tr>
 <tr class="memdesc:ga16f634e1946960ee6129f50ef1133884"><td class="mdescLeft">&#160;</td><td class="mdescRight">Делает "снимок" зашумлённости частотного диапазона.  <a href="#ga16f634e1946960ee6129f50ef1133884">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga16f634e1946960ee6129f50ef1133884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59f09f11be28b1db8446266c63c890d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_e_s_t___u_t_i_l_i_t_y.html#ga59f09f11be28b1db8446266c63c890d2">nrf24l01_test_carrier_wave</a> (enum <a class="el" href="nrf24l01_8h.html#ae361872da273e1eeac33d834503084ea">nrf24l01_power</a> power)</td></tr>
+<tr class="memdesc:ga59f09f11be28b1db8446266c63c890d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заставляет трансивер транслировать свою несущую волну.  <a href="#ga59f09f11be28b1db8446266c63c890d2">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga59f09f11be28b1db8446266c63c890d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <p>Функции трансивера, позволяющие анализировать работу радиосвязи и его самого. </p>
@@ -116,6 +119,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_e_s_t___u_t_i_
 </div><div class="memdoc">
 
 <p>Измеряет уровень шума на текущем канале. </p>
+<dl class="section note"><dt>Заметки</dt><dd>Если трансивер находится в режиме передатчика, то для измерения функция кратковременно переведёт его в режим приёмника, затем обратно.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>true, если был обнаружен сигнал мощностью не менее -64dbm, </dd>
 <dd>
 false в противном случае. </dd></dl>
@@ -158,13 +162,40 @@ false в противном случае. </dd></dl>
 <p>15 раз проходит по диапазону каналов, на каждом вызывая <a class="el" href="group___n_r_f24_l01___t_e_s_t___u_t_i_l_i_t_y.html#gadb2ebac7598e215717f88e6448fa812e" title="Измеряет уровень шума на текущем канале. ">nrf24l01_detect_signal()</a>, соответственно, для каждого канала накапливается значение от 0 до 0xF, показывающее его зашумлённость.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">snapshot_buff</td><td>Массив, в который будут записаны значения зашумлённости для каждого канала. Должен быть размером не менее end_ch - start_ch + 1. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">start_ch</td><td>Начальный канал снимка. Должен быть в диапазоне от 0 до NRF_CHANNELS - 1. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">snapshot_buff</td><td>Массив, в который будут записаны значения зашумлённости для каждого канала. Должен быть размером не менее end_ch - start_ch + 1.</td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">start_ch</td><td>Начальный канал снимка. Должен быть в диапазоне от 0 до NRF_CHANNELS - 1.</td></tr>
     <tr><td class="paramdir"></td><td class="paramname">end_ch</td><td>Конечный канал снимка. Должен быть в диапазоне от 0 до NRF_CHANNELS - 1.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>start_ch должен быть &lt; end_ch. </dd></dl>
+
+</div>
+</div>
+<a id="ga59f09f11be28b1db8446266c63c890d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga59f09f11be28b1db8446266c63c890d2">&#9670;&nbsp;</a></span>nrf24l01_test_carrier_wave()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf24l01_test_carrier_wave </td>
+          <td>(</td>
+          <td class="paramtype">enum <a class="el" href="nrf24l01_8h.html#ae361872da273e1eeac33d834503084ea">nrf24l01_power</a>&#160;</td>
+          <td class="paramname"><em>power</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Заставляет трансивер транслировать свою несущую волну. </p>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Данная функция должна использоваться только для тестирования трансивера на предмет бракованности, она не совместима со стандартными режимами работы и при вызове перезаписывает настройки на специальные для трансляции несущей. Однако до неё можно вызвать <a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga454171201b377a36cd23b5d4447d98b0" title="Устанавливает радиочастотный канал трансивера. ">nrf24l01_set_rf_channel()</a>, чтобы установить частотный канал, на котором будет трансляция.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">power</td><td>Мощность сигнала, с которой нужно транслировать. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -113,6 +113,9 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <tr class="memitem:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed">nrf24l01_tx_stop_cont_transmission</a> (void)</td></tr>
 <tr class="memdesc:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает режим постоянной отправки, если ранее он был включен.  <a href="#ga6d0159ea0c82f76bf902e9c803b6a3ed">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad288c8c54d23f382a941e476ade1c206"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad288c8c54d23f382a941e476ade1c206">nrf24l01_tx_get_statistics</a> (uint8_t *lost, uint8_t *retr)</td></tr>
+<tr class="memdesc:gad288c8c54d23f382a941e476ade1c206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Собирает статистику радиообмена.  <a href="#gad288c8c54d23f382a941e476ade1c206">Подробнее...</a><br /></td></tr>
+<tr class="separator:gad288c8c54d23f382a941e476ade1c206"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <p>Функции трансивера, которые есть смысл вызывать только в режиме передатчика. </p>
@@ -142,7 +145,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd><code>NRF24L01_OK</code>, если инициализация прошла успешно, </dd>
 <dd>
-<code>NRF24L01_EBUS</code>, в противном случае. </dd></dl>
+<code>NRF24L01_ERR_BUS</code>, в противном случае. </dd></dl>
 
 </div>
 </div>
@@ -167,7 +170,44 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <dl class="section attention"><dt>Внимание</dt><dd>Данная функция будет корректно работать только если настройки трансивера ранее не менялись (со времени подачи на него питания).</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd><code>NRF24L01_OK</code>, если инициализация прошла успешно, </dd>
 <dd>
-<code>NRF24L01_EBUS</code>, в противном случае. </dd></dl>
+<code>NRF24L01_ERR_BUS</code>, в противном случае. </dd></dl>
+
+</div>
+</div>
+<a id="gad288c8c54d23f382a941e476ade1c206"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad288c8c54d23f382a941e476ade1c206">&#9670;&nbsp;</a></span>nrf24l01_tx_get_statistics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf24l01_tx_get_statistics </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>lost</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>retr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Собирает статистику радиообмена. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">lost</td><td>Количество пакетов, для которых так и не пришло автоподтверждение. Счётчик доходит до 15 и далее останавливается. Сбрасывается при смене частотного канала.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">retr</td><td>Количество повторных отправок последнего пакета. Счётчик сбрасывается при отправке каждого нового пакета. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,5 +1,9 @@
 var NAVTREEINDEX1 =
 {
+"structnrf24l01__pipe__config.html#a66aad0e47d287324bb22181544162746":[1,0,0,0],
+"structnrf24l01__pipe__config.html#a757bfea5579a440bfd902148910ff795":[1,0,0,5],
+"structnrf24l01__pipe__config.html#a84be482c05bff2e29589caf9a64e9d15":[1,0,0,1],
+"structnrf24l01__pipe__config.html#a93fdeffedf85949ff63213dd89b65b8c":[1,0,0,4],
 "structnrf24l01__pipe__config.html#aa6b1dd1bb9c0c2e9967e4a7f61644db1":[1,0,0,2],
 "structnrf24l01__pipe__config.html#ac04c35971c92b7a0ddc152c107c02780":[1,0,0,3],
 "structnrf24l01__rx__config.html":[1,0,1],
