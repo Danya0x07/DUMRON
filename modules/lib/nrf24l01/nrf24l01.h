@@ -62,10 +62,10 @@ enum nrf24l01_datarate {
 
 /** @brief   Мощность сигнала при передаче. */
 enum nrf24l01_power {
-    NRF24L01_POWER_N18DBM = 0 << 1,  /**< -18dbm */
-    NRF24L01_POWER_N12DBM = 1 << 1,  /**< -12dbm */
-    NRF24L01_POWER_N6DBM  = 2 << 1,  /**< -6dbm */
-    NRF24L01_POWER_0DBM   = 3 << 1   /**<  0dbm */
+    NRF24L01_POWER_N18DBM = 0 << 1,  /**< -18dBm */
+    NRF24L01_POWER_N12DBM = 1 << 1,  /**< -12dBm */
+    NRF24L01_POWER_N6DBM  = 2 << 1,  /**< -6dBm */
+    NRF24L01_POWER_0DBM   = 3 << 1   /**<  0dBm */
 };
 
 /** @brief   Задержка между повторными отправками пакета. */
@@ -675,8 +675,20 @@ void nrf24l01_measure_noise(uint8_t *snapshot_buff,
  * частотный канал, на котором будет трансляция.
  *
  * @param power Мощность сигнала, с которой нужно транслировать.
+ *
+ * @param channel   Радиочастотный канал, на котором нужно транслировать.
+ *
+ * @see nrf24l01_stop_output_carrier()
  */
-void nrf24l01_test_carrier_wave(enum nrf24l01_power power);
+void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel);
+
+/**
+ * @brief   Выключает трансляцию несущей.
+ *
+ * @note
+ * Вызывать имеет смысл только после nrf24l01_start_output_carrier().
+ */
+void nrf24l01_stop_output_carrier(void);
 /** @} */
 
 #ifdef __cplusplus

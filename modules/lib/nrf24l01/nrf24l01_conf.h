@@ -20,4 +20,7 @@
  */
 #define NRF24L01_PLUS
 
+/** Раскомментировать, если микросекундная задержка не доступна. */
+//#define NRF24L01_DELAY_ONLY_MS
+
 #endif /* NRF24L01_CONF_H_INCLUDED */

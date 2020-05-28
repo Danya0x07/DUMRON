@@ -5,6 +5,14 @@
 #include "nrf24l01.h"
 #include "nrf24l01_port.h"
 
+#ifdef NRF24L01_DELAY_ONLY_MS
+#   define _delay_tx()      delay_ms(1)
+#   define _delay_rpd()     delay_ms(1)
+#else
+#   define _delay_tx()      delay_us(11)
+#   define _delay_rpd()     delay_us(200)
+#endif
+
 /* Команды радиомодуля */
 enum nrf24l01_command {
     R_REGISTER = 0x00,   /* + n Прочитать регистр n */
@@ -58,7 +66,7 @@ enum nrf24l01_reg {
 #ifdef NRF24L01_PLUS
     #define CONT_WAVE  (1 << 7)  /* (Только для nRF24L01+) Непрерывная передача несущей (для тестов) */
 #else
-    #define LNA_HCURR   (1 << 0)
+    #define LNA_HCURR   (1 << 0)  /* Уменьшает потребление тока на 0.8mA ценой уменьшения чувствительности на 1.5dB */
 #endif
 
 #define PLL_LOCK    (1 << 4)  /* Для тестов */
@@ -244,14 +252,13 @@ void nrf24l01_tx_reuse_pld(void)
 void nrf24l01_tx_transmit(void)
 {
     nrf24l01_ce_1();
-    delay_ms(1);
+    _delay_tx();
     nrf24l01_ce_0();
 }
 
 void nrf24l01_tx_start_cont_transmission(void)
 {
     nrf24l01_ce_1();
-    delay_ms(1);
 }
 
 void nrf24l01_tx_stop_cont_transmission(void)
@@ -291,6 +298,7 @@ int nrf24l01_rx_configure_minimal(uint8_t pld_size)
 {
     if (pld_size > 32)
         pld_size = 32;
+
     nrf24l01_power_up();
     nrf24l01_write_reg(RX_PW_P0, pld_size);
 
@@ -352,6 +360,7 @@ void nrf24l01_power_down(void)
 void nrf24l01_power_up(void)
 {
     nrf24l01_write_bits(CONFIG, PWR_UP, 1);
+    delay_ms(2);
 }
 
 uint8_t nrf24l01_get_interrupts(void)
@@ -409,8 +418,9 @@ bool nrf24l01_detect_signal(void)
 
     nrf24l01_write_bits(CONFIG, PRIM_RX, 1);
     nrf24l01_ce_1();
-    delay_ms(1);
+    _delay_rpd();
     nrf24l01_ce_0();
+    nrf24l01_write_reg(CONFIG, backup);
     return nrf24l01_read_reg(RPD_CD) & 0x01;
 }
 
@@ -419,7 +429,12 @@ void nrf24l01_measure_noise(uint8_t *snapshot_buff,
 {
     uint_fast8_t i, j;
 
-    memset(snapshot_buff, 0, end_ch = start_ch + 1);
+    if (start_ch > end_ch)
+        return;
+
+    for (i = 0; i < end_ch - start_ch + 1; i++)
+        snapshot_buff[i] = 0;
+
     for (i = 0; i < 0xF; i++) {
         for (j = start_ch; j <= end_ch; j++) {
             nrf24l01_set_rf_channel(j);
@@ -429,17 +444,19 @@ void nrf24l01_measure_noise(uint8_t *snapshot_buff,
     }
 }
 
-void nrf24l01_start_test_carrier(enum nrf24l01_power power, uint8_t channel)
+void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel)
 {
-    uint_fast8_t i;
-
-    nrf24l01_write_reg(CONFIG, PWR_UP);
-    delay_ms(2);
 #ifdef NRF24L01_PLUS
+    nrf24l01_power_up();
+    nrf24l01_write_bits(CONFIG, PRIM_RX, 0);
     nrf_write_reg(RF_SETUP, CONT_WAVE | PLL_LOCK | power);
     nrf24l01_set_rf_channel(channel);
     nrf24l01_ce_1();
 #else
+    uint_fast8_t i;
+
+    nrf24l01_power_up();
+    nrf24l01_write_bits(CONFIG, PRIM_RX, 0);
     nrf24l01_write_reg(EN_AA, 0);
     nrf24l01_write_reg(SETUP_RETR, 0);
     nrf24l01_write_reg(RF_SETUP, PLL_LOCK | power);
@@ -454,16 +471,15 @@ void nrf24l01_start_test_carrier(enum nrf24l01_power power, uint8_t channel)
         nrf24l01_spi_transfer_byte(0xFF);
 
     nrf24l01_write_bits(CONFIG, EN_CRC, 0);
-    nrf24l01_ce_1();
-    delay_ms(1);
-    nrf24l01_ce_0();
+    nrf24l01_set_rf_channel(channel);
+    nrf24l01_tx_transmit();
     delay_ms(1);
     nrf24l01_ce_1();
     nrf24l01_cmd(REUSE_TX_PL);
 #endif
 }
 
-void nrf24l01_stop_test_carrier(void)
+void nrf24l01_stop_output_carrier(void)
 {
     nrf24l01_ce_0();
 }
