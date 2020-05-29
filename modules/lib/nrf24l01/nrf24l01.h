@@ -74,18 +74,18 @@ enum nrf24l01_retr_delay {
     NRF24L01_RETR_DELAY_500US  = 0x10,
     NRF24L01_RETR_DELAY_750US  = 0x20,
     NRF24L01_RETR_DELAY_1000US = 0x30,
-    NRF24L01_RETR_DELAY_1000US = 0x40,
-    NRF24L01_RETR_DELAY_1000US = 0x50,
-    NRF24L01_RETR_DELAY_1000US = 0x60,
-    NRF24L01_RETR_DELAY_750US  = 0x70,
-    NRF24L01_RETR_DELAY_1000US = 0x80,
-    NRF24L01_RETR_DELAY_1000US = 0x90,
-    NRF24L01_RETR_DELAY_1000US = 0xA0,
-    NRF24L01_RETR_DELAY_1000US = 0xB0,
-    NRF24L01_RETR_DELAY_1000US = 0xC0,
-    NRF24L01_RETR_DELAY_1000US = 0xD0,
-    NRF24L01_RETR_DELAY_1000US = 0xE0,
-    NRF24L01_RETR_DELAY_1000US = 0xF0
+    NRF24L01_RETR_DELAY_1250US = 0x40,
+    NRF24L01_RETR_DELAY_1500US = 0x50,
+    NRF24L01_RETR_DELAY_1750US = 0x60,
+    NRF24L01_RETR_DELAY_2000US  = 0x70,
+    NRF24L01_RETR_DELAY_2250US = 0x80,
+    NRF24L01_RETR_DELAY_2500US = 0x90,
+    NRF24L01_RETR_DELAY_2750US = 0xA0,
+    NRF24L01_RETR_DELAY_3000US = 0xB0,
+    NRF24L01_RETR_DELAY_3250US = 0xC0,
+    NRF24L01_RETR_DELAY_3500US = 0xD0,
+    NRF24L01_RETR_DELAY_3750US = 0xE0,
+    NRF24L01_RETR_DELAY_4000US = 0xF0
 };
 
 /** @brief   Количество повторных попыток отправки пакета. */
@@ -183,7 +183,7 @@ enum nrf24l01_pipe_number {
 /** Включает у передатчика ожидание подтверждения после отправки пакета. */
 #define NRF24L01_FEATURE_ACK    0x03
 
-/** Если требуется работать с пакетами непостоянной длины. */
+/** Если требуется принимать пакеты непостоянной длины. */
 #define NRF24L01_FEATURE_DYNPL  0x04
 
 /**
@@ -312,24 +312,16 @@ struct nrf24l01_pipe_config {
     uint8_t features;
 };
 
-/**
- * @name    Статусы успешности операций с трансивером.
- * @{
- */
-#define NRF24L01_OK     (0)
-#define NRF24L01_ERR_BUS   (-1)  /**< некорректный ответ по SPI */
-/** @} */
-
 #ifndef NRF24L01_PLUS
-    /**
-     * @brief   Включает возможности стандартные возможности NRF24L01,
-     *          которые у NRF24L01+ включены по умолчанию.
-     *
-     * @warning
-     * Пользователь должен вызвать эту функцию ровно один раз в программе
-     * до использования любых других API-функций библиотеки.
-     */
-    void nrf24l01_activate(void);
+/**
+ * @brief   Включает возможности стандартные возможности NRF24L01,
+ *          которые у NRF24L01+ включены по умолчанию.
+ *
+ * @warning
+ * Пользователь должен вызвать эту функцию ровно один раз в программе
+ * до использования любых других API-функций библиотеки.
+ */
+void nrf24l01_activate(void);
 #endif
 
 /**
@@ -345,8 +337,8 @@ struct nrf24l01_pipe_config {
  *
  * @param config    Адрес структуры с конфигурацией передатчика.
  *
- * @return  `NRF24L01_OK`, если инициализация прошла успешно,
- * @return  `NRF24L01_ERR_BUS`, в противном случае.
+ * @return  0, если инициализация прошла успешно,
+ * @return  -1, в противном случае (скорее всего плохой контакт).
  */
 int nrf24l01_tx_configure(struct nrf24l01_tx_config *config);
 
@@ -361,8 +353,8 @@ int nrf24l01_tx_configure(struct nrf24l01_tx_config *config);
  * Данная функция будет корректно работать только если настройки трансивера
  * ранее не менялись (со времени подачи на него питания).
  *
- * @return  `NRF24L01_OK`, если инициализация прошла успешно,
- * @return  `NRF24L01_ERR_BUS`, в противном случае.
+ * @return  0, если инициализация прошла успешно,
+ * @return  -1, в противном случае (скорее всего плохой контакт).
  */
 int nrf24l01_tx_configure_minimal(void);
 
@@ -449,8 +441,8 @@ void nrf24l01_tx_get_statistics(uint8_t *lost, uint8_t *retr);
  *
  * @param config    Адрес структуры с конфигурацией приёмника.
  *
- * @return  `NRF24L01_OK`, если инициализация прошла успешно,
- * @return  `NRF24L01_ERR_BUS`, в противном случае.
+ * @return  0, если инициализация прошла успешно,
+ * @return  -1, в противном случае (скорее всего плохой контакт).
  */
 int nrf24l01_rx_configure(struct nrf24l01_rx_config *config);
 
@@ -473,17 +465,40 @@ int nrf24l01_rx_configure(struct nrf24l01_rx_config *config);
  * @param pld_size  Размер полезной нагрузки (от 1 до 32 байт).
  *                  Передатчик должен соблюдать такой же.
  *
- * @return  `NRF24L01_OK`, если инициализация прошла успешно,
- * @return  `NRF24L01_ERR_BUS`, в противном случае.
+ * @return  0, если инициализация прошла успешно,
+ * @return  -1, в противном случае (скорее всего плохой контакт).
  */
 int nrf24l01_rx_configure_minimal(uint8_t pld_size);
 
 /**
- * @brief   Включает и настраивает входящее соединение.
+ * @brief   Открывает и настраивает входящее соединение.
  *
  * @param config    Указатель на струкуру с конфигурацией соединения.
  */
 void nrf24l01_rx_setup_pipe(struct nrf24l01_pipe_config *config);
+
+/**
+ * @brief   Закрывает входящее соединение.
+ *
+ * @note
+ * Настройки соединения при этом не меняются.
+ *
+ * @param pipe_no   Номер соединения.
+ */
+void nrf24l01_rx_close_pipe(enum nrf24l01_pipe_number pipe_no);
+
+/**
+ * @brief   Открывает входящее соединение.
+ *
+ * @note
+ * Вызов имеет смысл только если ранее соединение было закрыто,
+ * но настроено.
+ *
+ * @param pipe_no   Номер соединения.
+ *
+ * @see nrf24l01_rx_setup_pipe(), nrf24l01_close_pipe()
+ */
+void nrf24l01_rx_open_pipe(enum nrf24l01_pipe_number pipe_no);
 
 /**
  * @brief   Включает прослушивание эфира на предмет валидных пакетов.
@@ -517,6 +532,21 @@ int nrf24l01_rx_get_pld_pipe_no(void);
  */
 void nrf24l01_rx_write_ack_pld(enum nrf24l01_pipe_number pipeno,
                                const void *pld, uint8_t size);
+
+#ifndef NRF24L01_PLUS
+/**
+ * @brief   Позволяет управлять встроенным усилителем (LNA) трансивера.
+ *
+ * Если выключить LNA, то чувствительность уменьшится на 1.5dBm,
+ * а энергопотребление уменьшится на 0.8mA.
+ *
+ * @note
+ * По умолчанию LNA включён
+ *
+ * @param state Состояние LNA: 1 - включено, 0 - выключено.
+ */
+void nrf24l01_rx_set_lna(bool state);
+#endif
 /** @} */
 
 /**
@@ -565,6 +595,14 @@ uint8_t nrf24l01_get_interrupts(void);
 void nrf24l01_clear_interrupts(uint8_t irq);
 
 /**
+ * @brief   Проверяет, есть ли в очереди отправки неотправленные пакеты.
+ *
+ * @return  true, если есть данные в очереди отправки,
+ * @return  false, если очередь отправки пуста.
+ */
+bool nrf24l01_data_in_tx_fifo(void);
+
+/**
  * @brief   Проверяет, есть ли принятые пакеты в очереди приёма.
  *
  * @return  true, если есть данные в очереди приёма,
@@ -583,6 +621,17 @@ bool nrf24l01_data_in_rx_fifo(void);
  * @return  false, если в очереди отправки есть свободные слоты.
  */
 bool nrf24l01_full_tx_fifo(void);
+
+/**
+ * @brief   Проверяет, заполнена ли очередь приёма.
+ *
+ * @note
+ * Если очередь приёма заполнена, новые пакеты приниматься не будут.
+ *
+ * @return  true, если очередь приёма заполнена,
+ * @return  false, если в очереди приёма есть свободные слоты.
+ */
+bool nrf24l01_full_rx_fifo(void);
 
 /**
  * @brief   Считывает размер полезной нагрузки, находящейся первой
@@ -688,7 +737,7 @@ void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel);
  * @note
  * Вызывать имеет смысл только после nrf24l01_start_output_carrier().
  */
-void nrf24l01_stop_output_carrier(void);
+#define nrf24l01_stop_output_carrier()  nrf24l01_stop_cont_transmission()
 /** @} */
 
 #ifdef __cplusplus

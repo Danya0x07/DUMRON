@@ -1,7 +1,3 @@
-/**
- * Функции для низкоуровневого взаимодействия
- * с модулем NRF24L01+ по интерфейсной шине SPI.
- */
 #include "nrf24l01.h"
 #include "nrf24l01_port.h"
 
@@ -15,89 +11,70 @@
 
 /* Команды радиомодуля */
 enum nrf24l01_command {
-    R_REGISTER = 0x00,   /* + n Прочитать регистр n */
-    W_REGISTER = 0x20,   /* + n Записать регистр n */
-    R_RX_PAYLOAD = 0x61, /* Принять данные данные из верхнего слота очереди приёмника. */
-    W_TX_PAYLOAD = 0xA0, /* Записать в очередь передатчика данные для отправки */
-    FLUSH_TX = 0xE1,     /* Сбросить очередь передатчика */
-    FLUSH_RX = 0xE2,     /* Сбросить очередь приёмника */
-    REUSE_TX_PL = 0xE3,  /* Использовать повторно последний переданный пакет */
-    R_RX_PL_WID = 0x60,  /* Прочитать размер данных принятого пакета в начале очереди приёмника. */
-    W_ACK_PAYLOAD = 0xA8,  /* + p Записать данные для отправки с пакетом подтверждения по каналу p. */
-    W_TX_PAYLOAD_NOACK = 0xB0,  /* Записать в очередь передатчика данные, для отправки без подтверждения */
-    NOP = 0xFF  /* Нет операции. Может быть использовано для чтения регистра статуса */
+    R_REGISTER = 0x00,
+    W_REGISTER = 0x20,
+    R_RX_PAYLOAD = 0x61,
+    W_TX_PAYLOAD = 0xA0,
+    FLUSH_TX = 0xE1,
+    FLUSH_RX = 0xE2,
+    REUSE_TX_PL = 0xE3,
+    R_RX_PL_WID = 0x60,
+    W_ACK_PAYLOAD = 0xA8,
+    W_TX_PAYLOAD_NOACK = 0xB0,
+    NOP = 0xFF
 };
 
 /* Регистры радуомодуля */
 enum nrf24l01_reg {
-    CONFIG = 0x00,  /* Регистр настроек */
-    EN_AA = 0x01,   /* Выбор автоподтверждения */
-    EN_RXADDR = 0x02,  /* Выбор каналов приёмника */
-    SETUP_AW = 0x03,   /* Настройка размера адреса */
-    SETUP_RETR = 0x04, /* Настройка повторной отправки */
-    RF_CH = 0x05,  /* Номер радиоканала, на котором осуществляется работа. От 0 до 125. */
-    RF_SETUP = 0x06,  /* Настройка радиоканала */
-    STATUS = 0x07,    /* Регистр статуса. */
-    OBSERVE_TX = 0x08,  /* Количество повторов передачи и потерянных пакетов */
-    RPD_CD = 0x09,  /* Мощность принимаемого сигнала. Если младший бит = 1, то уровень более -64dBm */
-    RX_ADDR_P0 = 0x0A,  /* 3-5 байт (начиная с младшего байта). Адрес канала 0 приёмника. */
-    RX_ADDR_P1 = 0x0B,  /* 3-5 байт (начиная с младшего байта). Адрес канала 1 приёмника. */
-    RX_ADDR_P2 = 0x0C,  /* Младший байт адреса канала 2 приёмника. Старшие байты из RX_ADDR_P1 */
-    RX_ADDR_P3 = 0x0D,  /* Младший байт адреса канала 3 приёмника. Старшие байты из RX_ADDR_P1 */
-    RX_ADDR_P4 = 0x0E,  /* Младший байт адреса канала 4 приёмника. Старшие байты из RX_ADDR_P1 */
-    RX_ADDR_P5 = 0x0F,  /* Младший байт адреса канала 5 приёмника. Старшие байты из RX_ADDR_P1 */
-    TX_ADDR = 0x10,  /* 3-5 байт (начиная с младшего байта). Адрес удалённого устройства для передачи */
-    RX_PW_P0 = 0x11,  /* Размер данных при приёме по каналу 0: от 1 до 32. 0 - канал не используется. */
-    RX_PW_P1 = 0x12,  /* Размер данных при приёме по каналу 1: от 1 до 32. 0 - канал не используется. */
-    RX_PW_P2 = 0x13,  /* Размер данных при приёме по каналу 2: от 1 до 32. 0 - канал не используется. */
-    RX_PW_P3 = 0x14,  /* Размер данных при приёме по каналу 3: от 1 до 32. 0 - канал не используется. */
-    RX_PW_P4 = 0x15,  /* Размер данных при приёме по каналу 4: от 1 до 32. 0 - канал не используется. */
-    RX_PW_P5 = 0x16,  /* Размер данных при приёме по каналу 5: от 1 до 32. 0 - канал не используется. */
-    FIFO_STATUS = 0x17, /* Состояние очередей FIFO приёмника и передатчика */
-    DYNPD = 0x1C,   /* Выбор каналов приёмника для которых используется произвольная длина пакетов. */
-    FEATURE = 0x1D  /* Регистр опций */
+    CONFIG = 0x00,
+    EN_AA = 0x01,
+    EN_RXADDR = 0x02,
+    SETUP_AW = 0x03,
+    SETUP_RETR = 0x04,
+    RF_CH = 0x05,
+    RF_SETUP = 0x06,
+    STATUS = 0x07,
+    OBSERVE_TX = 0x08,
+    RPD_CD = 0x09,
+    RX_ADDR_P0 = 0x0A,
+    RX_ADDR_P1 = 0x0B,
+    RX_ADDR_P2 = 0x0C,
+    RX_ADDR_P3 = 0x0D,
+    RX_ADDR_P4 = 0x0E,
+    RX_ADDR_P5 = 0x0F,
+    TX_ADDR = 0x10,
+    RX_PW_P0 = 0x11,
+    RX_PW_P1 = 0x12,
+    RX_PW_P2 = 0x13,
+    RX_PW_P3 = 0x14,
+    RX_PW_P4 = 0x15,
+    RX_PW_P5 = 0x16,
+    FIFO_STATUS = 0x17,
+    DYNPD = 0x1C,
+    FEATURE = 0x1D
 };
 
-/* Настройка CRC. */
-
+/* CONFIG */
 #define PWR_UP      (1 << 1)
 #define PRIM_RX     (1 << 0)
 
+/* TEST */
 #ifdef NRF24L01_PLUS
-    #define CONT_WAVE  (1 << 7)  /* (Только для nRF24L01+) Непрерывная передача несущей (для тестов) */
+#   define CONT_WAVE  (1 << 7)  /* (Только для nRF24L01+) Непрерывная передача несущей (для тестов) */
 #else
-    #define LNA_HCURR   (1 << 0)  /* Уменьшает потребление тока на 0.8mA ценой уменьшения чувствительности на 1.5dB */
+#   define LNA_HCURR   (1 << 0)  /* Уменьшает потребление тока на 0.8mA ценой уменьшения чувствительности на 1.5dB */
 #endif
 
-#define PLL_LOCK    (1 << 4)  /* Для тестов */
+#define PLL_LOCK    (1 << 4)
 
-/* STATUS */
-#define RX_DR   (1 << 6)  /* Флаг получения новых данных в FIFO приёмника. Для сброса флага нужно записать 1 */
-#define TX_DS   (1 << 5)  /* Флаг завершения передачи. Для сброса флага нужно записать 1 */
-#define MAX_RT  (1 << 4)  /* Флаг превышения установленного числа повторов. Без сброса (записать 1) обмен невозможен */
-#define RX_P_NO (1 << 1)  /* 3 бита. Номер канала, данные для которого доступны в FIFO приёмника. 7 -  FIFO пусто. */
-/* Признак заполнения FIFO передатчика: 1 - заполнено; 0 - есть доступные слоты
-  (переименовано из TX_FULL во избежание путаницы с одноимённым битом из регистра FIFO_STATUS) */
-#define TX_FULL_STATUS (1 << 0)
 #define INITIAL_STATUS_VALUE    0x0E
 
-/* OBSERVE_TX */
-#define PLOS_CNT 4  /* 4 бита. Общее количество пакетов без подтверждения. Сбрасывается записью RF_CH */
-#define ARC_CNT  0  /* 4 бита. Количество предпринятых повторов при последней отправке. */
+#define TX_REUSE (1 << 6)
 
-/* FIFO_STATUS */
-#define TX_REUSE (1 << 6)  /* Признак готовности последнего пакета для повторной отправки. */
-/* Флаг переполнения FIFO очереди передатчика.
-  (переименовано из TX_FULL во избежание путаницы с одноимённым битом из регистра STATUS) */
-#define TX_FULL_FIFO (1 << 5)
-#define TX_EMPTY (1 << 4)  /* Флаг освобождения FIFO очереди передатчика. */
-#define RX_FULL  (1 << 1)  /* Флаг переполнения FIFO очереди приёмника. */
-#define RX_EMPTY (1 << 0)  /* Флаг освобождения FIFO очереди приёмника. */
-
-/* FEATURE */
-#define EN_DPL     (1 << 2)  /* Включает поддержку приёма и передачи пакетов произвольной длины */
-#define EN_ACK_PAY (1 << 1)  /* Разрешает передачу данных с пакетами подтверждения приёма */
-#define EN_DYN_ACK (1 << 0)  /* Разрешает использование W_TX_PAYLOAD_NOACK */
+#define TX_FULL     (1 << 0)
+#define TX_EMPTY    (1 << 4)
+#define RX_FULL     (1 << 1)
+#define RX_EMPTY    (1 << 0)
 
 #define NRF24L01_FEATURES_MASK  0x07
 
@@ -160,17 +137,6 @@ static void nrf24l01_write_buffer(uint8_t cmd, const uint8_t *buff,
     nrf24l01_csn_1();
 }
 
-#ifndef NRF24L01_PLUS
-
-void nrf24l01_activate(void)
-{
-    nrf24l01_csn_0();
-    nrf24l01_spi_transfer_byte(0x50);
-    nrf24l01_spi_transfer_byte(0x73);
-    nrf24l01_csn_1();
-}
-#endif
-
 int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
 {
     config->en_irq &= NRF24L01_IRQ_ALL;
@@ -195,25 +161,24 @@ int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
                           config->addr_size + 2);
 
     nrf24l01_write_reg(FEATURE, config->features);
+
     if (config->features & NRF24L01_FEATURE_ACK) {
         nrf24l01_write_reg(EN_RXADDR, 1 << NRF24L01_PIPE0);
         nrf24l01_write_reg(EN_AA, 1 << NRF24L01_PIPE0);
         nrf24l01_write_buffer(W_REGISTER | RX_ADDR_P0, config->address,
                               config->addr_size + 2);
-    } else {
-        nrf24l01_write_reg(EN_RXADDR, 0);
-    }
-
-    if (config->features & NRF24L01_FEATURE_DYNPL) {
         /*
-         * Для DYNPD почему-то нужно устанавливать ещё и EN_AA
-         * в соответствующем соединении.
+         * Динамическая длина полезной нагрузки не может использоваться
+         * без использования автоподтверждений.
          */
-        nrf24l01_write_reg(EN_AA, 1 << NRF24L01_PIPE0);
-        nrf24l01_write_reg(DYNPD, 1 << NRF24L01_PIPE0);
+        if (config->features & NRF24L01_FEATURE_DYNPL) {
+            nrf24l01_write_reg(DYNPD, 1 << NRF24L01_PIPE0);
+        } else {
+            nrf24l01_write_reg(DYNPD, 0);
+        }
     } else {
         nrf24l01_write_reg(EN_AA, 0);
-        nrf24l01_write_reg(DYNPD, 0);
+        nrf24l01_write_reg(EN_RXADDR, 0);
     }
 
     nrf24l01_power_up();
@@ -222,25 +187,27 @@ int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
     nrf24l01_flush_rx_fifo();
     nrf24l01_clear_interrupts(NRF24L01_IRQ_ALL);
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ?
-            NRF24L01_OK : NRF24L01_ERR_BUS;
+    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
 }
 
 int nrf24l01_tx_configure_minimal(void)
 {
     nrf24l01_power_up();
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ?
-            NRF24L01_OK : NRF24L01_ERR_BUS;
+    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
 }
 
 void nrf24l01_tx_write_pld(const void *pld, uint8_t size)
 {
+    if (size > 32)
+        size = 32;
     nrf24l01_write_buffer(W_TX_PAYLOAD, (uint8_t *)pld, size);
 }
 
 void nrf24l01_tx_write_noack_pld(const void *pld, uint8_t size)
 {
+    if (size > 32)
+        size = 32;
     nrf24l01_write_buffer(W_TX_PAYLOAD_NOACK, (uint8_t *)pld, size);
 }
 
@@ -290,8 +257,7 @@ int nrf24l01_rx_configure(struct nrf24l01_rx_config *config)
     nrf24l01_flush_rx_fifo();
     nrf24l01_clear_interrupts(NRF24L01_IRQ_ALL);
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ?
-            NRF24L01_OK : NRF24L01_ERR_BUS;
+    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
 }
 
 int nrf24l01_rx_configure_minimal(uint8_t pld_size)
@@ -302,13 +268,13 @@ int nrf24l01_rx_configure_minimal(uint8_t pld_size)
     nrf24l01_power_up();
     nrf24l01_write_reg(RX_PW_P0, pld_size);
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ?
-            NRF24L01_OK : NRF24L01_ERR_BUS;
+    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
 }
 
 void nrf24l01_rx_setup_pipe(struct nrf24l01_pipe_config *config)
 {
     nrf24l01_write_bits(EN_RXADDR, 1 << config->number, 1);
+
     if (config->number == NRF24L01_PIPE0 || config->number == NRF24L01_PIPE1) {
         enum nrf24l01_addr_size addr_size = nrf24l01_read_reg(SETUP_AW);
         nrf24l01_write_buffer(W_REGISTER | (RX_ADDR_P0 + config->number),
@@ -331,6 +297,16 @@ void nrf24l01_rx_setup_pipe(struct nrf24l01_pipe_config *config)
     }
 }
 
+void nrf24l01_rx_close_pipe(enum nrf24l01_pipe_number pipe_no)
+{
+    nrf24l01_write_bits(EN_RXADDR, 1 << pipe_no, 0);
+}
+
+void nrf24l01_rx_open_pipe(enum nrf24l01_pipe_number pipe_no)
+{
+    nrf24l01_write_bits(EN_RXADDR, 1 << pipe_no, 1);
+}
+
 void nrf24l01_rx_start_listening(void)
 {
     nrf24l01_ce_1();
@@ -343,13 +319,16 @@ void nrf24l01_rx_stop_listening(void)
 
 int nrf24l01_rx_get_pld_pipe_no(void)
 {
-    return (nrf24l01_get_status() >> 1) & 0x07;
+    uint8_t pipe_no = (nrf24l01_get_status() >> 1) & 0x07;
+    return pipe_no < 6 ? pipe_no : -1;
 }
 
-void nrf24l01_rx_write_ack_pld(enum nrf24l01_pipe_number pipeno,
+void nrf24l01_rx_write_ack_pld(enum nrf24l01_pipe_number pipe_no,
                                const void *pld, uint8_t size)
 {
-    nrf24l01_write_buffer(W_ACK_PAYLOAD | pipeno, (uint8_t *)pld, size);
+    if (size > 32)
+        size = 32;
+    nrf24l01_write_buffer(W_ACK_PAYLOAD | pipe_no, (uint8_t *)pld, size);
 }
 
 void nrf24l01_power_down(void)
@@ -374,6 +353,11 @@ void nrf24l01_clear_interrupts(uint8_t irq)
     nrf24l01_write_bits(STATUS, irq, 1);
 }
 
+bool nrf24l01_data_in_tx_fifo(void)
+{
+    return (nrf24l01_read_reg(FIFO_STATUS) & TX_EMPTY) == 0;
+}
+
 bool nrf24l01_data_in_rx_fifo(void)
 {
     return (nrf24l01_read_reg(FIFO_STATUS) & RX_EMPTY) == 0;
@@ -381,7 +365,12 @@ bool nrf24l01_data_in_rx_fifo(void)
 
 bool nrf24l01_full_tx_fifo(void)
 {
-    return (nrf24l01_get_status() & TX_FULL_STATUS) != 0;
+    return (nrf24l01_get_status() & TX_FULL) != 0;
+}
+
+bool nrf24l01_full_rx_fifo(void)
+{
+     return (nrf24l01_read_reg(FIFO_STATUS) & RX_FULL) != 0;
 }
 
 int nrf24l01_read_pld_size(void)
@@ -409,6 +398,8 @@ void nrf24l01_flush_rx_fifo(void)
 
 void nrf24l01_set_rf_channel(uint8_t channel)
 {
+    if (channel > NRF24L01_CHANNELS - 1)
+        channel = NRF24L01_CHANNELS - 1;
     nrf24l01_write_reg(RF_CH, channel);
 }
 
@@ -429,7 +420,7 @@ void nrf24l01_measure_noise(uint8_t *snapshot_buff,
 {
     uint_fast8_t i, j;
 
-    if (start_ch > end_ch)
+    if (end_ch > NRF24L01_CHANNELS - 1 || start_ch > end_ch)
         return;
 
     for (i = 0; i < end_ch - start_ch + 1; i++)
@@ -479,7 +470,18 @@ void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel)
 #endif
 }
 
-void nrf24l01_stop_output_carrier(void)
+#ifndef NRF24L01_PLUS
+
+void nrf24l01_activate(void)
 {
-    nrf24l01_ce_0();
+    nrf24l01_csn_0();
+    nrf24l01_spi_transfer_byte(0x50);
+    nrf24l01_spi_transfer_byte(0x73);
+    nrf24l01_csn_1();
 }
+
+void nrf24l01_rx_set_lna(bool state)
+{
+    nrf24l01_write_bits(RF_SETUP, LNA_HCURR, state);
+}
+#endif
