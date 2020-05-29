@@ -6,10 +6,7 @@
 #ifndef LIBPORT_H_INCLUDED
 #define LIBPORT_H_INCLUDED
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-
+#include "main.h"
 
 void delay_ms(unsigned int ms);
 void delay_us(unsigned int us);

@@ -1,9 +1,11 @@
 /**
  * @file
- * @brief   Драйвер температурных датчиков DS18B20.
- * @author  Danya0x07
+ * @brief   Простая кроссплатформенная библиотека для датчиков температуры
+ *          DS18B20.
  *
  * На текущий момент поддерживается работа только с одной линией 1-Wire.
+ *
+ * @author  Danya0x07
  *
  * @todo    Реализовать проверку контрольной суммы.
  * @todo    Реализовать динамический поиск датчиков на линии.
@@ -12,6 +14,10 @@
 
 #ifndef DS18B20_H_INCLUDED
 #define DS18B20_H_INCLUDED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include <stddef.h>
@@ -150,5 +156,9 @@ int8_t ds18b20_get_result(const uint8_t *address, int32_t *result);
  */
 void ds18b20_parse_result(int32_t result, int8_t *integer,
                           uint16_t *fractional);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* DS18B20_H_INCLUDED */

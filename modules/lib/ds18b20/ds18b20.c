@@ -1,9 +1,5 @@
-/**
- * @file
- * @brief   Реализация драйвера температурных датчиков DS18B20.
- */
-#include "ds18b20_conf.h"
 #include "ds18b20.h"
+#include "ds18b20_port.h"
 
 enum ds18b20_commands {
     SEARCH_ROM   = 0xF0,

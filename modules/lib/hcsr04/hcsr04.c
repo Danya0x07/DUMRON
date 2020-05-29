@@ -1,5 +1,6 @@
 #include "main.h"
 #include "hcsr04.h"
+#include <libport.h>
 
 #define TRIGGER_PULSE_WIDTH_US    12
 #define ECHO_RESPONSE_TIMEOUT_US  500

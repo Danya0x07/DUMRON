@@ -1,6 +1,11 @@
 /**
  * @file
- * @brief   Драйвер трансиверов NRF24L01 и NRF24L01+.
+ * @brief   Простая кроссплатформенная библиотека для трансиверов NRF24L01
+ *          и NRF24L01+.
+ *
+ * На текущий момент поддерживается работа только с единственным экземпляром
+ * трансивера.
+ *
  * @author  Danya0x07
  */
 
@@ -11,12 +16,17 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
+
 #include "nrf24l01_conf.h"
 
 /**
  * @brief   Размер адреса соединений трансивера NRF24L01/+.
  *
- * @details для приёмника распространяется на все входящие соединения.
+ * Для приёмника распространяется на все входящие соединения.
+ *
  * @note
  * Этот параметр у передатчика и приёмника должен быть одинаковым.
  */
@@ -60,7 +70,9 @@ enum nrf24l01_datarate {
 #endif
 };
 
-/** @brief   Мощность сигнала при передаче. */
+/**
+ * @brief   Мощность сигнала при передаче.
+ */
 enum nrf24l01_power {
     NRF24L01_POWER_N18DBM = 0 << 1,  /**< -18dBm */
     NRF24L01_POWER_N12DBM = 1 << 1,  /**< -12dBm */
@@ -68,7 +80,9 @@ enum nrf24l01_power {
     NRF24L01_POWER_0DBM   = 3 << 1   /**<  0dBm */
 };
 
-/** @brief   Задержка между повторными отправками пакета. */
+/**
+ * @brief   Задержка между повторными отправками пакета.
+ */
 enum nrf24l01_retr_delay {
     NRF24L01_RETR_DELAY_250US  = 0x00,
     NRF24L01_RETR_DELAY_500US  = 0x10,
@@ -88,7 +102,9 @@ enum nrf24l01_retr_delay {
     NRF24L01_RETR_DELAY_4000US = 0xF0
 };
 
-/** @brief   Количество повторных попыток отправки пакета. */
+/**
+ * @brief   Количество повторных попыток отправки пакета.
+ */
 enum nrf24l01_retr_count {
     NRF24L01_RETR_COUNT_0  = 0x00,
     NRF24L01_RETR_COUNT_1  = 0x01,
@@ -194,7 +210,7 @@ enum nrf24l01_pipe_number {
  * Использование полезной нагрузки с пакетами автоподтверждения автоматически
  * подразумевает использование @ref NRF24L01_FEATURE_ACK и
  * @ref NRF24L01_FEATURE_DYNPL. Передатчик должен проверять размер принятой
- * полезной нагрузки вызовом nrf24l01_read_pldnrf24l01_set_rf_channel(config->rf_channel);_size() перед считыванием,
+ * полезной нагрузки вызовом nrf24l01_read_pld() перед считыванием,
  * чтобы убедиться в её валидности.
  */
 #define NRF24L01_FEATURE_ACK_PLD    0x07
@@ -211,17 +227,19 @@ enum nrf24l01_pipe_number {
  */
 
 /** Если размер пакетов, приходящих по этому соединению, варьируется. */
-#define NRF24L01_PIPE_FEATURE_DYNPL 0x01
+#define NRF24L01_PIPE_FEATURE_DYNPL 0x03
 
 /**
  * Если для пакетов, приходящих по этому соединению,
  * нужно высылать автоподтверждения.
  */
-#define NRF24L01_PIPE_FEATURE_ACK   0x02
+#define NRF24L01_PIPE_FEATURE_ACK   0x01
 /** @} */
 
 
-/** @brief   Структура с конфигурацией передатчика. */
+/**
+ * @brief   Структура с конфигурацией передатчика.
+ */
 struct nrf24l01_tx_config {
     /**
      * Адрес соединения. Должен быть равен адресу одного из входящих соединений
@@ -253,7 +271,9 @@ struct nrf24l01_tx_config {
     uint8_t features;
 };
 
-/** @brief   Структура с конфигурацией приёмника. */
+/**
+ * @brief   Структура с конфигурацией приёмника.
+ */
 struct nrf24l01_rx_config {
     enum nrf24l01_addr_size addr_size;
     enum nrf24l01_crc_mode crc_mode;
@@ -423,7 +443,9 @@ void nrf24l01_tx_transmit(void);
  */
 void nrf24l01_tx_start_cont_transmission(void);
 
-/** @brief   Выключает режим постоянной отправки, если ранее он был включен. */
+/**
+ * @brief   Выключает режим постоянной отправки, если ранее он был включен.
+ */
 void nrf24l01_tx_stop_cont_transmission(void);
 
 /**
@@ -518,7 +540,9 @@ void nrf24l01_rx_open_pipe(enum nrf24l01_pipe_number pipe_no);
  */
 void nrf24l01_rx_start_listening(void);
 
-/** @brief   Выключает прослушивание эфира на предмет валидных пакетов. */
+/**
+ * @brief   Выключает прослушивание эфира на предмет валидных пакетов.
+ */
 void nrf24l01_rx_stop_listening(void);
 
 /**
@@ -668,10 +692,14 @@ int nrf24l01_read_pld_size(void);
  */
 void nrf24l01_read_pld(void *pld, uint8_t size);
 
-/** @brief   Очищает очередь отправки. */
+/**
+ * @brief   Очищает очередь отправки.
+ */
 void nrf24l01_flush_tx_fifo(void);
 
-/** @brief   Очищает очередь приёма. */
+/**
+ * @brief   Очищает очередь приёма.
+ */
 void nrf24l01_flush_rx_fifo(void);
 
 /**

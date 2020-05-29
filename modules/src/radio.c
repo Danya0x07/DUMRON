@@ -1,108 +1,55 @@
+#include <main.h>
 #include <nrf24l01/nrf24l01.h>
 #include "radio.h"
 #include "debug.h"
 
-#define delay_ms(ms)    HAL_Delay((ms))  // временное решение
-
 void Radio_Init(void)
 {
-    uint8_t address[4] = {0xC7, 0x68, 0xAC, 0x35};
+    uint8_t rx_address[4] = {0xC7, 0x68, 0xAC, 0x35};
 
-    /*
-     * Включаем проверку контрольной суммы
-     * и переводимся в режим приёмника.
-     */
-    const uint8_t config = PWR_UP | PRIM_RX | EN_CRC | MASK_TX_DS | MASK_MAX_RT;
+    struct nrf24l01_rx_config config = {
+            .addr_size = NRF24L01_ADDRS_4BYTE,
+            .crc_mode  = NRF24L01_CRC_1BYTE,
+            .datarate  = NRF24L01_DATARATE_1MBPS,
+            .en_irq = NRF24L01_IRQ_RX_DR,
+            .rf_channel = 112,
+            .features = NRF24L01_FEATURE_ACK_PLD
+    };
 
-    /* Выбираем частотный канал. */
-    const uint8_t rf_ch = 112;
+    struct nrf24l01_pipe_config p0 = {
+            .address.array = rx_address,
+            .number = NRF24L01_PIPE0,
+            .features = NRF24L01_PIPE_FEATURE_ACK | NRF24L01_PIPE_FEATURE_DYNPL,
+    };
 
-    /* Выбираем скорость работы 1 Мбит/с. */
-    const uint8_t rf_setup = 0;
+    HAL_Delay(NRF24L01_PWR_ON_DELAY_MS);
 
-    /* Выбираем длину адреса в 4 байта. */
-    const uint8_t setup_aw = SETUP_AW_4BYTES_ADDRESS;
+    nrf24l01_rx_configure(&config);
+    nrf24l01_rx_setup_pipe(&p0);
 
-    /* Включаем канал 0. */
-    const uint8_t en_rxaddr = ERX_P0;
-
-    /* Включаем автоподтверждение на канале 0. */
-    const uint8_t en_aa = ENAA_P0;
-
-    /*
-     * Включаем возможность слать данные вместе с пакетами подтверждения
-     * и не указывать размер полезной нагрузки.
-     */
-    const uint8_t feature = EN_DPL | EN_ACK_PAY;
-
-    /* Включаем динамическую длину полезной нагрузки на канале 0. */
-    const uint8_t dynpd = DPL_P0;
-
-    /* Подали питание. */
-    nrf_csn_1();
-    nrf_ce_0();
-    delay_ms(100);
-
-    /* Power down --> Standby_1 */
-    nrf24l01_write_reg(CONFIG, PWR_UP);
-    delay_ms(5);
-
-    /* Записываем настройки в модуль. */
-    nrf_apply_mask(CONFIG, config, SET);
-    nrf24l01_write_reg(RF_CH, rf_ch);
-    nrf24l01_write_reg(RF_SETUP, rf_setup);
-    nrf24l01_write_reg(SETUP_AW, setup_aw);
-    nrf24l01_write_reg(EN_RXADDR, en_rxaddr);
-    nrf24l01_write_reg(EN_AA, en_aa);
-    nrf24l01_write_reg(FEATURE, feature);
-    nrf24l01_write_reg(DYNPD, dynpd);
-
-    /* Записываем адрес канала. */
-    nrf_rw_buff(W_REGISTER | RX_ADDR_P0, address, 4, NRF_OPERATION_WRITE);
-
-    /* Проверяем, что модуль всё понял. */
-    if (nrf24l01_read_reg(CONFIG) != config) {
-        debug_logs("nrf not responding\n");
-    }
-
-    /* Чистим буферы на всякий случай. */
-    nrf24l01_cmd(FLUSH_TX);
-    nrf24l01_cmd(FLUSH_RX);
-
-    /*
-     * Начинаем слушать эфир.
-     * Standby_1 --> Rx mode.
-     */
-    nrf_ce_1();
-    delay_ms(1);
+    nrf24l01_rx_start_listening();
 }
 
 void Radio_TakeIncoming(DataToRobot_s *incoming)
 {
-    uint8_t status = nrf_get_status();
-    if (status & RX_DR) {
-        uint8_t fifo_status, data_size;
+    if (nrf24l01_get_interrupts() & NRF24L01_IRQ_RX_DR) {
         do {
-            nrf_rw_buff(R_RX_PL_WID, &data_size, 1, NRF_OPERATION_READ);
-            if (data_size != sizeof(DataToRobot_s)) {
-                nrf24l01_cmd(FLUSH_RX);
-                nrf_clear_interrupts();
+            if (nrf24l01_read_pld_size() != sizeof(DataToRobot_s)) {
+                nrf24l01_flush_rx_fifo();
+                nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
                 break;
             }
-            nrf_rw_buff(R_RX_PAYLOAD, (uint8_t *)incoming,
-                        sizeof(DataToRobot_s), NRF_OPERATION_READ);
-            nrf_clear_interrupts();
-            fifo_status = nrf24l01_read_reg(FIFO_STATUS);
-        } while (!(fifo_status & RX_EMPTY));
+            nrf24l01_read_pld(incoming, sizeof(DataToRobot_s));
+            nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
+        } while (nrf24l01_data_in_rx_fifo());
     }
 }
 
 void Radio_PutOutcoming(DataFromRobot_s *outcoming)
 {
-    uint8_t status = nrf_get_status();
-    if (status & TX_FULL_STATUS) {
-        nrf24l01_cmd(FLUSH_TX);
+    if (nrf24l01_full_tx_fifo()) {
+        nrf24l01_flush_tx_fifo();
     }
-    nrf_rw_buff(W_ACK_PAYLOAD | 0, (uint8_t *)outcoming,
-                sizeof(DataFromRobot_s), NRF_OPERATION_WRITE);
+    nrf24l01_rx_write_ack_pld(NRF24L01_PIPE0, outcoming,
+                              sizeof(DataFromRobot_s));
 }

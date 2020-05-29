@@ -1,6 +1,8 @@
 /**
  * @file
- * @brief   Платформозависимая часть драйвера трансиверов NRF24L01/+.
+ * @brief   Платформозависимая часть библиотеки трансиверов NRF24L01/+.
+ *
+ * @author  Danya0x07
  *
  * Путём реализации данного интерфейса можно перенести библиотеку
  * на любую платформу.
@@ -14,10 +16,9 @@
 #define NRF24L01_PORT_H_INCLUDED
 
 #include <libport.h>
-#include "main.h"
 
 /**
- * @name    Интерфейс, используемый драйвером.
+ * @name    Интерфейс, используемый библиотекой.
  * @{
  */
 #define nrf24l01_csn_1() LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
@@ -29,6 +30,7 @@ static inline uint8_t nrf24l01_spi_transfer_byte(uint8_t byte)
 {
     return spi_transfer_byte(byte);
 }
+
 static inline void nrf24l01_spi_transfer_bytes(uint8_t *in, const uint8_t *out,
                                                size_t len)
 {

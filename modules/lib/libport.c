@@ -1,12 +1,11 @@
 #include "libport.h"
-#include "main.h"
 
 void delay_ms(unsigned int ms)
 {
     HAL_Delay(ms);
 }
 
-void delay_us(uint us)
+void delay_us(unsigned int us)
 {
     LL_TIM_SetCounter(TIM3, 0);
     while (LL_TIM_GetCounter(TIM3) < us)
