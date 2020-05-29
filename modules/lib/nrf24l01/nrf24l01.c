@@ -9,76 +9,70 @@
 #   define _delay_rpd()     delay_us(200)
 #endif
 
-/* Команды радиомодуля */
-enum nrf24l01_command {
-    R_REGISTER = 0x00,
-    W_REGISTER = 0x20,
-    R_RX_PAYLOAD = 0x61,
-    W_TX_PAYLOAD = 0xA0,
-    FLUSH_TX = 0xE1,
-    FLUSH_RX = 0xE2,
-    REUSE_TX_PL = 0xE3,
-    R_RX_PL_WID = 0x60,
-    W_ACK_PAYLOAD = 0xA8,
-    W_TX_PAYLOAD_NOACK = 0xB0,
-    NOP = 0xFF
+enum nrf24l01_cmd {
+    CMD_R_REGISTER = 0x00,
+    CMD_W_REGISTER = 0x20,
+    CMD_R_RX_PAYLOAD = 0x61,
+    CMD_W_TX_PAYLOAD = 0xA0,
+    CMD_FLUSH_TX = 0xE1,
+    CMD_FLUSH_RX = 0xE2,
+    CMD_REUSE_TX_PL = 0xE3,
+    CMD_R_RX_PL_WID = 0x60,
+    CMD_W_ACK_PAYLOAD = 0xA8,
+    CMD_W_TX_PAYLOAD_NOACK = 0xB0,
+    CMD_NOP = 0xFF
 };
 
-/* Регистры радуомодуля */
 enum nrf24l01_reg {
-    CONFIG = 0x00,
-    EN_AA = 0x01,
-    EN_RXADDR = 0x02,
-    SETUP_AW = 0x03,
-    SETUP_RETR = 0x04,
-    RF_CH = 0x05,
-    RF_SETUP = 0x06,
-    STATUS = 0x07,
-    OBSERVE_TX = 0x08,
-    RPD_CD = 0x09,
-    RX_ADDR_P0 = 0x0A,
-    RX_ADDR_P1 = 0x0B,
-    RX_ADDR_P2 = 0x0C,
-    RX_ADDR_P3 = 0x0D,
-    RX_ADDR_P4 = 0x0E,
-    RX_ADDR_P5 = 0x0F,
-    TX_ADDR = 0x10,
-    RX_PW_P0 = 0x11,
-    RX_PW_P1 = 0x12,
-    RX_PW_P2 = 0x13,
-    RX_PW_P3 = 0x14,
-    RX_PW_P4 = 0x15,
-    RX_PW_P5 = 0x16,
-    FIFO_STATUS = 0x17,
-    DYNPD = 0x1C,
-    FEATURE = 0x1D
+    REG_CONFIG = 0x00,
+    REG_EN_AA = 0x01,
+    REG_EN_RXADDR = 0x02,
+    REG_SETUP_AW = 0x03,
+    REG_SETUP_RETR = 0x04,
+    REG_RF_CH = 0x05,
+    REG_RF_SETUP = 0x06,
+    REG_STATUS = 0x07,
+    REG_OBSERVE_TX = 0x08,
+    REG_RPD_CD = 0x09,
+    REG_RX_ADDR_P0 = 0x0A,
+    REG_RX_ADDR_P1 = 0x0B,
+    REG_RX_ADDR_P2 = 0x0C,
+    REG_RX_ADDR_P3 = 0x0D,
+    REG_RX_ADDR_P4 = 0x0E,
+    REG_RX_ADDR_P5 = 0x0F,
+    REG_TX_ADDR = 0x10,
+    REG_RX_PW_P0 = 0x11,
+    REG_RX_PW_P1 = 0x12,
+    REG_RX_PW_P2 = 0x13,
+    REG_RX_PW_P3 = 0x14,
+    REG_RX_PW_P4 = 0x15,
+    REG_RX_PW_P5 = 0x16,
+    REG_FIFO_STATUS = 0x17,
+    REG_DYNPD = 0x1C,
+    REG_FEATURE = 0x1D
 };
 
-/* CONFIG */
-#define PWR_UP      (1 << 1)
-#define PRIM_RX     (1 << 0)
+#define CONFIG_PWR_UP   (1 << 1)
+#define CONFIG_PRIM_RX  (1 << 0)
 
-/* TEST */
+#define STATUS_RESET_VALUE    0x0E  /* для выявления аппаратных проблем */
+#define STATUS_TX_FULL  (1 << 0)
+
+#define FIFO_STATUS_TX_REUSE    (1 << 6)
+#define FIFO_STATUS_TX_EMPTY    (1 << 4)
+#define FIFO_STATUS_RX_FULL     (1 << 1)
+#define FIFO_STATUS_RX_EMPTY    (1 << 0)
+
+#define RF_SETUP_PLL_LOCK   (1 << 4)
 #ifdef NRF24L01_PLUS
-#   define CONT_WAVE  (1 << 7)  /* (Только для nRF24L01+) Непрерывная передача несущей (для тестов) */
+#   define RF_SETUP_CONT_WAVE   (1 << 7)
 #else
-#   define LNA_HCURR   (1 << 0)  /* Уменьшает потребление тока на 0.8mA ценой уменьшения чувствительности на 1.5dB */
+#   define RF_SETUP_LNA_HCURR   (1 << 0)
 #endif
 
-#define PLL_LOCK    (1 << 4)
+#define FEATURE_ALL  0x07  /* маска для валидации пользовательских настроек */
 
-#define INITIAL_STATUS_VALUE    0x0E
-
-#define TX_REUSE (1 << 6)
-
-#define TX_FULL     (1 << 0)
-#define TX_EMPTY    (1 << 4)
-#define RX_FULL     (1 << 1)
-#define RX_EMPTY    (1 << 0)
-
-#define NRF24L01_FEATURES_MASK  0x07
-
-static uint8_t nrf24l01_cmd(enum nrf24l01_command cmd)
+static uint8_t nrf24l01_exec(enum nrf24l01_cmd cmd)
 {
     uint8_t status;
     nrf24l01_csn_0();
@@ -89,15 +83,15 @@ static uint8_t nrf24l01_cmd(enum nrf24l01_command cmd)
 
 static inline uint8_t nrf24l01_get_status(void)
 {
-    return nrf24l01_cmd(NOP);
+    return nrf24l01_exec(CMD_NOP);
 }
 
 static uint8_t nrf24l01_read_reg(enum nrf24l01_reg reg)
 {
     uint8_t value;
     nrf24l01_csn_0();
-    nrf24l01_spi_transfer_byte(R_REGISTER | reg);
-    value = nrf24l01_spi_transfer_byte(NOP);
+    nrf24l01_spi_transfer_byte(CMD_R_REGISTER | reg);
+    value = nrf24l01_spi_transfer_byte(CMD_NOP);
     nrf24l01_csn_1();
     return value;
 }
@@ -105,7 +99,7 @@ static uint8_t nrf24l01_read_reg(enum nrf24l01_reg reg)
 static void nrf24l01_write_reg(enum nrf24l01_reg reg, uint8_t value)
 {
     nrf24l01_csn_0();
-    nrf24l01_spi_transfer_byte(W_REGISTER | reg);
+    nrf24l01_spi_transfer_byte(CMD_W_REGISTER | reg);
     nrf24l01_spi_transfer_byte(value);
     nrf24l01_csn_1();
 }
@@ -140,45 +134,45 @@ static void nrf24l01_write_buffer(uint8_t cmd, const uint8_t *buff,
 int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
 {
     config->en_irq &= NRF24L01_IRQ_ALL;
-    config->features &= NRF24L01_FEATURES_MASK;
+    config->features &= FEATURE_ALL;
 
     /*
      * Запись 1 на место бита прерывания в регистре CONFIG выключает данное
      * прерывание, поэтому пользовательскую маску нужно инвертировать.
      */
-    nrf24l01_write_reg(CONFIG, config->crc_mode |
+    nrf24l01_write_reg(REG_CONFIG, config->crc_mode |
                        (config->en_irq ^ NRF24L01_IRQ_ALL));
 
-    nrf24l01_write_reg(RF_SETUP, config->datarate | config->power);
-    nrf24l01_write_reg(SETUP_RETR, config->retr_delay | config->retr_count);
+    nrf24l01_write_reg(REG_RF_SETUP, config->datarate | config->power);
+    nrf24l01_write_reg(REG_SETUP_RETR, config->retr_delay | config->retr_count);
 
-    nrf24l01_write_reg(SETUP_AW, config->addr_size);
+    nrf24l01_write_reg(REG_SETUP_AW, config->addr_size);
     /*
      * Битовое представление ширины адреса определяется от 1 до 3,
      * а фактический размер от 3 до 5 байт.
      */
-    nrf24l01_write_buffer(W_REGISTER | TX_ADDR, config->address,
+    nrf24l01_write_buffer(CMD_W_REGISTER | REG_TX_ADDR, config->address,
                           config->addr_size + 2);
 
-    nrf24l01_write_reg(FEATURE, config->features);
+    nrf24l01_write_reg(REG_FEATURE, config->features);
 
     if (config->features & NRF24L01_FEATURE_ACK) {
-        nrf24l01_write_reg(EN_RXADDR, 1 << NRF24L01_PIPE0);
-        nrf24l01_write_reg(EN_AA, 1 << NRF24L01_PIPE0);
-        nrf24l01_write_buffer(W_REGISTER | RX_ADDR_P0, config->address,
+        nrf24l01_write_reg(REG_EN_RXADDR, 1 << NRF24L01_PIPE0);
+        nrf24l01_write_reg(REG_EN_AA, 1 << NRF24L01_PIPE0);
+        nrf24l01_write_buffer(CMD_W_REGISTER | REG_RX_ADDR_P0, config->address,
                               config->addr_size + 2);
         /*
          * Динамическая длина полезной нагрузки не может использоваться
          * без использования автоподтверждений.
          */
         if (config->features & NRF24L01_FEATURE_DYNPL) {
-            nrf24l01_write_reg(DYNPD, 1 << NRF24L01_PIPE0);
+            nrf24l01_write_reg(REG_DYNPD, 1 << NRF24L01_PIPE0);
         } else {
-            nrf24l01_write_reg(DYNPD, 0);
+            nrf24l01_write_reg(REG_DYNPD, 0);
         }
     } else {
-        nrf24l01_write_reg(EN_AA, 0);
-        nrf24l01_write_reg(EN_RXADDR, 0);
+        nrf24l01_write_reg(REG_EN_AA, 0);
+        nrf24l01_write_reg(REG_EN_RXADDR, 0);
     }
 
     nrf24l01_power_up();
@@ -187,33 +181,38 @@ int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
     nrf24l01_flush_rx_fifo();
     nrf24l01_clear_interrupts(NRF24L01_IRQ_ALL);
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
+    return nrf24l01_get_status() == STATUS_RESET_VALUE ? 0 : -1;
 }
 
 int nrf24l01_tx_configure_minimal(void)
 {
     nrf24l01_power_up();
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
+    return nrf24l01_get_status() == STATUS_RESET_VALUE ? 0 : -1;
 }
 
 void nrf24l01_tx_write_pld(const void *pld, uint8_t size)
 {
     if (size > 32)
         size = 32;
-    nrf24l01_write_buffer(W_TX_PAYLOAD, (uint8_t *)pld, size);
+    nrf24l01_write_buffer(CMD_W_TX_PAYLOAD, (uint8_t *)pld, size);
 }
 
 void nrf24l01_tx_write_noack_pld(const void *pld, uint8_t size)
 {
     if (size > 32)
         size = 32;
-    nrf24l01_write_buffer(W_TX_PAYLOAD_NOACK, (uint8_t *)pld, size);
+    nrf24l01_write_buffer(CMD_W_TX_PAYLOAD_NOACK, (uint8_t *)pld, size);
 }
 
 void nrf24l01_tx_reuse_pld(void)
 {
-    nrf24l01_cmd(REUSE_TX_PL);
+    nrf24l01_exec(CMD_REUSE_TX_PL);
+}
+
+bool nrf24l01_tx_reusing_pld(void)
+{
+    return (nrf24l01_read_reg(REG_FIFO_STATUS) & FIFO_STATUS_TX_REUSE) != 0;
 }
 
 void nrf24l01_tx_transmit(void)
@@ -235,7 +234,7 @@ void nrf24l01_tx_stop_cont_transmission(void)
 
 void nrf24l01_tx_get_statistics(uint8_t *lost, uint8_t *retr)
 {
-    uint8_t observe_tx = nrf24l01_read_reg(OBSERVE_TX);
+    uint8_t observe_tx = nrf24l01_read_reg(REG_OBSERVE_TX);
     *lost = observe_tx >> 4;
     *retr = observe_tx & 0x0F;
 }
@@ -243,13 +242,13 @@ void nrf24l01_tx_get_statistics(uint8_t *lost, uint8_t *retr)
 int nrf24l01_rx_configure(struct nrf24l01_rx_config *config)
 {
     config->en_irq &= NRF24L01_IRQ_ALL;
-    config->features &= NRF24L01_FEATURES_MASK;
+    config->features &= FEATURE_ALL;
 
-    nrf24l01_write_reg(CONFIG, config->crc_mode | PRIM_RX |
+    nrf24l01_write_reg(REG_CONFIG, config->crc_mode | CONFIG_PRIM_RX |
                        (config->en_irq ^ NRF24L01_IRQ_ALL));
-    nrf24l01_write_reg(RF_SETUP, config->datarate);
-    nrf24l01_write_reg(SETUP_AW, config->addr_size);
-    nrf24l01_write_reg(FEATURE, config->features);
+    nrf24l01_write_reg(REG_RF_SETUP, config->datarate);
+    nrf24l01_write_reg(REG_SETUP_AW, config->addr_size);
+    nrf24l01_write_reg(REG_FEATURE, config->features);
 
     nrf24l01_power_up();
     nrf24l01_set_rf_channel(config->rf_channel);
@@ -257,7 +256,7 @@ int nrf24l01_rx_configure(struct nrf24l01_rx_config *config)
     nrf24l01_flush_rx_fifo();
     nrf24l01_clear_interrupts(NRF24L01_IRQ_ALL);
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
+    return nrf24l01_get_status() == STATUS_RESET_VALUE ? 0 : -1;
 }
 
 int nrf24l01_rx_configure_minimal(uint8_t pld_size)
@@ -266,45 +265,48 @@ int nrf24l01_rx_configure_minimal(uint8_t pld_size)
         pld_size = 32;
 
     nrf24l01_power_up();
-    nrf24l01_write_reg(RX_PW_P0, pld_size);
+    nrf24l01_write_reg(REG_RX_PW_P0, pld_size);
 
-    return nrf24l01_get_status() == INITIAL_STATUS_VALUE ? 0 : -1;
+    return nrf24l01_get_status() == STATUS_RESET_VALUE ? 0 : -1;
 }
 
 void nrf24l01_rx_setup_pipe(struct nrf24l01_pipe_config *config)
 {
-    nrf24l01_write_bits(EN_RXADDR, 1 << config->number, 1);
+    nrf24l01_write_bits(REG_EN_RXADDR, 1 << config->number, 1);
 
     if (config->number == NRF24L01_PIPE0 || config->number == NRF24L01_PIPE1) {
-        enum nrf24l01_addr_size addr_size = nrf24l01_read_reg(SETUP_AW);
-        nrf24l01_write_buffer(W_REGISTER | (RX_ADDR_P0 + config->number),
+        enum nrf24l01_addr_size addr_size = nrf24l01_read_reg(REG_SETUP_AW);
+        nrf24l01_write_buffer(CMD_W_REGISTER |
+                              (REG_RX_ADDR_P0 + config->number),
                               config->address.array, addr_size + 2);
     } else {
-        nrf24l01_write_buffer(W_REGISTER | (RX_ADDR_P0 + config->number),
-                              config->address.lsb, 1);
+        nrf24l01_write_buffer(CMD_W_REGISTER |
+                              (REG_RX_ADDR_P0 + config->number),
+                              &config->address.lsb, 1);
     }
 
     if (config->features & NRF24L01_PIPE_FEATURE_ACK) {
-        nrf24l01_write_bits(EN_AA, 1 << config->number, 1);
+        nrf24l01_write_bits(REG_EN_AA, 1 << config->number, 1);
     } else {
-        nrf24l01_write_bits(EN_AA, 1 << config->number, 0);
+        nrf24l01_write_bits(REG_EN_AA, 1 << config->number, 0);
     }
 
     if (config->features & NRF24L01_PIPE_FEATURE_DYNPL) {
-        nrf24l01_write_bits(DYNPD, 1 << config->number, 1);
+        nrf24l01_write_bits(REG_DYNPD, 1 << config->number, 1);
     } else {
-        nrf24l01_write_bits(DYNPD, 1 << config->number, 0);
+        nrf24l01_write_reg(REG_RX_PW_P0 + config->number, config->pld_size);
+        nrf24l01_write_bits(REG_DYNPD, 1 << config->number, 0);
     }
 }
 
 void nrf24l01_rx_close_pipe(enum nrf24l01_pipe_number pipe_no)
 {
-    nrf24l01_write_bits(EN_RXADDR, 1 << pipe_no, 0);
+    nrf24l01_write_bits(REG_EN_RXADDR, 1 << pipe_no, 0);
 }
 
 void nrf24l01_rx_open_pipe(enum nrf24l01_pipe_number pipe_no)
 {
-    nrf24l01_write_bits(EN_RXADDR, 1 << pipe_no, 1);
+    nrf24l01_write_bits(REG_EN_RXADDR, 1 << pipe_no, 1);
 }
 
 void nrf24l01_rx_start_listening(void)
@@ -328,17 +330,17 @@ void nrf24l01_rx_write_ack_pld(enum nrf24l01_pipe_number pipe_no,
 {
     if (size > 32)
         size = 32;
-    nrf24l01_write_buffer(W_ACK_PAYLOAD | pipe_no, (uint8_t *)pld, size);
+    nrf24l01_write_buffer(CMD_W_ACK_PAYLOAD | pipe_no, (uint8_t *)pld, size);
 }
 
 void nrf24l01_power_down(void)
 {
-    nrf24l01_write_bits(CONFIG, PWR_UP, 0);
+    nrf24l01_write_bits(REG_CONFIG, CONFIG_PWR_UP, 0);
 }
 
 void nrf24l01_power_up(void)
 {
-    nrf24l01_write_bits(CONFIG, PWR_UP, 1);
+    nrf24l01_write_bits(REG_CONFIG, CONFIG_PWR_UP, 1);
     delay_ms(2);
 }
 
@@ -350,69 +352,69 @@ uint8_t nrf24l01_get_interrupts(void)
 void nrf24l01_clear_interrupts(uint8_t irq)
 {
     irq &= NRF24L01_IRQ_ALL;
-    nrf24l01_write_bits(STATUS, irq, 1);
+    nrf24l01_write_bits(REG_STATUS, irq, 1);
 }
 
 bool nrf24l01_data_in_tx_fifo(void)
 {
-    return (nrf24l01_read_reg(FIFO_STATUS) & TX_EMPTY) == 0;
+    return (nrf24l01_read_reg(REG_FIFO_STATUS) & FIFO_STATUS_TX_EMPTY) == 0;
 }
 
 bool nrf24l01_data_in_rx_fifo(void)
 {
-    return (nrf24l01_read_reg(FIFO_STATUS) & RX_EMPTY) == 0;
+    return nrf24l01_rx_get_pld_pipe_no() < 0;
 }
 
 bool nrf24l01_full_tx_fifo(void)
 {
-    return (nrf24l01_get_status() & TX_FULL) != 0;
+    return (nrf24l01_get_status() & STATUS_TX_FULL) != 0;
 }
 
 bool nrf24l01_full_rx_fifo(void)
 {
-     return (nrf24l01_read_reg(FIFO_STATUS) & RX_FULL) != 0;
+     return (nrf24l01_read_reg(REG_FIFO_STATUS) & FIFO_STATUS_RX_FULL) != 0;
 }
 
 int nrf24l01_read_pld_size(void)
 {
     uint8_t pld_size;
 
-    nrf24l01_read_buffer(R_RX_PL_WID, &pld_size, 1);
+    nrf24l01_read_buffer(CMD_R_RX_PL_WID, &pld_size, 1);
     return pld_size;
 }
 
 void nrf24l01_read_pld(void *pld, uint8_t size)
 {
-    nrf24l01_read_buffer(R_RX_PAYLOAD, (uint8_t *)pld, size);
+    nrf24l01_read_buffer(CMD_R_RX_PAYLOAD, (uint8_t *)pld, size);
 }
 
 void nrf24l01_flush_tx_fifo(void)
 {
-    nrf24l01_cmd(FLUSH_TX);
+    nrf24l01_exec(CMD_FLUSH_TX);
 }
 
 void nrf24l01_flush_rx_fifo(void)
 {
-    nrf24l01_cmd(FLUSH_RX);
+    nrf24l01_exec(CMD_FLUSH_RX);
 }
 
 void nrf24l01_set_rf_channel(uint8_t channel)
 {
     if (channel > NRF24L01_CHANNELS - 1)
         channel = NRF24L01_CHANNELS - 1;
-    nrf24l01_write_reg(RF_CH, channel);
+    nrf24l01_write_reg(REG_RF_CH, channel);
 }
 
 bool nrf24l01_detect_signal(void)
 {
-    uint8_t backup = nrf24l01_read_reg(CONFIG);
+    uint8_t backup = nrf24l01_read_reg(REG_CONFIG);
 
-    nrf24l01_write_bits(CONFIG, PRIM_RX, 1);
+    nrf24l01_write_bits(REG_CONFIG, CONFIG_PRIM_RX, 1);
     nrf24l01_ce_1();
     _delay_rpd();
     nrf24l01_ce_0();
-    nrf24l01_write_reg(CONFIG, backup);
-    return nrf24l01_read_reg(RPD_CD) & 0x01;
+    nrf24l01_write_reg(REG_CONFIG, backup);
+    return nrf24l01_read_reg(REG_RPD_CD) & 0x01;
 }
 
 void nrf24l01_measure_noise(uint8_t *snapshot_buff,
@@ -439,34 +441,34 @@ void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel)
 {
 #ifdef NRF24L01_PLUS
     nrf24l01_power_up();
-    nrf24l01_write_bits(CONFIG, PRIM_RX, 0);
-    nrf_write_reg(RF_SETUP, CONT_WAVE | PLL_LOCK | power);
+    nrf24l01_write_bits(REG_CONFIG, CONFIG_PRIM_RX, 0);
+    nrf_write_reg(REG_RF_SETUP, RF_SETUP_CONT_WAVE | RF_SETUP_PLL_LOCK | power);
     nrf24l01_set_rf_channel(channel);
     nrf24l01_ce_1();
 #else
     uint_fast8_t i;
 
     nrf24l01_power_up();
-    nrf24l01_write_bits(CONFIG, PRIM_RX, 0);
-    nrf24l01_write_reg(EN_AA, 0);
-    nrf24l01_write_reg(SETUP_RETR, 0);
-    nrf24l01_write_reg(RF_SETUP, PLL_LOCK | power);
-    nrf24l01_write_reg(SETUP_AW, NRF24L01_ADDRS_5BYTE);
+    nrf24l01_write_bits(REG_CONFIG, CONFIG_PRIM_RX, 0);
+    nrf24l01_write_reg(REG_EN_AA, 0);
+    nrf24l01_write_reg(REG_SETUP_RETR, 0);
+    nrf24l01_write_reg(REG_RF_SETUP, RF_SETUP_PLL_LOCK | power);
+    nrf24l01_write_reg(REG_SETUP_AW, NRF24L01_ADDRS_5BYTE);
 
-    nrf24l01_spi_transfer_byte(W_REGISTER | TX_ADDR);
+    nrf24l01_spi_transfer_byte(CMD_W_REGISTER | REG_TX_ADDR);
     for (i = 0; i < 5; i++)
         nrf24l01_spi_transfer_byte(0xFF);
 
-    nrf24l01_spi_transfer_byte(W_TX_PAYLOAD);
+    nrf24l01_spi_transfer_byte(CMD_W_TX_PAYLOAD);
     for (i = 0; i < 32; i++)
         nrf24l01_spi_transfer_byte(0xFF);
 
-    nrf24l01_write_bits(CONFIG, EN_CRC, 0);
+    nrf24l01_write_bits(REG_CONFIG, EN_CRC, 0);
     nrf24l01_set_rf_channel(channel);
     nrf24l01_tx_transmit();
     delay_ms(1);
     nrf24l01_ce_1();
-    nrf24l01_cmd(REUSE_TX_PL);
+    nrf24l01_exec(CMD_REUSE_TX_PL);
 #endif
 }
 
@@ -482,6 +484,6 @@ void nrf24l01_activate(void)
 
 void nrf24l01_rx_set_lna(bool state)
 {
-    nrf24l01_write_bits(RF_SETUP, LNA_HCURR, state);
+    nrf24l01_write_bits(REG_RF_SETUP, RF_SETUP_LNA_HCURR, state);
 }
 #endif

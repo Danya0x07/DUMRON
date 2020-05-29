@@ -77,7 +77,7 @@ enum nrf24l01_retr_delay {
     NRF24L01_RETR_DELAY_1250US = 0x40,
     NRF24L01_RETR_DELAY_1500US = 0x50,
     NRF24L01_RETR_DELAY_1750US = 0x60,
-    NRF24L01_RETR_DELAY_2000US  = 0x70,
+    NRF24L01_RETR_DELAY_2000US = 0x70,
     NRF24L01_RETR_DELAY_2250US = 0x80,
     NRF24L01_RETR_DELAY_2500US = 0x90,
     NRF24L01_RETR_DELAY_2750US = 0xA0,
@@ -388,6 +388,17 @@ void nrf24l01_tx_write_noack_pld(const void *pld, uint8_t size);
 void nrf24l01_tx_reuse_pld(void);
 
 /**
+ * @brief   Проверяет, включено ли у передатчика повторное использование
+ *          пакетов при отправке.
+ *
+ * @return  true, если повторное использование пакетов включено.
+ * @return  false, если выключено.
+ *
+ * @see nrf24l01_tx_reuse_pld()
+ */
+bool nrf24l01_tx_reusing_pld(void);
+
+/**
  * @brief   Инициирует отправку первого в очереди пакета.
  *
  * @note
@@ -511,8 +522,8 @@ void nrf24l01_rx_start_listening(void);
 void nrf24l01_rx_stop_listening(void);
 
 /**
- * @brief   Получает номер соединения, полезная нагрузка для которого находится
- *          первой в очереди приёма.
+ * @brief   Получает номер соединения,  принятая полезная нагрузка
+ *          для которого находится первой в очереди приёма.
  *
  * @return  Номер соединения из @ref nrf24l01_pipe_number,
  * @return  -1, если очередь приёма пуста.
@@ -644,6 +655,7 @@ bool nrf24l01_full_rx_fifo(void);
  * размер полезной нагрузки, принятой вместе с пакетом автоподтверждения.
  *
  * @return  Размер полезной нагрузки (от 1 до 32 байт).
+ * @todo TODO
  */
 int nrf24l01_read_pld_size(void);
 
@@ -708,7 +720,7 @@ bool nrf24l01_detect_signal(void);
  * @param end_ch    Конечный канал снимка. Должен быть в диапазоне от 0 до
  *                  @ref NRF_CHANNELS - 1.
  *
- * @warning start_ch должен быть < end_ch.
+ * @warning start_ch <= end_ch.
  */
 void nrf24l01_measure_noise(uint8_t *snapshot_buff,
                             uint8_t start_ch, uint8_t end_ch);
