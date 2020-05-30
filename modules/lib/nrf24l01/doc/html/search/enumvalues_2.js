@@ -1,5 +1,29 @@
 var searchData=
 [
-  ['en_5faa',['EN_AA',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163eaa8415aca327c9b5139ab9a271eb5c172',1,'nrf24l01.c']]],
-  ['en_5frxaddr',['EN_RXADDR',['../nrf24l01_8c.html#a6dfee12fc2a739ff56778d6c4691163ea977bdcd02be750a79275ed307c408761',1,'nrf24l01.c']]]
+  ['reg_5fconfig',['REG_CONFIG',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa1274e1a75524735fd9a2bc72cf8e11b9',1,'nrf24l01.c']]],
+  ['reg_5fdynpd',['REG_DYNPD',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa114323383dcdc44dfd16ef989a122243',1,'nrf24l01.c']]],
+  ['reg_5fen_5faa',['REG_EN_AA',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaad195678e086b1f65fd0355c8796f9a0e',1,'nrf24l01.c']]],
+  ['reg_5fen_5frxaddr',['REG_EN_RXADDR',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa0f30057b8d5cd01f71d7f0bdff39a492',1,'nrf24l01.c']]],
+  ['reg_5ffeature',['REG_FEATURE',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaaf24be1498b23f1f6b6b069cd33dd820d',1,'nrf24l01.c']]],
+  ['reg_5ffifo_5fstatus',['REG_FIFO_STATUS',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaadde32c429e9c196739b3e8d20449aeff',1,'nrf24l01.c']]],
+  ['reg_5fobserve_5ftx',['REG_OBSERVE_TX',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa6615ed59f07b9d6a97486800b15ff4b1',1,'nrf24l01.c']]],
+  ['reg_5frf_5fch',['REG_RF_CH',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa6e2c0c7035191ae6b148f751042cdaca',1,'nrf24l01.c']]],
+  ['reg_5frf_5fsetup',['REG_RF_SETUP',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa4ca5c0c4f5a2f9d70d194a78211babee',1,'nrf24l01.c']]],
+  ['reg_5frpd_5fcd',['REG_RPD_CD',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaac8ee864da1b88d96ce8e57aad600e7be',1,'nrf24l01.c']]],
+  ['reg_5frx_5faddr_5fp0',['REG_RX_ADDR_P0',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa0849562b3e9db86f2df7d961ee03553c',1,'nrf24l01.c']]],
+  ['reg_5frx_5faddr_5fp1',['REG_RX_ADDR_P1',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaad9981dac5bc346a28f881b862fa51aa2',1,'nrf24l01.c']]],
+  ['reg_5frx_5faddr_5fp2',['REG_RX_ADDR_P2',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa043601589aa0b82539430be6cc858b79',1,'nrf24l01.c']]],
+  ['reg_5frx_5faddr_5fp3',['REG_RX_ADDR_P3',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa37f2ff2aa0ab1c5009aac4bc9d7f77cc',1,'nrf24l01.c']]],
+  ['reg_5frx_5faddr_5fp4',['REG_RX_ADDR_P4',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa21ad0bd7c673255e26083048ca036791',1,'nrf24l01.c']]],
+  ['reg_5frx_5faddr_5fp5',['REG_RX_ADDR_P5',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa2adc406fce010de68d0e5d441581aa29',1,'nrf24l01.c']]],
+  ['reg_5frx_5fpw_5fp0',['REG_RX_PW_P0',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaabbcaf73e96d93cb5c2fc919896fbfd7d',1,'nrf24l01.c']]],
+  ['reg_5frx_5fpw_5fp1',['REG_RX_PW_P1',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaafc588e056418ade4dca6a7d50590690f',1,'nrf24l01.c']]],
+  ['reg_5frx_5fpw_5fp2',['REG_RX_PW_P2',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa2fbfea37477cc8c84e3c1bc6013501b8',1,'nrf24l01.c']]],
+  ['reg_5frx_5fpw_5fp3',['REG_RX_PW_P3',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa0703985b5211230475f9ba2b90144f60',1,'nrf24l01.c']]],
+  ['reg_5frx_5fpw_5fp4',['REG_RX_PW_P4',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaacd4083c0be295fed8d22700e69f9a8dc',1,'nrf24l01.c']]],
+  ['reg_5frx_5fpw_5fp5',['REG_RX_PW_P5',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa1a95f4d12fef36f26b81640a64488368',1,'nrf24l01.c']]],
+  ['reg_5fsetup_5faw',['REG_SETUP_AW',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaad775c79da6901193470c1a5945290c3b',1,'nrf24l01.c']]],
+  ['reg_5fsetup_5fretr',['REG_SETUP_RETR',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaab9606e6339135c3985addd0428c974ab',1,'nrf24l01.c']]],
+  ['reg_5fstatus',['REG_STATUS',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaadea8034327d219d939cd784da8bba37c',1,'nrf24l01.c']]],
+  ['reg_5ftx_5faddr',['REG_TX_ADDR',['../nrf24l01_8c.html#a88419bddefea6c892610ac2fa2cb9ecaa5f3c0cc486d4b6735103f10720fe5eec',1,'nrf24l01.c']]]
 ];

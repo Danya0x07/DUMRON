@@ -1,5 +1,6 @@
 var menudata={children:[
 {text:"Титульная страница",url:"index.html"},
+{text:"Описания",url:"pages.html"},
 {text:"Группы",url:"modules.html"},
 {text:"Структуры данных",url:"annotated.html",children:[
 {text:"Структуры данных",url:"annotated.html"},
@@ -11,40 +12,17 @@ var menudata={children:[
 {text:"Файлы",url:"files.html"},
 {text:"Список членов всех файлов",url:"globals.html",children:[
 {text:"Указатель",url:"globals.html",children:[
-{text:"a",url:"globals.html#index_a"},
-{text:"c",url:"globals.html#index_c"},
-{text:"d",url:"globals.html#index_d"},
-{text:"e",url:"globals.html#index_e"},
-{text:"f",url:"globals.html#index_f"},
-{text:"m",url:"globals.html#index_m"},
-{text:"n",url:"globals.html#index_n"},
-{text:"o",url:"globals.html#index_o"},
-{text:"p",url:"globals.html#index_p"},
-{text:"r",url:"globals.html#index_r"},
-{text:"s",url:"globals.html#index_s"},
-{text:"t",url:"globals.html#index_t"},
-{text:"w",url:"globals.html#index_w"}]},
+{text:"_",url:"globals.html#index__"},
+{text:"c",url:"globals_c.html#index_c"},
+{text:"f",url:"globals_f.html#index_f"},
+{text:"n",url:"globals_n.html#index_n"},
+{text:"r",url:"globals_r.html#index_r"},
+{text:"s",url:"globals_s.html#index_s"}]},
 {text:"Функции",url:"globals_func.html",children:[
 {text:"n",url:"globals_func.html#index_n"}]},
 {text:"Перечисления",url:"globals_enum.html"},
 {text:"Элементы перечислений",url:"globals_eval.html",children:[
 {text:"c",url:"globals_eval.html#index_c"},
-{text:"d",url:"globals_eval.html#index_d"},
-{text:"e",url:"globals_eval.html#index_e"},
-{text:"f",url:"globals_eval.html#index_f"},
 {text:"n",url:"globals_eval.html#index_n"},
-{text:"o",url:"globals_eval.html#index_o"},
-{text:"r",url:"globals_eval.html#index_r"},
-{text:"s",url:"globals_eval.html#index_s"},
-{text:"t",url:"globals_eval.html#index_t"},
-{text:"w",url:"globals_eval.html#index_w"}]},
-{text:"Макросы",url:"globals_defs.html",children:[
-{text:"a",url:"globals_defs.html#index_a"},
-{text:"c",url:"globals_defs.html#index_c"},
-{text:"d",url:"globals_defs.html#index_d"},
-{text:"e",url:"globals_defs.html#index_e"},
-{text:"m",url:"globals_defs.html#index_m"},
-{text:"n",url:"globals_defs.html#index_n"},
-{text:"p",url:"globals_defs.html#index_p"},
-{text:"r",url:"globals_defs.html#index_r"},
-{text:"t",url:"globals_defs.html#index_t"}]}]}]}]}
+{text:"r",url:"globals_eval.html#index_r"}]},
+{text:"Макросы",url:"globals_defs.html"}]}]}]}

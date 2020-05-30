@@ -71,7 +71,9 @@ enum nrf24l01_reg {
 #   define RF_SETUP_LNA_HCURR   (1 << 0)
 #endif
 
-#define FEATURE_ALL  0x07  /* маска для валидации пользовательских настроек */
+#define FEATURE_EN_DPL  (1 << 2)
+#define FEATURE_EN_ACK_PAY  (1 << 1)
+#define FEATURE_EN_DYN_ACK  (1 << 0)
 
 static uint8_t nrf24l01_exec(enum nrf24l01_cmd cmd)
 {
@@ -134,8 +136,9 @@ static void nrf24l01_write_buffer(uint8_t cmd, const uint8_t *buff,
 
 int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
 {
+    uint8_t features = 0;
+
     config->en_irq &= NRF24L01_IRQ_ALL;
-    config->features &= FEATURE_ALL;
 
     /*
      * Запись 1 на место бита прерывания в регистре CONFIG выключает данное
@@ -155,26 +158,26 @@ int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
     nrf24l01_write_buffer(CMD_W_REGISTER | REG_TX_ADDR, config->address,
                           config->addr_size + 2);
 
-    nrf24l01_write_reg(REG_FEATURE, config->features);
-
-    if (config->features & NRF24L01_FEATURE_ACK) {
+    if (config->mode >= NRF24L01_TX_MODE_ACK) {
+        /*
+         * Включаем и настраиваем входящее соединение 0 передатчика
+         * для приёма автоподтверждений.
+         */
         nrf24l01_write_reg(REG_EN_RXADDR, 1 << NRF24L01_PIPE0);
         nrf24l01_write_reg(REG_EN_AA, 1 << NRF24L01_PIPE0);
         nrf24l01_write_buffer(CMD_W_REGISTER | REG_RX_ADDR_P0, config->address,
                               config->addr_size + 2);
-        /*
-         * Динамическая длина полезной нагрузки не может использоваться
-         * без использования автоподтверждений.
-         */
-        if (config->features & NRF24L01_FEATURE_DYNPL) {
-            nrf24l01_write_reg(REG_DYNPD, 1 << NRF24L01_PIPE0);
-        } else {
-            nrf24l01_write_reg(REG_DYNPD, 0);
+
+        if (config->mode == NRF24L01_TX_MODE_ACK_PAYLOAD) {
+            features |=
+                    (FEATURE_EN_DPL | FEATURE_EN_ACK_PAY | FEATURE_EN_DYN_ACK);
         }
     } else {
         nrf24l01_write_reg(REG_EN_AA, 0);
         nrf24l01_write_reg(REG_EN_RXADDR, 0);
     }
+    nrf24l01_write_reg(REG_FEATURE, features);
+    nrf24l01_write_reg(REG_DYNPD, !!features << NRF24L01_PIPE0);
 
     nrf24l01_power_up();
     nrf24l01_set_rf_channel(config->rf_channel);
@@ -242,15 +245,22 @@ void nrf24l01_tx_get_statistics(uint8_t *lost, uint8_t *retr)
 
 int nrf24l01_rx_configure(struct nrf24l01_rx_config *config)
 {
+    uint8_t features = 0;
+
     config->en_irq &= NRF24L01_IRQ_ALL;
-    config->features &= FEATURE_ALL;
 
     nrf24l01_write_reg(REG_CONFIG, config->crc_mode | CONFIG_PRIM_RX |
                        (config->en_irq ^ NRF24L01_IRQ_ALL));
 
     nrf24l01_write_reg(REG_RF_SETUP, config->datarate);
     nrf24l01_write_reg(REG_SETUP_AW, config->addr_size);
-    nrf24l01_write_reg(REG_FEATURE, config->features);
+
+    if (config->mode >= NRF24L01_RX_MODE_DPL) {
+        features |= FEATURE_EN_DPL;
+        if (config->mode == NRF24L01_RX_MODE_DPL_ACK_PAYLOAD)
+            features |= FEATURE_EN_ACK_PAY | FEATURE_EN_DYN_ACK;
+    }
+    nrf24l01_write_reg(REG_FEATURE, features);
 
     nrf24l01_power_up();
     nrf24l01_set_rf_channel(config->rf_channel);
@@ -274,32 +284,26 @@ int nrf24l01_rx_configure_minimal(uint8_t pld_size)
 
 void nrf24l01_rx_setup_pipe(struct nrf24l01_pipe_config *config)
 {
+    if (config->pld_size > 32)
+        config->pld_size = 32;
+
     nrf24l01_write_bits(REG_EN_RXADDR, 1 << config->number, 1);
+    nrf24l01_write_reg(REG_RX_PW_P0 + config->number, config->pld_size);
 
     if (config->number == NRF24L01_PIPE0 || config->number == NRF24L01_PIPE1) {
-        enum nrf24l01_addr_size addr_size = nrf24l01_read_reg(REG_SETUP_AW);
+        uint8_t addr_size = nrf24l01_read_reg(REG_SETUP_AW) + 2;
         nrf24l01_write_buffer(CMD_W_REGISTER |
                               (REG_RX_ADDR_P0 + config->number),
-                              config->address.array, addr_size + 2);
+                              config->address.array, addr_size);
     } else {
         nrf24l01_write_buffer(CMD_W_REGISTER |
                               (REG_RX_ADDR_P0 + config->number),
                               &config->address.lsb, 1);
     }
-
-    if (config->pld_size > 32)
-        config->pld_size = 32;
-    nrf24l01_write_reg(REG_RX_PW_P0 + config->number, config->pld_size);
-
-    if (config->features & NRF24L01_PIPE_FEATURE_ACK) {
-        nrf24l01_write_bits(REG_EN_AA, 1 << config->number, 1);
-        if (config->features & NRF24L01_PIPE_FEATURE_DYNPL)
-            nrf24l01_write_bits(REG_DYNPD, 1 << config->number, 1);
-        else
-            nrf24l01_write_bits(REG_DYNPD, 1 << config->number, 0);
-    } else {
-        nrf24l01_write_bits(REG_EN_AA, 1 << config->number, 0);
-    }
+    nrf24l01_write_bits(REG_EN_AA, 1 << config->number,
+                        config->mode >= NRF24L01_PIPE_MODE_ACK);
+    nrf24l01_write_bits(REG_DYNPD, 1 << config->number,
+                        config->mode == NRF24L01_PIPE_MODE_ACK_DPL);
 }
 
 void nrf24l01_rx_close_pipe(enum nrf24l01_pipe_number pipe_no)

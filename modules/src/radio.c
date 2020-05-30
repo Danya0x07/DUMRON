@@ -11,15 +11,15 @@ void Radio_Init(void)
             .addr_size = NRF24L01_ADDRS_4BYTE,
             .crc_mode  = NRF24L01_CRC_1BYTE,
             .datarate  = NRF24L01_DATARATE_1MBPS,
+            .mode = NRF24L01_RX_MODE_DPL_ACK_PAYLOAD,
             .en_irq = NRF24L01_IRQ_RX_DR,
             .rf_channel = 112,
-            .features = NRF24L01_FEATURE_ACK_PLD
     };
 
     struct nrf24l01_pipe_config p0 = {
             .address.array = rx_address,
             .number = NRF24L01_PIPE0,
-            .features = NRF24L01_PIPE_FEATURE_ACK | NRF24L01_PIPE_FEATURE_DYNPL,
+            .mode = NRF24L01_PIPE_MODE_ACK_DPL,
     };
 
     HAL_Delay(NRF24L01_PWR_ON_DELAY_MS);

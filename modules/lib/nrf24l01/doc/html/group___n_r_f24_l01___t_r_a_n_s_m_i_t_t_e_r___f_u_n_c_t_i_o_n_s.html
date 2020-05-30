@@ -92,9 +92,9 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <tr class="memitem:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gac33dbf743e5cb704c71f85e54fd46ebc">nrf24l01_tx_configure</a> (struct <a class="el" href="structnrf24l01__tx__config.html">nrf24l01_tx_config</a> *config)</td></tr>
 <tr class="memdesc:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик.  <a href="#gac33dbf743e5cb704c71f85e54fd46ebc">Подробнее...</a><br /></td></tr>
 <tr class="separator:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">nrf24l01_tx_configure_default</a> (void)</td></tr>
-<tr class="memdesc:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик настройками по-умолчанию.  <a href="#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">Подробнее...</a><br /></td></tr>
-<tr class="separator:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef456c93713760d459a5a2e8f54bbb67"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gaef456c93713760d459a5a2e8f54bbb67">nrf24l01_tx_configure_minimal</a> (void)</td></tr>
+<tr class="memdesc:gaef456c93713760d459a5a2e8f54bbb67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик настройками по-умолчанию.  <a href="#gaef456c93713760d459a5a2e8f54bbb67">Подробнее...</a><br /></td></tr>
+<tr class="separator:gaef456c93713760d459a5a2e8f54bbb67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad56100c5019154a702f2f6a5ab2892d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad56100c5019154a702f2f6a5ab2892d8">nrf24l01_tx_write_pld</a> (const void *pld, uint8_t size)</td></tr>
 <tr class="memdesc:gad56100c5019154a702f2f6a5ab2892d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает в очередь отправки полезную нагрузку.  <a href="#gad56100c5019154a702f2f6a5ab2892d8">Подробнее...</a><br /></td></tr>
 <tr class="separator:gad56100c5019154a702f2f6a5ab2892d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,6 +104,9 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <tr class="memitem:ga1adfbfcfb9bf4edfb85962d56c486a6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga1adfbfcfb9bf4edfb85962d56c486a6c">nrf24l01_tx_reuse_pld</a> (void)</td></tr>
 <tr class="memdesc:ga1adfbfcfb9bf4edfb85962d56c486a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заставляет передатчик не удалять пакет из очереди отправки и при следующем вызове <a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga2f832d8b59a9ea86a5b4c6332b87068f" title="Инициирует отправку первого в очереди пакета. ">nrf24l01_tx_transmit()</a> отправлять его же.  <a href="#ga1adfbfcfb9bf4edfb85962d56c486a6c">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga1adfbfcfb9bf4edfb85962d56c486a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2f6fac329f988da4200d65378570858"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad2f6fac329f988da4200d65378570858">nrf24l01_tx_reusing_pld</a> (void)</td></tr>
+<tr class="memdesc:gad2f6fac329f988da4200d65378570858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, включено ли у передатчика повторное использование пакетов при отправке.  <a href="#gad2f6fac329f988da4200d65378570858">Подробнее...</a><br /></td></tr>
+<tr class="separator:gad2f6fac329f988da4200d65378570858"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2f832d8b59a9ea86a5b4c6332b87068f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga2f832d8b59a9ea86a5b4c6332b87068f">nrf24l01_tx_transmit</a> (void)</td></tr>
 <tr class="memdesc:ga2f832d8b59a9ea86a5b4c6332b87068f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициирует отправку первого в очереди пакета.  <a href="#ga2f832d8b59a9ea86a5b4c6332b87068f">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga2f832d8b59a9ea86a5b4c6332b87068f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,20 +146,22 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd><code>NRF24L01_OK</code>, если инициализация прошла успешно, </dd>
+<dl class="section return"><dt>Возвращает</dt><dd>0, если инициализация прошла успешно, </dd>
 <dd>
-<code>NRF24L01_ERR_BUS</code>, в противном случае. </dd></dl>
+-1, в противном случае (скорее всего плохой контакт). </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00137">137</a></p>
 
 </div>
 </div>
-<a id="ga5eb2a00a2131344cd6d8ef4c78ee0c4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">&#9670;&nbsp;</a></span>nrf24l01_tx_configure_default()</h2>
+<a id="gaef456c93713760d459a5a2e8f54bbb67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaef456c93713760d459a5a2e8f54bbb67">&#9670;&nbsp;</a></span>nrf24l01_tx_configure_minimal()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nrf24l01_tx_configure_default </td>
+          <td class="memname">int nrf24l01_tx_configure_minimal </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -166,11 +171,13 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 </div><div class="memdoc">
 
 <p>Инициализирует трансивер как передатчик настройками по-умолчанию. </p>
-<p>Минимальная конфигурация передатчика и приёмника позволяет протестировать их работоспособность, используя самые базовые их возможности: односторонний обмен данными без подтверждений и повторных отправок.</p>
+<p>Минимальная конфигурация передатчика и приёмника позволяет протестировать их работоспособность. Она подразумевает односторонний обмен данными с подтверждениями и фиксированным размером полезной нагрузки.</p>
 <dl class="section attention"><dt>Внимание</dt><dd>Данная функция будет корректно работать только если настройки трансивера ранее не менялись (со времени подачи на него питания).</dd></dl>
-<dl class="section return"><dt>Возвращает</dt><dd><code>NRF24L01_OK</code>, если инициализация прошла успешно, </dd>
+<dl class="section return"><dt>Возвращает</dt><dd>0, если инициализация прошла успешно, </dd>
 <dd>
-<code>NRF24L01_ERR_BUS</code>, в противном случае. </dd></dl>
+-1, в противном случае (скорее всего плохой контакт). </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00191">191</a></p>
 
 </div>
 </div>
@@ -209,6 +216,8 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
   </dd>
 </dl>
 
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00239">239</a></p>
+
 </div>
 </div>
 <a id="ga1adfbfcfb9bf4edfb85962d56c486a6c"></a>
@@ -229,6 +238,34 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 
 <p>Заставляет передатчик не удалять пакет из очереди отправки и при следующем вызове <a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga2f832d8b59a9ea86a5b4c6332b87068f" title="Инициирует отправку первого в очереди пакета. ">nrf24l01_tx_transmit()</a> отправлять его же. </p>
 <dl class="section note"><dt>Заметки</dt><dd>Вернуть стандартное поведение при отправке можно вызовом <a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad56100c5019154a702f2f6a5ab2892d8" title="Записывает в очередь отправки полезную нагрузку. ">nrf24l01_tx_write_pld()</a> или <a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga4fba1c654b2a44d07b087575c03f85de" title="Очищает очередь отправки. ">nrf24l01_flush_tx_fifo()</a>. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00212">212</a></p>
+
+</div>
+</div>
+<a id="gad2f6fac329f988da4200d65378570858"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad2f6fac329f988da4200d65378570858">&#9670;&nbsp;</a></span>nrf24l01_tx_reusing_pld()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool nrf24l01_tx_reusing_pld </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Проверяет, включено ли у передатчика повторное использование пакетов при отправке. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>true, если повторное использование пакетов включено. </dd>
+<dd>
+false, если выключено.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga1adfbfcfb9bf4edfb85962d56c486a6c" title="Заставляет передатчик не удалять пакет из очереди отправки и при следующем вызове nrf24l01_tx_transmi...">nrf24l01_tx_reuse_pld()</a> </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00217">217</a></p>
 
 </div>
 </div>
@@ -252,6 +289,8 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <p>В этом режиме передатчик отправляет пакет, как только тот будет записан в очередь отправки, не дожидаясь вызова <a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga2f832d8b59a9ea86a5b4c6332b87068f" title="Инициирует отправку первого в очереди пакета. ">nrf24l01_tx_transmit()</a>. Таким образом очередь отправки постоянно опустошается.</p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed" title="Выключает режим постоянной отправки, если ранее он был включен. ">nrf24l01_tx_stop_cont_transmission()</a> </dd></dl>
 
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00229">229</a></p>
+
 </div>
 </div>
 <a id="ga6d0159ea0c82f76bf902e9c803b6a3ed"></a>
@@ -271,6 +310,8 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 </div><div class="memdoc">
 
 <p>Выключает режим постоянной отправки, если ранее он был включен. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00234">234</a></p>
 
 </div>
 </div>
@@ -294,6 +335,8 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <dl class="section note"><dt>Заметки</dt><dd>Функция удаляет отправленный пакет из очереди отправки, если до неё не было включено повторное использование пакетов вызовом <a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga1adfbfcfb9bf4edfb85962d56c486a6c" title="Заставляет передатчик не удалять пакет из очереди отправки и при следующем вызове nrf24l01_tx_transmi...">nrf24l01_tx_reuse_pld()</a>.</dd></dl>
 <dl class="section attention"><dt>Внимание</dt><dd>Если ранее был включён режим постоянной отправки, он будет отключён.</dd></dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gabadb5a802d0040b242370208ae141e8c" title="Включает у передатчика режим постоянной отправки. ">nrf24l01_tx_start_cont_transmission()</a> </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00222">222</a></p>
 
 </div>
 </div>
@@ -328,10 +371,12 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramname">pld</td><td>Указатель на начало полезной нагрузки. </td></tr>
-    <tr><td class="paramname">size</td><td>Размер полезной нагрузки. </td></tr>
+    <tr><td class="paramname">size</td><td>Размер полезной нагрузки (от 1 до 32 байт). </td></tr>
   </table>
   </dd>
 </dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00205">205</a></p>
 
 </div>
 </div>
@@ -365,10 +410,12 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramname">pld</td><td>Указатель на начало полезной нагрузки. </td></tr>
-    <tr><td class="paramname">size</td><td>Размер полезной нагрузки. </td></tr>
+    <tr><td class="paramname">size</td><td>Размер полезной нагрузки (от 1 до 32 байт). </td></tr>
   </table>
   </dd>
 </dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00198">198</a></p>
 
 </div>
 </div>

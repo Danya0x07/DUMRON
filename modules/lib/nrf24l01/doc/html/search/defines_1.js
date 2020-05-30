@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['cont_5fwave',['CONT_WAVE',['../nrf24l01_8c.html#a165f18ecbab7e3f232eeba3dbcd028d0',1,'nrf24l01.c']]],
-  ['crc_5f2b',['CRC_2B',['../nrf24l01_8c.html#a50fc4c7f6be010cb5ba0c1d3fbe18007',1,'nrf24l01.c']]]
+  ['config_5fen_5fcrc',['CONFIG_EN_CRC',['../nrf24l01_8c.html#a461e8cd302d1029e969818f6fcea3e78',1,'nrf24l01.c']]],
+  ['config_5fprim_5frx',['CONFIG_PRIM_RX',['../nrf24l01_8c.html#a38db0d33a9bc52cc2dea3d4349b25f36',1,'nrf24l01.c']]],
+  ['config_5fpwr_5fup',['CONFIG_PWR_UP',['../nrf24l01_8c.html#a329d8ccec5fdb21438da718614f7d2a2',1,'nrf24l01.c']]]
 ];

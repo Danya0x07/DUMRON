@@ -95,6 +95,8 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
 <tr class="separator:ga16ac3f39447a5579f26a42490bd2ab55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga4643d84db44a4a9f6275aa06a51853e3">NRF24L01_IRQ_MAX_RT</a>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
 <tr class="separator:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga93c682c1dddd54e7376c0d294dc93ba1">NRF24L01_IRQ_ALL</a>&#160;&#160;&#160;0x70</td></tr>
+<tr class="separator:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <p>Прерывания трансивера NRF24L01/+.</p>
@@ -102,6 +104,22 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
 <dl class="section note"><dt>Заметки</dt><dd>Для приёмника обычно характерно только прерывание RX_DR. Для передатчика, в случае с трансивером NRF24L01 - TX_DS и MAX_RT, а в случае с NRF24L01+ - ещё и RX_DR (если используется возможность прикрепления полезной нагрузки к пакетам автоподтверждения).</dd></dl>
 <dl class="section attention"><dt>Внимание</dt><dd>В случае происхождения прерывания MAX_RT, дальнейшая отправка данных блокируется до тех пор, пока флаг прерывание не будет сброшен вызовом <a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#gafb9e361b525599ebdb8e34352c13fd7d" title="Сбрасывает флаги произошедших событий трансивера. ">nrf24l01_clear_interrupts()</a>. </dd></dl>
 <h2 class="groupheader">Макросы</h2>
+<a id="ga93c682c1dddd54e7376c0d294dc93ba1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga93c682c1dddd54e7376c0d294dc93ba1">&#9670;&nbsp;</a></span>NRF24L01_IRQ_ALL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NRF24L01_IRQ_ALL&#160;&#160;&#160;0x70</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00068">68</a></p>
+
+</div>
+</div>
 <a id="ga4643d84db44a4a9f6275aa06a51853e3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga4643d84db44a4a9f6275aa06a51853e3">&#9670;&nbsp;</a></span>NRF24L01_IRQ_MAX_RT</h2>
 
@@ -114,7 +132,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00158">158</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00066">66</a></p>
 
 </div>
 </div>
@@ -130,7 +148,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00156">156</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00064">64</a></p>
 
 </div>
 </div>
@@ -146,7 +164,7 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00157">157</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00065">65</a></p>
 
 </div>
 </div>

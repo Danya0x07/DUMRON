@@ -1,14 +1,15 @@
 var indexSectionsWithContent =
 {
-  0: "acdeflmnoprstw",
+  0: "_acdeflmnprsÐ",
   1: "n",
   2: "n",
   3: "n",
-  4: "acdeflnpr",
+  4: "acdelmnpr",
   5: "n",
-  6: "cdefnorstw",
-  7: "acdemnprt",
-  8: "n"
+  6: "cnr",
+  7: "_cfnrs",
+  8: "n",
+  9: "Ð"
 };
 
 var indexSectionNames =
@@ -21,7 +22,8 @@ var indexSectionNames =
   5: "enums",
   6: "enumvalues",
   7: "defines",
-  8: "groups"
+  8: "groups",
+  9: "pages"
 };
 
 var indexSectionLabels =
@@ -34,6 +36,7 @@ var indexSectionLabels =
   5: "Перечисления",
   6: "Элементы перечислений",
   7: "Макросы",
-  8: "Группы"
+  8: "Группы",
+  9: "Страницы"
 };
 
