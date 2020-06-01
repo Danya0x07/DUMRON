@@ -10,7 +10,6 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include <hcsr04/hcsr04.h>
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
@@ -25,6 +24,8 @@
 #include "temperature.h"
 #include "emmiters.h"
 #include "debug.h"
+
+#include "hcsr04/hcsr04.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -335,7 +336,7 @@ void Task_CheckDistance(void const * argument)
     uint16_t distance;
 
     for(;;) {
-        distance = hcsr04_measure();
+        distance = hcsr04_measure(1);
 
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = BACK_DISTANCE;

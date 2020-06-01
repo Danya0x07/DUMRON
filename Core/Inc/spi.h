@@ -38,6 +38,17 @@ void MX_SPI1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+/** Обменивается байтом по SPI1. */
+uint8_t spi_transfer_byte(uint8_t byte);
+
+/**
+ * Обменивается массивом байт по SPI1.
+ * out - Буфер исходящих данных. NULL, если не исопльзуется.
+ * in  - Буфер входящих данных. NULL, если не исопльзуется.
+ * len - Количество байт для обмена.
+ * ! in и out не должны быть NULL одновременно.
+ */
+void spi_transfer_bytes(uint8_t *in, const uint8_t *out, size_t len);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

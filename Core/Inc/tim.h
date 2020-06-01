@@ -43,6 +43,23 @@ void MX_TIM3_Init(void);
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                     
 /* USER CODE BEGIN Prototypes */
+
+static inline void tim_us_reset_counter(void)
+{
+    LL_TIM_SetCounter(TIM3, 0);
+}
+
+static inline uint32_t tim_us_get_counter(void)
+{
+    return LL_TIM_GetCounter(TIM3);
+}
+
+static inline void delay_ms(uint32_t ms)
+{
+    HAL_Delay(ms);
+}
+
+void delay_us(uint32_t us);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

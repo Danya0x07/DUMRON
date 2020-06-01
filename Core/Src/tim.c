@@ -213,6 +213,13 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+
+void delay_us(uint32_t us)
+{
+    tim_us_reset_counter();
+    while (tim_us_get_counter() < us)
+        ;
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -186,6 +186,7 @@ void TIM4_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+
 static void Clumsy_DelayMs(uint32_t ms)
 {
     for (uint_fast32_t i = 0; i < ms; i++)
