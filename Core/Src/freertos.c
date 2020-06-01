@@ -22,10 +22,10 @@
 #include "manipulator.h"
 #include "radio.h"
 #include "temperature.h"
+#include "distance.h"
 #include "emmiters.h"
 #include "debug.h"
 
-#include "hcsr04/hcsr04.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,12 +56,6 @@ typedef struct {
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-/**
-  * Максимальное расстояние от кормы робота до поверхности,
-  * при котором движение назад не блокируется.
-  */
-#define MAX_SAFE_TO_FALL_DISTANCE_CM    12
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -333,21 +327,21 @@ void Task_CheckDistance(void const * argument)
   /* USER CODE BEGIN Task_CheckDistance */
 
     OutcomingElement_s *element;
-    uint16_t distance;
+    bool cliff = false;
 
     for(;;) {
-        distance = hcsr04_measure(1);
+        cliff = Distance_CliffDetected();
 
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = BACK_DISTANCE;
-            element->udata = distance;
+            element->udata = cliff * 12;
             osMailPut(outcomingElementQueueHandle, element);
         } else {
             debug_logs("chd: alloc failed\n");
         }
 
         if (osMutexWait(incomingDataMutexHandle, 100) == osOK) {
-            if (distance > MAX_SAFE_TO_FALL_DISTANCE_CM) {
+            if (cliff) {
                 cliffBehindRobotDetected = true;
                 if (Motors_GetDirection() == ROBOT_DIRECTION_BACKWARD)
                     Motors_SetSpeed(0, 0);
