@@ -21,6 +21,12 @@ typedef struct {
  */
 #define MAX_SAFE_TO_FALL_DISTANCE_CM    12
 
+/*
+ * Минимальное расстояние от кормы робота до поверхности,
+ * при котором считается, что препятствия сзади нет.
+ */
+#define OBSTACLE_DISTANCE_CM    5
+
 static HCSR04_Sonar sternSonar = {
     .gport = SONAR_GPIO_Port,
     .gpin_trig = SONAR_TRIG_Pin,
@@ -48,7 +54,12 @@ static int Distance_MeasureCm(HCSR04_Sonar *sonar)
     return LL_TIM_GetCounter(TIM3) / 58;
 }
 
-bool Distance_CliffDetected(void)
+bool Distance_DetectCliff(void)
 {
     return Distance_MeasureCm(&sternSonar) > MAX_SAFE_TO_FALL_DISTANCE_CM;
+}
+
+bool Distance_DetectObstacle(void)
+{
+    return Distance_MeasureCm(&sternSonar) < OBSTACLE_DISTANCE_CM;
 }

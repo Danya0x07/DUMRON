@@ -17,7 +17,6 @@ void Radio_Init(void)
         .en_irq = NRF24L01_IRQ_RX_DR,
         .rf_channel = 112,
     };
-
     struct nrf24l01_pipe_config p0 = {
         .address.array = rx_address,
         .number = NRF24L01_PIPE0,
@@ -26,9 +25,10 @@ void Radio_Init(void)
 
     HAL_Delay(NRF24L01_PWR_ON_DELAY_MS);
 
-    nrf24l01_rx_configure(&config);
+    if (nrf24l01_rx_configure(&config) < 0) {
+        debug_logs("rc<0\n");
+    }
     nrf24l01_rx_setup_pipe(&p0);
-
     nrf24l01_rx_start_listening();
 }
 

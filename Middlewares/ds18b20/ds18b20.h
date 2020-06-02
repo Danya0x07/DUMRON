@@ -34,23 +34,18 @@ enum ds18b20_resolution {
 
 /**
  * @brief   Структура настроек датчика.
+ *
+ * Разрешение значения температуры влияет на время измерения.
+ * Температурные границы позволяют установить диапазон температур, значения
+ * вне которого будут считаться как опасные, и датчик, результат последнего
+ * измерения с которого оказался вне этого диапазона будет отвечать на команду
+ * аварийного поиска Alarm Search.
  */
 struct ds18b20_config {
-    uint8_t temp_lim_h;  ///< Верхняя температурная граница.
-    uint8_t temp_lim_l;  ///< Нижняя температурная граница.
-    enum ds18b20_resolution resolution;  ///< Разрешение значения температуры.
+    enum ds18b20_resolution resolution;  /**< разрешение результата измерений */
+    uint8_t temp_lim_h;  /**< верхняя температурная граница */
+    uint8_t temp_lim_l;  /**< нижняя температурная граница */
 };
-
-/**
- * @name    Статусы успешности операций с датчиками.
- * @attention   Функционал проверки CRC ещё не реализован.
- * @{
- */
-#define DS18B20_OK      (0)
-#define DS18B20_ABSENSE (-1)
-#define DS18B20_BUSY    (-2)
-#define DS18B20_CRC_MISMATCH    (-3)
-/** @} */
 
 /**
  * @name    Длительности процесса измерения для различных разрешений
@@ -64,6 +59,17 @@ struct ds18b20_config {
 /** @} */
 
 /**
+ * @name    Статусы успешности операций с датчиками.
+ * @attention   Функционал проверки CRC ещё не реализован.
+ * @{
+ */
+#define DS18B20_OK      (0)
+#define DS18B20_ABSENSE (-1)
+#define DS18B20_BUSY    (-2)
+#define DS18B20_CRC_MISMATCH    (-3)
+/** @} */
+
+/**
  * @brief   Отправляет импульс перезагрузки по линии 1-Wire
  *
  * Предполагается, что данная функция будет использоваться в качестве проверки
@@ -72,7 +78,7 @@ struct ds18b20_config {
  * @return  `DS18B20_OK`, если был получен импульс присутствия от датчиков,
  * @return  `DS18B20_ABSENSE`, если не был получен импульс присутствия.
  */
-int8_t ds18b20_check_presense(void);
+int ds18b20_check_presense(void);
 
 /**
  * @brief   Считывает адрес датчика на линии.
@@ -84,7 +90,7 @@ int8_t ds18b20_check_presense(void);
  * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия,
  * @return  `DS18B20_CRC_MISMATCH` если не совпали контрольные суммы.
  */
-int8_t ds18b20_read_address(uint8_t address[8]);
+int ds18b20_read_address(uint8_t address[8]);
 
 /**
  * @brief   Записывает настройки в DS18B20.
@@ -96,8 +102,8 @@ int8_t ds18b20_read_address(uint8_t address[8]);
  * @return  `DS18B20_OK`, если всё прошло успешно,
  * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия.
  */
-int8_t ds18b20_configure(const uint8_t *address,
-                         const struct ds18b20_config *config);
+int ds18b20_configure(const uint8_t *address,
+                      const struct ds18b20_config *config);
 
 /**
  * @brief   Запускает измерение температуры.
@@ -109,7 +115,7 @@ int8_t ds18b20_configure(const uint8_t *address,
  * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия,
  * @return  `DS18B20_BUSY`, если предыдущее измерение ещё в процессе.
  */
-int8_t ds18b20_start_measurement(const uint8_t *address);
+int ds18b20_start_measurement(const uint8_t *address);
 
 /**
  * @brief   Считывает результат измерения температуры.
@@ -132,7 +138,7 @@ int8_t ds18b20_start_measurement(const uint8_t *address);
  * @return  `DS18B20_ABSENSE`, если если не был получен импульс присутствия,
  * @return  `DS18B20_CRC_MISMATCH` если не совпали контрольные суммы.
  */
-int8_t ds18b20_get_result(const uint8_t *address, int32_t *result);
+int ds18b20_get_result(const uint8_t *address, int32_t *result);
 
 /**
  * @brief   Парсит результат измерения на целую и дробную части.

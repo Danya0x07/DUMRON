@@ -2,11 +2,11 @@
 #include "nrf24l01_port.h"
 
 #ifdef NRF24L01_DELAY_ONLY_MS
-#   define _delay_tx()      delay_ms(1)
-#   define _delay_rpd()     delay_ms(1)
+#   define _delay_tx()      _delay_ms(1)
+#   define _delay_rpd()     _delay_ms(1)
 #else
-#   define _delay_tx()      delay_us(11)
-#   define _delay_rpd()     delay_us(200)
+#   define _delay_tx()      _delay_us(11)
+#   define _delay_rpd()     _delay_us(200)
 #endif
 
 enum nrf24l01_cmd {

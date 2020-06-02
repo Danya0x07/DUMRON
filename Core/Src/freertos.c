@@ -295,7 +295,8 @@ void Task_UpdateOutcomingData(void const * argument)
                     outcomingData.motorsCharge = element->udata;
                     break;
                 case BACK_DISTANCE:
-                    outcomingData.backDistance = element->udata;
+                    outcomingData.stsReg &= 0xFC;
+                    outcomingData.stsReg |= element->udata;
                     break;
                 case AMBIENT_TEMPERATURE:
                     outcomingData.ambientTemperature = element->sdata;
@@ -327,14 +328,22 @@ void Task_CheckDistance(void const * argument)
   /* USER CODE BEGIN Task_CheckDistance */
 
     OutcomingElement_s *element;
-    bool cliff = false;
+    bool cliff, obstacle;
+    uint8_t distanceStatus;
 
     for(;;) {
-        cliff = Distance_CliffDetected();
+        distanceStatus = 0;
+        cliff = Distance_DetectCliff();
+        obstacle = Distance_DetectObstacle();
+
+        if (cliff)
+            distanceStatus = ROBOT_SFLAG_CLIFF;
+        else if (obstacle)
+            distanceStatus = ROBOT_SFLAG_OBSTACLE;
 
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = BACK_DISTANCE;
-            element->udata = cliff * 12;
+            element->udata = distanceStatus;
             osMailPut(outcomingElementQueueHandle, element);
         } else {
             debug_logs("chd: alloc failed\n");

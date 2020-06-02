@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 
-bool Distance_CliffDetected(void);
+bool Distance_DetectCliff(void);
+bool Distance_DetectObstacle(void);
 
 #endif /* DISTANCE_H */

@@ -43,11 +43,14 @@ typedef struct {
  * Структура пакетов, идущих от робота к пульту.
  */
 typedef struct {
+    uint8_t stsReg;  // регистр статуса
     uint8_t brainsCharge;  // заряд аккумулятора "мозговой"(нежной) части
     uint8_t motorsCharge;  // заряд аккумулятора "силовой" части
-    uint8_t backDistance;  // расстояние от кормы до поверхности
     int8_t  ambientTemperature;   // температура окружающей среды
     int8_t  internalTemperature;  // температура внутри корпуса
 } DataFromRobot_s;
+
+#define ROBOT_SFLAG_CLIFF   (1 << 0)
+#define ROBOT_SFLAG_OBSTACLE    (1 << 1)
 
 #endif /* PROTOCOL_H */

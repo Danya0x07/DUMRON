@@ -71,15 +71,15 @@ static uint_fast8_t onewire_perform_reset(void)
     return wire_status;
 }
 
-int8_t ds18b20_check_presense(void)
+int ds18b20_check_presense(void)
 {
     uint_fast8_t presense = onewire_perform_reset() == 0;
     return presense ? DS18B20_OK : DS18B20_ABSENSE;
 }
 
-int8_t ds18b20_read_address(uint8_t address[8])
+int ds18b20_read_address(uint8_t address[8])
 {
-    int8_t status;
+    int status;
 
     if ((status = ds18b20_check_presense()) == DS18B20_OK) {
         onewire_write_byte(READ_ROM);
@@ -89,9 +89,9 @@ int8_t ds18b20_read_address(uint8_t address[8])
     return status;
 }
 
-static int8_t ds18b20_select(const uint8_t *address)
+static int ds18b20_select(const uint8_t *address)
 {
-    int8_t status;
+    int status;
 
     if ((status = ds18b20_check_presense()) == DS18B20_OK) {
         if (address) {
@@ -105,10 +105,10 @@ static int8_t ds18b20_select(const uint8_t *address)
     return status;
 }
 
-int8_t ds18b20_configure(const uint8_t *address,
+int ds18b20_configure(const uint8_t *address,
                          const struct ds18b20_config *config)
 {
-    int8_t status;
+    int status;
 
     if ((status = ds18b20_select(address)) == DS18B20_OK) {
         onewire_write_byte(W_SCRATCHPAD);
@@ -119,9 +119,9 @@ int8_t ds18b20_configure(const uint8_t *address,
     return status;
 }
 
-int8_t ds18b20_start_measurement(const uint8_t *address)
+int ds18b20_start_measurement(const uint8_t *address)
 {
-    int8_t status;
+    int status;
 
     if ((status = ds18b20_select(address)) == DS18B20_OK) {
         onewire_write_byte(CONVERT_T);
@@ -131,23 +131,27 @@ int8_t ds18b20_start_measurement(const uint8_t *address)
     return status;
 }
 
-int8_t ds18b20_get_result(const uint8_t *address, int32_t *result)
+int ds18b20_get_result(const uint8_t *address, int32_t *result)
 {
-    int8_t status;
+    int status;
     struct ds18b20_scratchpad scratchpad;
 
     if ((status = ds18b20_select(address)) == DS18B20_OK) {
+        int temp_sign;
+        int8_t temp_int;
+        unsigned int temp_fract;
         uint8_t *data = (uint8_t *)&scratchpad;
+        uint_fast8_t i;
+
         onewire_write_byte(R_SCRATCHPAD);
-        for (uint_fast8_t i = 0; i < sizeof(scratchpad); i++)
+        for (i = 0; i < sizeof(scratchpad); i++)
             *data++ = onewire_read_byte();
 
-        int8_t temp_int = ((scratchpad.temp_msb << 4) |
-                           (scratchpad.temp_lsb >> 4)) & 0x7F;
+        temp_sign = (scratchpad.temp_msb & 0x80) ? -1 : 1;
+        temp_int = ((scratchpad.temp_msb << 4) |
+                    (scratchpad.temp_lsb >> 4)) & 0x7F;
+        temp_fract = 0;
 
-        int8_t temp_sign = (scratchpad.temp_msb & 0x80) ? -1 : 1;
-
-        uint16_t temp_fract = 0;
         if (scratchpad.temp_lsb & 0x08)
             temp_fract += 5000;
         if (scratchpad.temp_lsb & 0x04)
@@ -176,8 +180,8 @@ void ds18b20_parse_result(int32_t result, int8_t *integer,
         integer_abs = tmp_integer;
     }
 
-    if (integer)
+    if (integer != NULL)
         *integer = tmp_integer;
-    if (fractional)
+    if (fractional != NULL)
         *fractional = result_abs - integer_abs * 10000;
 }
