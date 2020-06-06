@@ -17,40 +17,10 @@
 #define CLAW_MAX_PULSE   270
 #define CLAW_PULSE_FADE  3
 
-static ArmDirection_e armDirection = ARM_STOP;
-static ClawDirection_e clawDirection = CLAW_STOP;
+static const int directions[3] = {0, 1, -1};
 
-static void ArmMove(ArmDirection_e direction);
-static void ClawMove(ClawDirection_e direction);
-static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval);
-
-void Manipulator_SetDirections(ArmDirection_e armDir, ClawDirection_e clawDir)
-{
-    armDirection = armDir;
-    clawDirection = clawDir;
-}
-
-void Manipulator_Move(void)
-{
-    ArmMove(armDirection);
-    ClawMove(clawDirection);
-}
-
-static void ArmMove(ArmDirection_e direction)
-{
-    uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_ARM_PWM_Reg);
-    pulse += ARM_PULSE_FADE * direction;
-    ConstrainPulse(&pulse, ARM_MAX_PULSE, ARM_MIN_PULSE);
-    LL_TIM_WriteReg(SERVO_TIM, SERVO_ARM_PWM_Reg, pulse);
-}
-
-static void ClawMove(ClawDirection_e direction)
-{
-    uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_CLAW_PWM_Reg);
-    pulse += CLAW_PULSE_FADE * direction;
-    ConstrainPulse(&pulse, CLAW_MAX_PULSE, CLAW_MIN_PULSE);
-    LL_TIM_WriteReg(SERVO_TIM, SERVO_CLAW_PWM_Reg, pulse);
-}
+static int armDirection = 0;
+static int clawDirection = 0;
 
 static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval)
 {
@@ -58,4 +28,36 @@ static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval)
         *pulse = maxval;
     else if (*pulse < minval)
         *pulse = minval;
+}
+
+static void ArmMove(int direction)
+{
+    uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_ARM_PWM_Reg);
+    pulse += ARM_PULSE_FADE * direction;
+    ConstrainPulse(&pulse, ARM_MAX_PULSE, ARM_MIN_PULSE);
+    LL_TIM_WriteReg(SERVO_TIM, SERVO_ARM_PWM_Reg, pulse);
+}
+
+static void ClawMove(int direction)
+{
+    uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_CLAW_PWM_Reg);
+    pulse += CLAW_PULSE_FADE * direction;
+    ConstrainPulse(&pulse, CLAW_MAX_PULSE, CLAW_MIN_PULSE);
+    LL_TIM_WriteReg(SERVO_TIM, SERVO_CLAW_PWM_Reg, pulse);
+}
+
+void Manipulator_SetArm(ArmControl_e ctrl)
+{
+    armDirection = directions[ctrl];
+}
+
+void Manipulator_SetClaw(ClawControl_e ctrl)
+{
+    clawDirection = directions[ctrl];
+}
+
+void Manipulator_Move(void)
+{
+    ArmMove(armDirection);
+    ClawMove(clawDirection);
 }

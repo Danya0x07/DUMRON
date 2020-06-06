@@ -7,50 +7,75 @@
 
 #include <stdint.h>
 
-/**
- * Возможные направления вращения моторов робота:
- */
+/** Возможные направления вращения моторов робота. */
 typedef enum {
-    ROBOT_DIRECTION_NONE,      // в никуда
-    ROBOT_DIRECTION_FORWARD,   // оба вперёд
-    ROBOT_DIRECTION_BACKWARD,  // оба назад
-    ROBOT_DIRECTION_LEFTWARD,  // левый назад, правый вперёд
-    ROBOT_DIRECTION_RIGHTWARD  // левый вперёд, правый назад
-} RobotDirection_e;
+    MOVEDIR_NONE = 0,  // в никуда
+    MOVEDIR_FORWARD,   // оба вперёд
+    MOVEDIR_BACKWARD,  // оба назад
+    MOVEDIR_LEFTWARD,  // левый назад, правый вперёд
+    MOVEDIR_RIGHTWARD  // левый вперёд, правый назад
+} MoveDirection_e;
 
-_Static_assert(sizeof(RobotDirection_e) == 1, "incorrect size of enum");
+/** Возможные состояния плеча манипулятора. */
+typedef enum {
+    ARM_STOP = 0,
+    ARM_UP,
+    ARM_DOWN
+} ArmControl_e;
+
+/** Возможные состояние клешни манипулятора. */
+typedef enum {
+    CLAW_STOP = 0,
+    CLAW_SQUEESE,
+    CLAW_RELEASE
+} ClawControl_e;
 
 /**
  * Структура пакетов, идущих от пульта к роботу.
  */
 typedef struct {
-    RobotDirection_e direction;  // направление
-    uint8_t speedL;   // скорость левого мотора [0; 255]
-    uint8_t speedR;   // скорость правого мотора [0; 255]
-    uint8_t ctrlReg;  // регистр управления
+    union {
+        struct {
+            uint8_t moveDir :3;
+            uint8_t armCtrl  :2;
+            uint8_t clawCtrl :2;
+            uint8_t lightsEn :1;
+
+            uint8_t _extra   :7;
+            uint8_t buzzerEn :1;
+        } bf;
+        uint16_t reg;
+    } ctrl;
+    uint8_t speedL;
+    uint8_t speedR;
 } DataToRobot_s;
 
-/* флаги управления */
-#define ROBOT_CFLAG_ARM_DOWN (1 << 0)
-#define ROBOT_CFLAG_ARM_UP   (1 << 1)
-#define ROBOT_CFLAG_CLAW_SQUEEZE (1 << 2)
-#define ROBOT_CFLAG_CLAW_RELEASE (1 << 3)
-/* TODO #define ROBOT_CFLAG_ARM_FOLD  (1 << 4) */
-#define ROBOT_CFLAG_LIGHTS_EN (1 << 5)
-#define ROBOT_CFLAG_KLAXON_EN (1 << 6)
+/** Возможные реалии расстояния от кормы робота до поверхности. */
+typedef enum {
+    DIST_NOTHING = 0,
+    DIST_CLIFF,
+    DIST_OBSTACLE,
+    DIST_ERROR  // если сонар сорвало
+} Distance_e;
 
 /**
  * Структура пакетов, идущих от робота к пульту.
  */
 typedef struct {
-    uint8_t stsReg;  // регистр статуса
-    uint8_t brainsCharge;  // заряд аккумулятора "мозговой"(нежной) части
-    uint8_t motorsCharge;  // заряд аккумулятора "силовой" части
-    int8_t  ambientTemperature;   // температура окружающей среды
-    int8_t  internalTemperature;  // температура внутри корпуса
+    union {
+        struct {
+            uint8_t _extra :6;
+            uint8_t backDistance :2;
+        } bf;
+        uint8_t reg;
+    } status;
+    uint8_t brainsCharge;
+    uint8_t motorsCharge;
+    int8_t  ambientTemperature;
+    int8_t  internalTemperature;
 } DataFromRobot_s;
 
-#define ROBOT_SFLAG_CLIFF   (1 << 0)
-#define ROBOT_SFLAG_OBSTACLE    (1 << 1)
+_Static_assert(sizeof(DataToRobot_s) == 4, "ss");
+_Static_assert(sizeof(DataFromRobot_s) == 5, "ss");
 
 #endif /* PROTOCOL_H */

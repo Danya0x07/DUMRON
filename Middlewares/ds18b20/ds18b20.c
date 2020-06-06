@@ -29,20 +29,20 @@ struct ds18b20_scratchpad {
 
 static void onewire_write_bit(uint_fast8_t bit)
 {
-    onewire_pin_0();
-    onewire_delay_us(bit ? 3 : 65);
-    onewire_pin_1();
-    onewire_delay_us(bit ? 65 : 3);
+    _wire_low();
+    _delay_us(bit ? 3 : 65);
+    _wire_high();
+    _delay_us(bit ? 65 : 3);
 }
 
 static uint_fast8_t onewire_read_bit(void)
 {
-    onewire_pin_0();
-    onewire_delay_us(2);
-    onewire_pin_1();
-    onewire_delay_us(10);
-    uint_fast8_t bit = onewire_pin_is_1();
-    onewire_delay_us(55);
+    _wire_low();
+    _delay_us(2);
+    _wire_high();
+    _delay_us(10);
+    uint_fast8_t bit = _wire_is_high();
+    _delay_us(55);
     return bit;
 }
 
@@ -62,12 +62,12 @@ static uint8_t onewire_read_byte(void)
 
 static uint_fast8_t onewire_perform_reset(void)
 {
-    onewire_pin_0();
-    onewire_delay_us(490);
-    onewire_pin_1();
-    onewire_delay_us(70);
-    uint_fast8_t wire_status = onewire_pin_is_1();
-    onewire_delay_us(250);
+    _wire_low();
+    _delay_us(490);
+    _wire_high();
+    _delay_us(70);
+    uint_fast8_t wire_status = _wire_is_high();
+    _delay_us(250);
     return wire_status;
 }
 
@@ -85,6 +85,7 @@ int ds18b20_read_address(uint8_t address[8])
         onewire_write_byte(READ_ROM);
         for (uint_fast8_t i = 0; i < 8; i++)
             address[i] = onewire_read_byte();
+        /* TODO: Добавить проверку контрольной суммы. */
     }
     return status;
 }
@@ -106,7 +107,7 @@ static int ds18b20_select(const uint8_t *address)
 }
 
 int ds18b20_configure(const uint8_t *address,
-                         const struct ds18b20_config *config)
+                      const struct ds18b20_config *config)
 {
     int status;
 
@@ -137,31 +138,32 @@ int ds18b20_get_result(const uint8_t *address, int32_t *result)
     struct ds18b20_scratchpad scratchpad;
 
     if ((status = ds18b20_select(address)) == DS18B20_OK) {
-        int temp_sign;
-        int8_t temp_int;
-        unsigned int temp_fract;
+        int res_sign;  /* знак результата */
+        int res_int;  /* целая часть результата */
+        unsigned int res_fract;  /* дробная часть результата */
         uint8_t *data = (uint8_t *)&scratchpad;
         uint_fast8_t i;
 
         onewire_write_byte(R_SCRATCHPAD);
         for (i = 0; i < sizeof(scratchpad); i++)
             *data++ = onewire_read_byte();
+        /* TODO: Добавить проверку контрольной суммы. */
 
-        temp_sign = (scratchpad.temp_msb & 0x80) ? -1 : 1;
-        temp_int = ((scratchpad.temp_msb << 4) |
-                    (scratchpad.temp_lsb >> 4)) & 0x7F;
-        temp_fract = 0;
+        res_sign = (scratchpad.temp_msb & 0x80) ? -1 : 1;
+        res_int = ((scratchpad.temp_msb << 4) |
+                   (scratchpad.temp_lsb >> 4)) & 0x7F;
+        res_fract = 0;
 
         if (scratchpad.temp_lsb & 0x08)
-            temp_fract += 5000;
+            res_fract += 5000;
         if (scratchpad.temp_lsb & 0x04)
-            temp_fract += 2500;
+            res_fract += 2500;
         if (scratchpad.temp_lsb & 0x02)
-            temp_fract += 1250;
+            res_fract += 1250;
         if (scratchpad.temp_lsb & 0x01)
-            temp_fract += 625;
+            res_fract += 625;
 
-        *result = temp_sign * ((int32_t)temp_int * 10000 + temp_fract);
+        *result = res_sign * ((int32_t)res_int * 10000 + res_fract);
     }
     return status;
 }

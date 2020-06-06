@@ -1,7 +1,7 @@
 #include "nrf24l01.h"
 #include "nrf24l01_port.h"
 
-#ifdef NRF24L01_DELAY_ONLY_MS
+#if (NRF24L01_DELAY_US_AVAILABLE == 0)
 #   define _delay_tx()      _delay_ms(1)
 #   define _delay_rpd()     _delay_ms(1)
 #else
@@ -65,7 +65,7 @@ enum nrf24l01_reg {
 #define FIFO_STATUS_RX_EMPTY    (1 << 0)
 
 #define RF_SETUP_PLL_LOCK   (1 << 4)
-#ifdef NRF24L01_PLUS
+#if (NRF24L01_PLUS == 1)
 #   define RF_SETUP_CONT_WAVE   (1 << 7)
 #else
 #   define RF_SETUP_LNA_HCURR   (1 << 0)
@@ -78,9 +78,9 @@ enum nrf24l01_reg {
 static uint8_t nrf24l01_exec(enum nrf24l01_cmd cmd)
 {
     uint8_t status;
-    _csn_0();
+    _csn_low();
     status = _spi_transfer_byte(cmd);
-    _csn_1();
+    _csn_high();
     return status;
 }
 
@@ -92,19 +92,19 @@ static inline uint8_t nrf24l01_get_status(void)
 static uint8_t nrf24l01_read_reg(enum nrf24l01_reg reg)
 {
     uint8_t value;
-    _csn_0();
+    _csn_low();
     _spi_transfer_byte(CMD_R_REGISTER | reg);
     value = _spi_transfer_byte(CMD_NOP);
-    _csn_1();
+    _csn_high();
     return value;
 }
 
 static void nrf24l01_write_reg(enum nrf24l01_reg reg, uint8_t value)
 {
-    _csn_0();
+    _csn_low();
     _spi_transfer_byte(CMD_W_REGISTER | reg);
     _spi_transfer_byte(value);
-    _csn_1();
+    _csn_high();
 }
 
 static void nrf24l01_write_bits(enum nrf24l01_reg reg, uint8_t bits, bool state)
@@ -119,19 +119,19 @@ static void nrf24l01_write_bits(enum nrf24l01_reg reg, uint8_t bits, bool state)
 
 static void nrf24l01_read_buffer(uint8_t cmd, uint8_t *buff, uint8_t size)
 {
-    _csn_0();
+    _csn_low();
     _spi_transfer_byte(cmd);
     _spi_transfer_bytes(buff, NULL, size);
-    _csn_1();
+    _csn_high();
 }
 
 static void nrf24l01_write_buffer(uint8_t cmd, const uint8_t *buff,
                                   uint8_t size)
 {
-    _csn_0();
+    _csn_low();
     _spi_transfer_byte(cmd);
     _spi_transfer_bytes(NULL, buff, size);
-    _csn_1();
+    _csn_high();
 }
 
 int nrf24l01_tx_configure(struct nrf24l01_tx_config *config)
@@ -221,19 +221,19 @@ bool nrf24l01_tx_reusing_pld(void)
 
 void nrf24l01_tx_transmit(void)
 {
-    _ce_1();
+    _ce_high();
     _delay_tx();
-    _ce_0();
+    _ce_low();
 }
 
 void nrf24l01_tx_start_cont_transmission(void)
 {
-    _ce_1();
+    _ce_high();
 }
 
 void nrf24l01_tx_stop_cont_transmission(void)
 {
-    _ce_0();
+    _ce_low();
 }
 
 void nrf24l01_tx_get_statistics(uint8_t *lost, uint8_t *retr)
@@ -318,12 +318,12 @@ void nrf24l01_rx_open_pipe(enum nrf24l01_pipe_number pipe_no)
 
 void nrf24l01_rx_start_listening(void)
 {
-    _ce_1();
+    _ce_high();
 }
 
 void nrf24l01_rx_stop_listening(void)
 {
-    _ce_0();
+    _ce_low();
 }
 
 int nrf24l01_rx_get_pld_pipe_no(void)
@@ -417,9 +417,9 @@ bool nrf24l01_detect_signal(void)
     uint8_t backup = nrf24l01_read_reg(REG_CONFIG);
 
     nrf24l01_write_bits(REG_CONFIG, CONFIG_PRIM_RX, 1);
-    _ce_1();
+    _ce_high();
     _delay_rpd();
-    _ce_0();
+    _ce_low();
     nrf24l01_write_reg(REG_CONFIG, backup);
     return nrf24l01_read_reg(REG_RPD_CD) & 0x01;
 }
@@ -446,13 +446,13 @@ void nrf24l01_measure_noise(uint8_t *snapshot_buff,
 
 void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel)
 {
-#ifdef NRF24L01_PLUS
+#if (NRF24L01_PLUS == 1)
     nrf24l01_power_up();
     nrf24l01_write_bits(REG_CONFIG, CONFIG_PRIM_RX, 0);
     nrf24l01_write_reg(REG_RF_SETUP, RF_SETUP_CONT_WAVE | RF_SETUP_PLL_LOCK |
                        power);
     nrf24l01_set_rf_channel(channel);
-    _ce_1();
+    _ce_high();
 #else
     uint_fast8_t i;
 
@@ -475,19 +475,19 @@ void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel)
     nrf24l01_set_rf_channel(channel);
     nrf24l01_tx_transmit();
     delay_ms(1);
-    _ce_1();
+    _ce_high();
     nrf24l01_exec(CMD_REUSE_TX_PL);
 #endif
 }
 
-#ifndef NRF24L01_PLUS
+#if (NRF24L01_PLUS == 0)
 
 void nrf24l01_activate(void)
 {
-    _csn_0();
+    _csn_low();
     _spi_transfer_byte(0x50);
     _spi_transfer_byte(0x73);
-    _csn_1();
+    _csn_high();
 }
 
 void nrf24l01_rx_set_lna(bool state)

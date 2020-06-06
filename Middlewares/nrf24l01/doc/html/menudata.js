@@ -25,4 +25,10 @@ var menudata={children:[
 {text:"c",url:"globals_eval.html#index_c"},
 {text:"n",url:"globals_eval.html#index_n"},
 {text:"r",url:"globals_eval.html#index_r"}]},
-{text:"Макросы",url:"globals_defs.html"}]}]}]}
+{text:"Макросы",url:"globals_defs.html",children:[
+{text:"_",url:"globals_defs.html#index__"},
+{text:"c",url:"globals_defs.html#index_c"},
+{text:"f",url:"globals_defs.html#index_f"},
+{text:"n",url:"globals_defs.html#index_n"},
+{text:"r",url:"globals_defs.html#index_r"},
+{text:"s",url:"globals_defs.html#index_s"}]}]}]}]}

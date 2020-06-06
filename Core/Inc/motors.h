@@ -11,8 +11,8 @@
 
 #include "protocol.h"
 
-void Motors_SetDirection(RobotDirection_e);
+void Motors_SetDirection(MoveDirection_e);
 void Motors_SetSpeed(uint8_t speedL, uint8_t speedR);
-RobotDirection_e Motors_GetDirection(void);
+MoveDirection_e Motors_GetDirection(void);
 
 #endif /* MOTORS_H */

@@ -7,19 +7,10 @@
 #ifndef MANIPULATOR_H
 #define MANIPULATOR_H
 
-typedef enum {
-    ARM_STOP = 0,
-    ARM_UP = 1,
-    ARM_DOWN = -1
-} ArmDirection_e;
+#include "protocol.h"
 
-typedef enum {
-    CLAW_STOP = 0,
-    CLAW_SQUEESE = 1,
-    CLAW_RELEASE = -1
-} ClawDirection_e;
-
-void Manipulator_SetDirections(ArmDirection_e, ClawDirection_e);
+void Manipulator_SetArm(ArmControl_e ctrl);
+void Manipulator_SetClaw(ClawControl_e ctrl);
 void Manipulator_Move(void);
 
 #endif /* MANIPULATOR_H */

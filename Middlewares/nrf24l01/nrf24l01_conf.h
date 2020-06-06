@@ -8,13 +8,10 @@
 #ifndef NRF24L01_CONF_H
 #define NRF24L01_CONF_H
 
-/**
- * Должно быть закомментировано если используется
- * модификация трансивера без +.
- */
-#define NRF24L01_PLUS
+/** 1 для NRF24L01+, 0 для NRF24L01. */
+#define NRF24L01_PLUS   1
 
-/** Раскомментировать, если микросекундная задержка не доступна. */
-/* #define NRF24L01_DELAY_ONLY_MS */
+/** 1 если микросекундная задержка доступна, 0 если нет. */
+#define NRF24L01_DELAY_US_AVAILABLE  1
 
 #endif /* NRF24L01_CONF_H */

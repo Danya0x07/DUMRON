@@ -203,8 +203,7 @@ void Error_Handler(void)
    */
   Led_SetState(0);
   Buzzer_SetState(1);
-  for (;;)
-      ;
+  for (;;) {}
   /* USER CODE END Error_Handler_Debug */
 }
 

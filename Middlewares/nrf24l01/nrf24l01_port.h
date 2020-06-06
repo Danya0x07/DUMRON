@@ -23,10 +23,10 @@
  * @name    Макросы для управления выводами трансивера.
  * @{
  */
-#define _csn_1() LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
-#define _csn_0() LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
-#define _ce_1()  LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)
-#define _ce_0()  LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)
+#define _csn_high() LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
+#define _csn_low()  LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)
+#define _ce_high()  LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)
+#define _ce_low()   LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)
 /** @} */
 
 /**
@@ -61,13 +61,11 @@ static inline void _spi_transfer_bytes(uint8_t *in, const uint8_t *out,
     spi_transfer_bytes(in, out, len);
 }
 
-/**
- * @brief   Функция миллисекундной задержки.
- */
+/** Функция миллисекундной задержки. */
 #define _delay_ms(ms)   delay_ms((ms))
 
 /**
- * @brief   Функция микросекундной задержки.
+ * Функция микросекундной задержки.
  *
  * @note
  * Данная функция не является необходимой. Если микросекундная задержка не

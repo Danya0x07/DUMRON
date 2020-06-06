@@ -1,8 +1,27 @@
 #include <main.h>
 
 #include "motors.h"
+#include "debug.h"
 
-static RobotDirection_e currentDirection = ROBOT_DIRECTION_NONE;
+#define NUM_OF_DIRECTIONS   5
+
+static const uint32_t resetPinTable[NUM_OF_DIRECTIONS] = {
+    MOTOR_L1_Pin | MOTOR_L2_Pin | MOTOR_R1_Pin | MOTOR_R2_Pin,
+    MOTOR_L2_Pin | MOTOR_R2_Pin,
+    MOTOR_L1_Pin | MOTOR_R1_Pin,
+    MOTOR_L1_Pin | MOTOR_R2_Pin,
+    MOTOR_L2_Pin | MOTOR_R1_Pin
+};
+
+static const uint32_t setPinTable[NUM_OF_DIRECTIONS] = {
+    0,
+    MOTOR_L1_Pin | MOTOR_R1_Pin,
+    MOTOR_L2_Pin | MOTOR_R2_Pin,
+    MOTOR_L2_Pin | MOTOR_R1_Pin,
+    MOTOR_L1_Pin | MOTOR_R2_Pin
+};
+
+static MoveDirection_e currentDirection = MOVEDIR_NONE;
 
 static inline void Motors_PinSet(uint32_t mask)
 {
@@ -14,31 +33,14 @@ static inline void Motors_PinReset(uint32_t mask)
     LL_GPIO_ResetOutputPin(MOTOR_GPIO_Port, mask);
 }
 
-void Motors_SetDirection(RobotDirection_e direction)
+void Motors_SetDirection(MoveDirection_e direction)
 {
+    if (direction == currentDirection)
+        return;
+
     Motors_SetSpeed(0, 0);
-    switch (direction)
-    {
-    case ROBOT_DIRECTION_NONE:
-        Motors_PinReset(MOTOR_L1_Pin | MOTOR_L2_Pin | MOTOR_R1_Pin | MOTOR_R2_Pin);
-        break;
-    case ROBOT_DIRECTION_FORWARD:
-        Motors_PinReset(MOTOR_L2_Pin | MOTOR_R2_Pin);
-        Motors_PinSet  (MOTOR_L1_Pin | MOTOR_R1_Pin);
-        break;
-    case ROBOT_DIRECTION_BACKWARD:
-        Motors_PinReset(MOTOR_L1_Pin | MOTOR_R1_Pin);
-        Motors_PinSet  (MOTOR_L2_Pin | MOTOR_R2_Pin);
-        break;
-    case ROBOT_DIRECTION_LEFTWARD:
-        Motors_PinReset(MOTOR_L1_Pin | MOTOR_R2_Pin);
-        Motors_PinSet  (MOTOR_L2_Pin | MOTOR_R1_Pin);
-        break;
-    case ROBOT_DIRECTION_RIGHTWARD:
-        Motors_PinReset(MOTOR_L2_Pin | MOTOR_R1_Pin);
-        Motors_PinSet  (MOTOR_L1_Pin | MOTOR_R2_Pin);
-        break;
-    }
+    Motors_PinReset(resetPinTable[direction]);
+    Motors_PinSet(setPinTable[direction]);
     currentDirection = direction;
 }
 
@@ -48,7 +50,7 @@ void Motors_SetSpeed(uint8_t speedL, uint8_t speedR)
     LL_TIM_WriteReg(MOTOR_TIM, MOTOR_R_PWM_Reg, speedR);
 }
 
-RobotDirection_e Motors_GetDirection(void)
+MoveDirection_e Motors_GetDirection(void)
 {
     return currentDirection;
 }

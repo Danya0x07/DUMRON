@@ -1,7 +1,9 @@
 var nrf24l01__port_8h =
 [
-    [ "nrf24l01_ce_0", "nrf24l01__port_8h.html#a36ac787baa6b995e899aa075beaf9cbc", null ],
-    [ "nrf24l01_ce_1", "nrf24l01__port_8h.html#a786d1b1fbef1c9dbc5259181be045059", null ],
-    [ "nrf24l01_csn_0", "nrf24l01__port_8h.html#aae23b6b719fd04c8aaaff72b2c013ac5", null ],
-    [ "nrf24l01_csn_1", "nrf24l01__port_8h.html#af71d6213edbe8896b3d64ed1b55af909", null ]
+    [ "_ce_0", "nrf24l01__port_8h.html#a8077d6c55270d0b5ce66b5fd8d38040b", null ],
+    [ "_ce_1", "nrf24l01__port_8h.html#a4204fd4c0ea30dcfc6b0fd88a310ef52", null ],
+    [ "_csn_0", "nrf24l01__port_8h.html#a0c5a8b654e8a890c06c7c09c06c55330", null ],
+    [ "_csn_1", "nrf24l01__port_8h.html#a2b006bbe1de1c74a8b22bff7b538a0aa", null ],
+    [ "_delay_ms", "nrf24l01__port_8h.html#a5647ead118e2be59c7c23959d2f3c046", null ],
+    [ "_delay_us", "nrf24l01__port_8h.html#ab3716dd1e11c06aba7ccf7c2dccf68f5", null ]
 ];

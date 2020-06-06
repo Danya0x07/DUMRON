@@ -111,7 +111,7 @@ enum nrf24l01_crc_mode {
 enum nrf24l01_datarate {
     NRF24L01_DATARATE_1MBPS = 0,
     NRF24L01_DATARATE_2MBPS = 1 << 3,
-#ifdef NRF24L01_PLUS
+#if (NRF24L01_PLUS == 1)
     NRF24L01_DATARATE_250KBPS = 1 << 5
 #endif
 };
@@ -329,7 +329,7 @@ struct nrf24l01_pipe_config {
     uint8_t pld_size;
 };
 
-#ifndef NRF24L01_PLUS
+#if (NRF24L01_PLUS == 0)
 /**
  * @brief   Включает возможности стандартные возможности NRF24L01,
  *          которые у NRF24L01+ включены по умолчанию.
@@ -565,7 +565,7 @@ int nrf24l01_rx_get_pld_pipe_no(void);
 void nrf24l01_rx_write_ack_pld(enum nrf24l01_pipe_number pipeno,
                                const void *pld, uint8_t size);
 
-#ifndef NRF24L01_PLUS
+#if (NRF24L01_PLUS == 0)
 /**
  * @brief   Позволяет управлять встроенным усилителем (LNA) трансивера.
  *

@@ -19,13 +19,15 @@
 #include <tim.h>
 
 /**
- * @name    Интерфейс, используемый библиотекой.
+ * @name    Макросы для управления линией 1-Wire.
  * @{
  */
-#define onewire_pin_1() LL_GPIO_SetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
-#define onewire_pin_0() LL_GPIO_ResetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
-#define onewire_pin_is_1() LL_GPIO_IsInputPinSet(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
-#define onewire_delay_us(us)    delay_us((us))
+#define _wire_high()    LL_GPIO_SetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
+#define _wire_low()     LL_GPIO_ResetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
+#define _wire_is_high() LL_GPIO_IsInputPinSet(ONEWIRE_GPIO_Port, ONEWIRE_Pin)
 /** @} */
+
+/** Функция микросекундной задержки. */
+#define _delay_us(us)   delay_us((us))
 
 #endif /* DS18B20_PORT_H */

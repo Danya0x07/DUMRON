@@ -71,7 +71,7 @@ void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
   bool ledState = false;
-  Buzzer_SetState(true);
+  Buzzer_SetState(1);
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
@@ -89,7 +89,7 @@ void MemManage_Handler(void)
 {
   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
   bool ledState = false;
-  Buzzer_SetState(true);
+  Buzzer_SetState(1);
   /* USER CODE END MemoryManagement_IRQn 0 */
   while (1)
   {
@@ -106,14 +106,14 @@ void MemManage_Handler(void)
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
-  Buzzer_SetState(false);
+  Buzzer_SetState(0);
   /* USER CODE END BusFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
-    Led_SetState(true);
+    Led_SetState(1);
     Clumsy_DelayMs(2000);
-    Led_SetState(false);
+    Led_SetState(0);
     Clumsy_DelayMs(1000);
     /* USER CODE END W1_BusFault_IRQn 0 */
   }
@@ -125,14 +125,14 @@ void BusFault_Handler(void)
 void UsageFault_Handler(void)
 {
   /* USER CODE BEGIN UsageFault_IRQn 0 */
-  Buzzer_SetState(false);
+  Buzzer_SetState(0);
   /* USER CODE END UsageFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
-    Led_SetState(true);
+    Led_SetState(1);
     Clumsy_DelayMs(2000);
-    Led_SetState(false);
+    Led_SetState(0);
     Clumsy_DelayMs(500);
     /* USER CODE END W1_UsageFault_IRQn 0 */
   }

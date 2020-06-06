@@ -40,9 +40,9 @@
   */
 typedef struct {
     enum {
+        BACK_DISTANCE,
         BRAINS_CHARGE,
         MOTORS_CHARGE,
-        BACK_DISTANCE,
         AMBIENT_TEMPERATURE,
         INTERNAL_TEMPERATURE
     } kind;
@@ -78,7 +78,7 @@ static osMailQId outcomingElementQueueHandle;
   * задача обмена информацией с пультом Task_ExchangeDataWithRC.
   * Защищена мьютексом по дескриптору outcomingDataMutexHandle.
   */
-static DataFromRobot_s outcomingData;
+static DataFromRobot_s outcomingData = {0};
 
 /**
   * Глобальная переменная, хранящая факт наличия обрыва позади робота.
@@ -136,7 +136,7 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
     bool buzzerState = false;
 
     /* Издаём звуковые сигналы при включённом светодиоде. */
-    Led_SetState(true);
+    Led_SetState(1);
 
     debug_logs((char*) pcTaskName);
     debug_logs(" : stack overflow\n");
@@ -155,7 +155,7 @@ void vApplicationMallocFailedHook(void)
     bool buzzerState = false;
 
     /* Издаём звуковые сигналы при выключённом светодиоде. */
-    Led_SetState(false);
+    Led_SetState(0);
 
     debug_logs("malloc failed\n");
     for (;;) {
@@ -253,7 +253,7 @@ void Task_BlinkLed(void const * argument)
 {
   /* USER CODE BEGIN Task_BlinkLed */
 
-    for(;;) {
+    for (;;) {
         for (int_fast8_t i = 0; i < 2; i++) {
             Led_SetState(true);
             osDelay(140);
@@ -281,22 +281,21 @@ void Task_UpdateOutcomingData(void const * argument)
     OutcomingElement_s *element;
     osEvent event;
 
-    for(;;) {
+    for (;;) {
         event = osMailGet(outcomingElementQueueHandle, osWaitForever);
         if (event.status == osEventMail) {
             element = event.value.p;
             if (osMutexWait(outcomingDataMutexHandle, osWaitForever) == osOK) {
                 switch (element->kind)
                 {
+                case BACK_DISTANCE:
+                    outcomingData.status.bf.backDistance = element->udata;
+                    break;
                 case BRAINS_CHARGE:
                     outcomingData.brainsCharge = element->udata;
                     break;
                 case MOTORS_CHARGE:
                     outcomingData.motorsCharge = element->udata;
-                    break;
-                case BACK_DISTANCE:
-                    outcomingData.stsReg &= 0xFC;
-                    outcomingData.stsReg |= element->udata;
                     break;
                 case AMBIENT_TEMPERATURE:
                     outcomingData.ambientTemperature = element->sdata;
@@ -328,18 +327,10 @@ void Task_CheckDistance(void const * argument)
   /* USER CODE BEGIN Task_CheckDistance */
 
     OutcomingElement_s *element;
-    bool cliff, obstacle;
-    uint8_t distanceStatus;
+    Distance_e distanceStatus;
 
-    for(;;) {
-        distanceStatus = 0;
-        cliff = Distance_DetectCliff();
-        obstacle = Distance_DetectObstacle();
-
-        if (cliff)
-            distanceStatus = ROBOT_SFLAG_CLIFF;
-        else if (obstacle)
-            distanceStatus = ROBOT_SFLAG_OBSTACLE;
+    for (;;) {
+        distanceStatus = Distance_GetBack();
 
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = BACK_DISTANCE;
@@ -350,9 +341,9 @@ void Task_CheckDistance(void const * argument)
         }
 
         if (osMutexWait(incomingDataMutexHandle, 100) == osOK) {
-            if (cliff) {
+            if (distanceStatus == DIST_CLIFF) {
                 cliffBehindRobotDetected = true;
-                if (Motors_GetDirection() == ROBOT_DIRECTION_BACKWARD)
+                if (Motors_GetDirection() == MOVEDIR_BACKWARD)
                     Motors_SetSpeed(0, 0);
             } else {
                 cliffBehindRobotDetected = false;
@@ -380,7 +371,7 @@ void Task_CheckTemp(void const * argument)
 
     OutcomingElement_s *element;
 
-    for(;;) {
+    for (;;) {
         Temperature_StartMeasurement();
         osDelay(TEMPERATURE_MEASURE_TIME_MS);
 
@@ -418,7 +409,7 @@ void Task_CheckBatteries(void const * argument)
 
     OutcomingElement_s *element;
 
-    for(;;) {
+    for (;;) {
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = BRAINS_CHARGE;
             element->udata = Battery_GetPercentageBrains();
@@ -454,43 +445,28 @@ void Task_ExchangeDataWithRC(void const * argument)
   /* USER CODE BEGIN Task_ExchangeDataWithRC */
 
     DataToRobot_s incomingData = {
-        .direction = ROBOT_DIRECTION_NONE,
+        .ctrl.reg = 0,
         .speedL = 0,
         .speedR = 0,
-        .ctrlReg = 0
     };
-    ArmDirection_e armDirection;
-    ClawDirection_e clawDirection;
 
-    for(;;) {
+    for (;;) {
         osSemaphoreWait(dataRecieveSemaphoreHandle, osWaitForever);
         Radio_TakeIncoming(&incomingData);
 
         if (osMutexWait(incomingDataMutexHandle, 100) == osOK) {
-            Motors_SetDirection(incomingData.direction);
+            Motors_SetDirection(incomingData.ctrl.bf.moveDir);
 
             if (!cliffBehindRobotDetected ||
-                    incomingData.direction != ROBOT_DIRECTION_BACKWARD)
+                    incomingData.ctrl.bf.moveDir != MOVEDIR_BACKWARD)
                 Motors_SetSpeed(incomingData.speedL, incomingData.speedR);
 
-            if (incomingData.ctrlReg & ROBOT_CFLAG_ARM_UP)
-                armDirection = ARM_UP;
-            else if (incomingData.ctrlReg & ROBOT_CFLAG_ARM_DOWN)
-                armDirection = ARM_DOWN;
-            else
-                armDirection = ARM_STOP;
+            Manipulator_SetArm(incomingData.ctrl.bf.armCtrl);
+            Manipulator_SetClaw(incomingData.ctrl.bf.clawCtrl);
 
-            if (incomingData.ctrlReg & ROBOT_CFLAG_CLAW_SQUEEZE)
-                clawDirection = CLAW_SQUEESE;
-            else if (incomingData.ctrlReg & ROBOT_CFLAG_CLAW_RELEASE)
-                clawDirection = CLAW_RELEASE;
-            else
-                clawDirection = CLAW_STOP;
+            Lights_SetState(incomingData.ctrl.bf.lightsEn);
+            Buzzer_SetState(incomingData.ctrl.bf.buzzerEn);
 
-            Manipulator_SetDirections(armDirection, clawDirection);
-
-            Lights_SetState(incomingData.ctrlReg & ROBOT_CFLAG_LIGHTS_EN);
-            Buzzer_SetState(incomingData.ctrlReg & ROBOT_CFLAG_KLAXON_EN);
             osMutexRelease(incomingDataMutexHandle);
         } else {
             debug_logs("exd: idm failed\n");

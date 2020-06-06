@@ -1,14 +1,13 @@
 #include <main.h>
 
 #include "radio.h"
+#include "errors.h"
 #include "debug.h"
 
 #include <nrf24l01/nrf24l01.h>
 
 void Radio_Init(void)
 {
-    uint8_t rx_address[4] = {0xC7, 0x68, 0xAC, 0x35};
-
     struct nrf24l01_rx_config config = {
         .addr_size = NRF24L01_ADDRS_4BYTE,
         .crc_mode  = NRF24L01_CRC_1BYTE,
@@ -18,7 +17,7 @@ void Radio_Init(void)
         .rf_channel = 112,
     };
     struct nrf24l01_pipe_config p0 = {
-        .address.array = rx_address,
+        .address.array = (uint8_t [4]){0xC7, 0x68, 0xAC, 0x35},
         .number = NRF24L01_PIPE0,
         .mode = NRF24L01_PIPE_MODE_ACK_DPL,
     };
@@ -26,7 +25,8 @@ void Radio_Init(void)
     HAL_Delay(NRF24L01_PWR_ON_DELAY_MS);
 
     if (nrf24l01_rx_configure(&config) < 0) {
-        debug_logs("rc<0\n");
+        Error_InitRadio();
+        debug_logs("nrf24l01 init error\n");
     }
     nrf24l01_rx_setup_pipe(&p0);
     nrf24l01_rx_start_listening();
@@ -39,6 +39,7 @@ void Radio_TakeIncoming(DataToRobot_s *incoming)
             if (nrf24l01_read_pld_size() != sizeof(DataToRobot_s)) {
                 nrf24l01_flush_rx_fifo();
                 nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
+                debug_logs("incorrect pld size\n");
                 break;
             }
             nrf24l01_read_pld(incoming, sizeof(DataToRobot_s));

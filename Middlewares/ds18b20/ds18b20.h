@@ -52,10 +52,10 @@ struct ds18b20_config {
  * @details в миллисекундах.
  * @{
  */
-#define DS18B20_MEASURE_TIME_MS_9BIT    (94)
-#define DS18B20_MEASURE_TIME_MS_10BIT   (188)
-#define DS18B20_MEASURE_TIME_MS_11BIT   (375)
-#define DS18B20_MEASURE_TIME_MS_12BIT   (750)
+#define DS18B20_MEASURE_TIME_MS_9BIT    94
+#define DS18B20_MEASURE_TIME_MS_10BIT   188
+#define DS18B20_MEASURE_TIME_MS_11BIT   375
+#define DS18B20_MEASURE_TIME_MS_12BIT   750
 /** @} */
 
 /**

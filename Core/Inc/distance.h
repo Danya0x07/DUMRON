@@ -1,5 +1,5 @@
 /**
- * Функции обнаружения опасного перепада высоты позади робота.
+ * Модуль обнаружения опасного перепада высоты либо препятствия позади робота.
  */
 
 #ifndef DISTANCE_H
@@ -7,7 +7,8 @@
 
 #include <stdbool.h>
 
-bool Distance_DetectCliff(void);
-bool Distance_DetectObstacle(void);
+#include "protocol.h"
+
+Distance_e Distance_GetBack(void);
 
 #endif /* DISTANCE_H */
