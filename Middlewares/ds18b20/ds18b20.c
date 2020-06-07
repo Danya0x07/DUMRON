@@ -1,6 +1,8 @@
 #include "ds18b20.h"
 #include "ds18b20_port.h"
 
+#define DS18B20_CRC_POLYNOM 0x18
+
 enum ds18b20_commands {
     SEARCH_ROM   = 0xF0,
     ALARM_SEARCH = 0xEC,
@@ -74,18 +76,46 @@ static uint_fast8_t onewire_perform_reset(void)
 int ds18b20_check_presense(void)
 {
     uint_fast8_t presense = onewire_perform_reset() == 0;
-    return presense ? DS18B20_OK : DS18B20_ABSENSE;
+    return presense ? DS18B20_OK : DS18B20_EABSENT;
 }
+
+static uint8_t ds18b20_calc_crc8(const uint8_t *data, uint8_t len)
+{
+    uint_fast8_t i;
+    uint8_t crc = 0;
+    uint8_t inbyte;
+
+    while (len--) {
+        inbyte = *data++;
+        for (i = 0; i < 8; i++) {
+            uint8_t bit0 = (crc ^ inbyte) & 0x01;
+            crc >>= 1;
+            if (bit0)
+                crc ^= 0x80 | DS18B20_CRC_POLYNOM >> 1;
+            inbyte >>= 1;
+        }
+    }
+
+    return crc;
+}
+
 
 int ds18b20_read_address(uint8_t address[8])
 {
     int status;
 
     if ((status = ds18b20_check_presense()) == DS18B20_OK) {
+        uint_fast8_t i;
+
         onewire_write_byte(READ_ROM);
-        for (uint_fast8_t i = 0; i < 8; i++)
+        for (i = 0; i < 8; i++)
             address[i] = onewire_read_byte();
-        /* TODO: Добавить проверку контрольной суммы. */
+
+#if (DS18B20_CRC_MODE > 0)
+        if (ds18b20_calc_crc8(address, 7) != address[7])
+            status = DS18B20_ECRC;
+#endif
+
     }
     return status;
 }
@@ -126,8 +156,6 @@ int ds18b20_start_measurement(const uint8_t *address)
 
     if ((status = ds18b20_select(address)) == DS18B20_OK) {
         onewire_write_byte(CONVERT_T);
-        if (onewire_read_bit() == 0)
-            status = DS18B20_BUSY;
     }
     return status;
 }
@@ -147,11 +175,17 @@ int ds18b20_get_result(const uint8_t *address, int32_t *result)
         onewire_write_byte(R_SCRATCHPAD);
         for (i = 0; i < sizeof(scratchpad); i++)
             *data++ = onewire_read_byte();
-        /* TODO: Добавить проверку контрольной суммы. */
+
+#if (DS18B20_CRC_MODE > 0)
+        if (ds18b20_calc_crc8((uint8_t *)&scratchpad, sizeof(scratchpad) - 1)
+                != scratchpad.crc) {
+            return DS18B20_ECRC;
+        }
+#endif
 
         res_sign = (scratchpad.temp_msb & 0x80) ? -1 : 1;
-        res_int = ((scratchpad.temp_msb << 4) |
-                   (scratchpad.temp_lsb >> 4)) & 0x7F;
+        res_int = 0x7F & ((scratchpad.temp_msb << 4) |
+                          (scratchpad.temp_lsb >> 4));
         res_fract = 0;
 
         if (scratchpad.temp_lsb & 0x08)
@@ -163,7 +197,35 @@ int ds18b20_get_result(const uint8_t *address, int32_t *result)
         if (scratchpad.temp_lsb & 0x01)
             res_fract += 625;
 
+        if (res_sign < 0)
+            res_fract = 10000 - res_fract;
+
         *result = res_sign * ((int32_t)res_int * 10000 + res_fract);
+    }
+
+    return status;
+}
+
+int ds18b20_measure(const uint8_t *address, int32_t *result)
+{
+    int status;
+
+    if ((status = ds18b20_start_measurement(address)) == DS18B20_OK) {
+        int wait_time_ms = 0;
+
+        do {
+            _delay_us(3 * 1000);
+            wait_time_ms += 3;
+        } while (onewire_read_bit() == 0 &&
+                 wait_time_ms < DS18B20_MEASURE_TIME_12BIT_MS);
+        /*
+         * Очень маловероятная ситуация, но если не использовать таймаут
+         * можно повесить программу, и потом долго искать, где.
+         */
+        if (wait_time_ms >= DS18B20_MEASURE_TIME_12BIT_MS)
+            status = DS18B20_EBUSY;
+        else
+            status = ds18b20_get_result(address, result);
     }
     return status;
 }

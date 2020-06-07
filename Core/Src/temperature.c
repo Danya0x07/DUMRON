@@ -4,6 +4,9 @@
 
 #include <ds18b20/ds18b20.h>
 
+/* Количество попыток считывания результата измерений при несовпадении CRC. */
+#define RESULT_READING_RETRIES    3
+
 static const uint8_t internalSensorAddress[8] = {
     0x28, 0xAA, 0xCE, 0xB1, 0x48, 0x14, 0x01, 0x8E
 };
@@ -15,17 +18,24 @@ static const uint8_t ambientSensorAddress[8] = {
 static int8_t Temperature_Get(const uint8_t *sensorAddress)
 {
     int32_t result;
-    int8_t res_integer;
-    int status = ds18b20_get_result(sensorAddress, &result);
+    int status;
+    int retries = RESULT_READING_RETRIES;
 
-    if (status == DS18B20_CRC_MISMATCH) {
+    do {
+        status = ds18b20_get_result(sensorAddress, &result);
+        --retries;
+    } while (status == DS18B20_ECRC && retries > 0);
+
+    if (status == DS18B20_ECRC) {
         debug_logs("ds18b20 crc mismatch\n");
         return -128;
-    } else if (status == DS18B20_ABSENSE) {
+    }
+    else if (status == DS18B20_EABSENT) {
         debug_logs("ds18b20 absent (get)\n");
         return -128;
     }
 
+    int8_t res_integer;
     ds18b20_parse_result(result, &res_integer, NULL);
     return res_integer;
 }
@@ -34,7 +44,7 @@ void Temperature_Init(void)
 {
     struct ds18b20_config config = {
         .temp_lim_h = 80,
-        .temp_lim_l = 10,
+        .temp_lim_l = -10,
         .resolution = DS18B20_RESOLUTION_9BIT
     };
 
@@ -48,9 +58,7 @@ void Temperature_StartMeasurement(void)
 {
     int status = ds18b20_start_measurement(NULL);
 
-    if (status == DS18B20_BUSY) {
-        //debug_logs("ds18b20 busy\n");
-    } else if (status == DS18B20_ABSENSE) {
+    if (status == DS18B20_EABSENT) {
         debug_logs("ds18b20 absent (sm)\n");
     }
 }

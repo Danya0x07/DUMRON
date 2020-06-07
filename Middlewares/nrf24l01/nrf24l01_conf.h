@@ -2,7 +2,7 @@
  * @file
  * @brief   Файл с настройками библиотеки NRF24L01/+.
  *
- * @author  Danya0x07
+ * @author  Danya0x07 <dlef0xf8@gmail.com>
  */
 
 #ifndef NRF24L01_CONF_H
