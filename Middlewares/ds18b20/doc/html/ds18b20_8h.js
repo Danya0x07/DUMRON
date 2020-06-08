@@ -1,13 +1,13 @@
 var ds18b20_8h =
 [
     [ "ds18b20_config", "structds18b20__config.html", "structds18b20__config" ],
-    [ "DS18B20_ABSENSE", "ds18b20_8h.html#a30d8e479d6d790464c5262e093b5421d", null ],
-    [ "DS18B20_BUSY", "ds18b20_8h.html#ae807bdba659a34d5d86af568ede0b456", null ],
-    [ "DS18B20_CRC_MISMATCH", "ds18b20_8h.html#aa16b9fc9c06c32d21eabff739fddb6c1", null ],
-    [ "DS18B20_MEASURE_TIME_MS_10BIT", "ds18b20_8h.html#ab5ac0205955075fce392eb60d304f7d4", null ],
-    [ "DS18B20_MEASURE_TIME_MS_11BIT", "ds18b20_8h.html#ab12af6e8f729b92e1cc785232e50402b", null ],
-    [ "DS18B20_MEASURE_TIME_MS_12BIT", "ds18b20_8h.html#ad593cc59c36028788aa38d1ddf288b69", null ],
-    [ "DS18B20_MEASURE_TIME_MS_9BIT", "ds18b20_8h.html#a5f8bd6d4ce7f65fbf189f107699cacb6", null ],
+    [ "DS18B20_EABSENT", "ds18b20_8h.html#a11a88fb90c6afe57cf6276a911275d50", null ],
+    [ "DS18B20_EBUSY", "ds18b20_8h.html#ab99de946c7903b6847aae790a26ffa20", null ],
+    [ "DS18B20_ECRC", "ds18b20_8h.html#a04e88f562cbf66f1f8dfa0e35d095c57", null ],
+    [ "DS18B20_MEASURE_TIME_10BIT_MS", "ds18b20_8h.html#a37bbf7ec063baaa55b200edc79e67beb", null ],
+    [ "DS18B20_MEASURE_TIME_11BIT_MS", "ds18b20_8h.html#a033ac8205d84a89ee5636eb711a3d95a", null ],
+    [ "DS18B20_MEASURE_TIME_12BIT_MS", "ds18b20_8h.html#aea127b46981620ca3487c21d9f1694ec", null ],
+    [ "DS18B20_MEASURE_TIME_9BIT_MS", "ds18b20_8h.html#a5de2ec9bfceab1ec0740382f1b8b01d6", null ],
     [ "DS18B20_OK", "ds18b20_8h.html#a0fe4c904641c1a8bb5cdb738442b2f02", null ],
     [ "ds18b20_resolution", "ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5", [
       [ "DS18B20_RESOLUTION_9BIT", "ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5a5333ef2c5e5ec44213bf3f40bd9aa50b", null ],
@@ -15,10 +15,11 @@ var ds18b20_8h =
       [ "DS18B20_RESOLUTION_11BIT", "ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5a0396bfa58a01fdd9922771715e1467f6", null ],
       [ "DS18B20_RESOLUTION_12BIT", "ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5af2f20b32fccc2658193d818188ae54ca", null ]
     ] ],
-    [ "ds18b20_check_presense", "ds18b20_8h.html#a51a1bc5e72b12af7e90e01aabf4e61bd", null ],
-    [ "ds18b20_configure", "ds18b20_8h.html#a18032c476bbe10481964c0c47eb50d11", null ],
-    [ "ds18b20_get_result", "ds18b20_8h.html#a75d588b6b1d8b12d76d6eeb611257779", null ],
+    [ "ds18b20_check_presense", "ds18b20_8h.html#afbe0375190971913b6369845c9825044", null ],
+    [ "ds18b20_configure", "ds18b20_8h.html#a14dd8eae720b214af6cba00dd2c4348e", null ],
+    [ "ds18b20_get_result", "ds18b20_8h.html#af80971eec2dba9a5fd9f407f8ab5e419", null ],
+    [ "ds18b20_measure", "ds18b20_8h.html#a8847aaaa53b4027305881e9e74489b1b", null ],
     [ "ds18b20_parse_result", "ds18b20_8h.html#a44aaec53cd8eda5f80ed976333fa2bd9", null ],
-    [ "ds18b20_read_address", "ds18b20_8h.html#a965d76fe92c64cb9349b57a2f8ec05bb", null ],
-    [ "ds18b20_start_measurement", "ds18b20_8h.html#a083093a48dbb33463a16aa16237c0fed", null ]
+    [ "ds18b20_read_address", "ds18b20_8h.html#aee8b0d7e6dfcd64d5efd5a11838625ef", null ],
+    [ "ds18b20_start_measurement", "ds18b20_8h.html#a768128906fb9b345afdfb6a6d64b4297", null ]
 ];

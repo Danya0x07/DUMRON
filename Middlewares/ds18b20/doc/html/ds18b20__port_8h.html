@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Простая кроссплатформенная библиотека для датчиков температуры DS18B20.: Файл ds18b20_conf.h</title>
+<title>Простая кроссплатформенная библиотека для датчиков температуры DS18B20.: Файл ds18b20_port.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,7 +62,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('ds18b20__conf_8h.html','');});
+$(document).ready(function(){initNavTree('ds18b20__port_8h.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -83,43 +83,61 @@ $(document).ready(function(){initNavTree('ds18b20__conf_8h.html','');});
   <div class="summary">
 <a href="#define-members">Макросы</a>  </div>
   <div class="headertitle">
-<div class="title">Файл ds18b20_conf.h</div>  </div>
+<div class="title">Файл ds18b20_port.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Файл с настройками библиотеки DS18B20.  
+<p>Платформозависимая часть библиотеки датчиков температуры DS18B20.  
 <a href="#details">Подробнее...</a></p>
-<div class="textblock"><div class="dynheader">
-Граф файлов, в которые включается этот файл:</div>
+<div class="textblock"><code>#include &lt;main.h&gt;</code><br />
+<code>#include &lt;tim.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Граф включаемых заголовочных файлов для ds18b20_port.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="ds18b20__conf_8h__dep__incl.png" border="0" usemap="#ds18b20__conf_8hdep" alt=""/></div>
-<map name="ds18b20__conf_8hdep" id="ds18b20__conf_8hdep">
+<div class="center"><img src="ds18b20__port_8h__incl.png" border="0" usemap="#ds18b20__port_8h" alt=""/></div>
+<map name="ds18b20__port_8h" id="ds18b20__port_8h">
 </map>
 </div>
 </div>
-<p><a href="ds18b20__conf_8h_source.html">См. исходные тексты.</a></p>
+<p><a href="ds18b20__port_8h_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Макросы</h2></td></tr>
-<tr class="memitem:aecce701eea615dded98f6de5fd4d766f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20__conf_8h.html#aecce701eea615dded98f6de5fd4d766f">DS18B20_CRC_MODE</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:aecce701eea615dded98f6de5fd4d766f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20__port_8h.html#ab3716dd1e11c06aba7ccf7c2dccf68f5">_delay_us</a>(us)&#160;&#160;&#160;delay_us((us))</td></tr>
+<tr class="separator:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Макросы для управления линией 1-Wire.</div></td></tr>
+<tr class="memitem:aa5ab12a082ccd31fdd3df064e1612c92"><td class="memItemLeft" align="right" valign="top"><a id="aa5ab12a082ccd31fdd3df064e1612c92"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>_wire_high</b>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</td></tr>
+<tr class="separator:aa5ab12a082ccd31fdd3df064e1612c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ade25a4dafd6e5bea99509c744f4e22"><td class="memItemLeft" align="right" valign="top"><a id="a2ade25a4dafd6e5bea99509c744f4e22"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>_wire_low</b>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</td></tr>
+<tr class="separator:a2ade25a4dafd6e5bea99509c744f4e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71c6a616675784be775cf240fb72c4df"><td class="memItemLeft" align="right" valign="top"><a id="a71c6a616675784be775cf240fb72c4df"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>_wire_is_high</b>()&#160;&#160;&#160;LL_GPIO_IsInputPinSet(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</td></tr>
+<tr class="separator:a71c6a616675784be775cf240fb72c4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Файл с настройками библиотеки DS18B20. </p>
+<div class="textblock"><p>Платформозависимая часть библиотеки датчиков температуры DS18B20. </p>
+<p>Путём реализации данного интерфейса можно перенести библиотеку на любую платформу.</p>
+<dl class="section note"><dt>Заметки</dt><dd>В данном файле можно подключать любые заголовочные файлы, необходимые для реализации объявленного интерфейса.</dd></dl>
 <dl class="section author"><dt>Автор</dt><dd>Danya0x07 <a href="#" onclick="location.href='mai'+'lto:'+'dle'+'f0'+'xf8'+'@g'+'mai'+'l.'+'com'; return false;">dlef0<span style="display: none;">.nosp@m.</span>xf8@<span style="display: none;">.nosp@m.</span>gmail<span style="display: none;">.nosp@m.</span>.com</a> </dd></dl>
 </div><h2 class="groupheader">Макросы</h2>
-<a id="aecce701eea615dded98f6de5fd4d766f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecce701eea615dded98f6de5fd4d766f">&#9670;&nbsp;</a></span>DS18B20_CRC_MODE</h2>
+<a id="ab3716dd1e11c06aba7ccf7c2dccf68f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3716dd1e11c06aba7ccf7c2dccf68f5">&#9670;&nbsp;</a></span>_delay_us</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DS18B20_CRC_MODE&#160;&#160;&#160;1</td>
+          <td class="memname">#define _delay_us</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">us</td><td>)</td>
+          <td>&#160;&#160;&#160;delay_us((us))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>0: не проверять контрольную сумму, 1: проверять контрольную сумму побитовым расчётом, </p>
+<p>Функция микросекундной задержки. </p>
 
 </div>
 </div>
@@ -128,7 +146,7 @@ $(document).ready(function(){initNavTree('ds18b20__conf_8h.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="ds18b20__conf_8h.html">ds18b20_conf.h</a></li>
+    <li class="navelem"><a class="el" href="ds18b20__port_8h.html">ds18b20_port.h</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>

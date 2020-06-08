@@ -12,8 +12,8 @@
  * @author  Danya0x07 <dlef0xf8@gmail.com>
  */
 
-#ifndef NRF24L01_PORT_H
-#define NRF24L01_PORT_H
+#ifndef _NRF24L01_PORT_H
+#define _NRF24L01_PORT_H
 
 #include <main.h>
 #include <tim.h>
@@ -73,4 +73,4 @@ static inline void _spi_transfer_bytes(uint8_t *in, const uint8_t *out,
  */
 #define _delay_us(us)   delay_us((us))
 
-#endif /* NRF24L01_PORT_H */
+#endif /* _NRF24L01_PORT_H */

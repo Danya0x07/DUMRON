@@ -9,8 +9,8 @@
  * @author  Danya0x07 <dlef0xf8@gmail.com>
  */
 
-#ifndef NRF24L01_H
-#define NRF24L01_H
+#ifndef _NRF24L01_H
+#define _NRF24L01_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,6 +21,14 @@ extern "C" {
 #include <stdbool.h>
 
 #include "nrf24l01_conf.h"
+
+#ifndef NRF24L01_PLUS
+#   error Не найден макрос NRF24L01_PLUS, должен быть определён в nrf24l01_conf.h
+#endif
+
+#ifndef NRF24L01_DELAY_US_AVAILABLE
+#   error Не найден макрос NRF24L01_DELAY_US_AVAILABLE, должен быть определён в nrf24l01_conf.h
+#endif
 
 /**
  * @brief   Длительность неопределённого состояния трансивера
@@ -781,4 +789,4 @@ void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel);
 }
 #endif
 
-#endif /* NRF24L01_H */
+#endif /* _NRF24L01_H */

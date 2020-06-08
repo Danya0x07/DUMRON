@@ -4,16 +4,19 @@
  *          DS18B20.
  *
  * На текущий момент поддерживается работа только с одной линией 1-Wire.
+ * Для расчёта контрольной суммы CRC реализован только побитовый  алгоритм,
+ * поскольку выигрыш по скорости от табличного метода не будет иметь большого
+ * по сравнению с проигрышем по памяти значения вследствие невысокой скорости
+ * самого протокола 1-Wire.
  *
  * @author  Danya0x07 <dlef0xf8@gmail.com>
  *
- * @todo    Реализовать проверку контрольной суммы.
  * @todo    Реализовать динамический поиск датчиков на линии.
  * @todo    Реализовать поиск датчиков по тревоге (Alarm search).
  */
 
-#ifndef DS18B20_H
-#define DS18B20_H
+#ifndef _DS18B20_H
+#define _DS18B20_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,6 +26,10 @@ extern "C" {
 #include <stddef.h>
 
 #include "ds18b20_conf.h"
+
+#ifndef DS18B20_CRC_MODE
+#   error Не найден макрос DS18B20_CRC_MODE, должен быть определён в ds18b20_conf.h
+#endif
 
 /**
  * @brief Возможные разрешения значения температуры.
@@ -164,7 +171,7 @@ int ds18b20_get_result(const uint8_t *address, int32_t *result);
  * @return  `DS18B20_EABSENT`, если если не был получен импульс присутствия,
  * @return  `DS18B20_ECRC`, если не совпали контрольные суммы.
  * @return  `DS18B20_EBUSY`, если истёк срок ожидания (скорее всего означает
- *           короткое замыкание на землю).
+ *           короткое замыкание линии 1-Wire на землю).
  */
 int ds18b20_measure(const uint8_t *address, int32_t *result);
 
@@ -178,7 +185,7 @@ int ds18b20_measure(const uint8_t *address, int32_t *result);
  * в "сыром" виде.
  *
  * @param[in] result    Результат измерения, полученный вызовом функции
- *                      ds18b20_get_result().
+ *                      ds18b20_get_result() или ds18b20_measure().
  *
  * @param[out] integer      Указатель на переменную, в которую будет записана
  *                          целая часть результата *(с учётом знака)*, или NULL,
@@ -187,8 +194,6 @@ int ds18b20_measure(const uint8_t *address, int32_t *result);
  * @param[out] fractional   Указатель на переменную, в которую будет записана
  *                          дробная часть результата *(без учёта знака)*,
  *                          или NULL,  если она не нужна.
- *
- * @see ds18b20_get_result(), ds18b20_measure()
  */
 void ds18b20_parse_result(int32_t result, int8_t *integer,
                           uint16_t *fractional);
@@ -197,4 +202,4 @@ void ds18b20_parse_result(int32_t result, int8_t *integer,
 }
 #endif
 
-#endif  /* DS18B20_H */
+#endif  /* _DS18B20_H */

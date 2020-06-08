@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Библиотека DS18B20 для микрононтроллеров: Исходный файл ds18b20_conf.h</title>
+<title>Простая кроссплатформенная библиотека для датчиков температуры DS18B20.: Исходный файл ds18b20_conf.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,10 +28,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Библиотека DS18B20 для микрононтроллеров
-   &#160;<span id="projectnumber">0.1.0</span>
+   <div id="projectname">Простая кроссплатформенная библиотека для датчиков температуры DS18B20.
+   &#160;<span id="projectnumber">0.7.0</span>
    </div>
-   <div id="projectbrief">простая как угол дома</div>
   </td>
  </tr>
  </tbody>
@@ -85,7 +84,7 @@ $(document).ready(function(){initNavTree('ds18b20__conf_8h_source.html','');});
 <div class="title">ds18b20_conf.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="ds18b20__conf_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef DS18B20_CONF_H_INCLUDED</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define DS18B20_CONF_H_INCLUDED</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;main.h&quot;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="ds18b20__conf_8h.html#af675afc7def9adbe907a10f4b3702402">   17</a></span>&#160;<span class="preprocessor">#define onewire_pin_1() LL_GPIO_SetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define onewire_pin_0() LL_GPIO_ResetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define onewire_pin_is_1() LL_GPIO_IsInputPinSet(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> delay_us(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>);</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* DS18B20_CONF_H_INCLUDED */</span><span class="preprocessor"></span></div></div><!-- fragment --></div><!-- contents -->
+<a href="ds18b20__conf_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef _DS18B20_CONF_H</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define _DS18B20_CONF_H</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="ds18b20__conf_8h.html#aecce701eea615dded98f6de5fd4d766f">   15</a></span>&#160;<span class="preprocessor">#define DS18B20_CRC_MODE    1</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* _DS18B20_CONF_H */</span><span class="preprocessor"></span></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

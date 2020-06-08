@@ -89,6 +89,23 @@ static uint8_t ds18b20_calc_crc8(const uint8_t *data, uint8_t len)
         inbyte = *data++;
         for (i = 0; i < 8; i++) {
             uint8_t bit0 = (crc ^ inbyte) & 0x01;
+            /*
+             * Следующий код является слегка укороченным вариантом этого:
+             *
+             * if (bit0) {
+             *     crc ^= DS18B20_CRC_POLYNOM;
+             *     crc >>= 1;
+             *     crc |= 0x80
+             * }
+             * else {
+             *     crc >>= 1;
+             * }
+             *
+             * т.к. мы заранее сдвигаем crc на 1 вправо, то и
+             * DS18B20_CRC_POLYNOM тоже нужно сдвинуть на 1 вправо и тогда
+             * операцию XOR с ним можно объединить с установкой старшего бита
+             * в crc.
+             */
             crc >>= 1;
             if (bit0)
                 crc ^= 0x80 | DS18B20_CRC_POLYNOM >> 1;

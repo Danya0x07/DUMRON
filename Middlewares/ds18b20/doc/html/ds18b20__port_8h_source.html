@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Мой опиздохуительный самописный драйвер DS18B20: Список членов всех файлов</title>
+<title>Простая кроссплатформенная библиотека для датчиков температуры DS18B20.: Исходный файл ds18b20_port.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,10 +28,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Мой опиздохуительный самописный драйвер DS18B20
-   &#160;<span id="projectnumber">0.1.0</span>
+   <div id="projectname">Простая кроссплатформенная библиотека для датчиков температуры DS18B20.
+   &#160;<span id="projectnumber">0.7.0</span>
    </div>
-   <div id="projectbrief">синопсис</div>
   </td>
  </tr>
  </tbody>
@@ -63,7 +62,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('globals_eval.html','');});
+$(document).ready(function(){initNavTree('ds18b20__port_8h_source.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -80,59 +79,17 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
 </iframe>
 </div>
 
+<div class="header">
+  <div class="headertitle">
+<div class="title">ds18b20_port.h</div>  </div>
+</div><!--header-->
 <div class="contents">
-&#160;<ul>
-<li>ALARM_SEARCH
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a02431b0f1cf677b56bea3bca69ac644c">ds18b20.c</a>
-</li>
-<li>CONVERT_TEMP
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a09df29529d2e45b9fd737968a395861f">ds18b20.c</a>
-</li>
-<li>CP_SCRATCHPAD
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563aba396f64045165c6b4a2df6c69528c85">ds18b20.c</a>
-</li>
-<li>DS18B20_RESOLUTION_10BIT
-: <a class="el" href="ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5a6274d477f2d9d92a62050c3375c361a0">ds18b20.h</a>
-</li>
-<li>DS18B20_RESOLUTION_11BIT
-: <a class="el" href="ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5a0396bfa58a01fdd9922771715e1467f6">ds18b20.h</a>
-</li>
-<li>DS18B20_RESOLUTION_12BIT
-: <a class="el" href="ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5af2f20b32fccc2658193d818188ae54ca">ds18b20.h</a>
-</li>
-<li>DS18B20_RESOLUTION_9BIT
-: <a class="el" href="ds18b20_8h.html#af0a4e8b10a2f59b531eb057a07fcb6d5a5333ef2c5e5ec44213bf3f40bd9aa50b">ds18b20.h</a>
-</li>
-<li>MATCH_ROM
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563ae50aca2852a3bcbf63888da57e28ed21">ds18b20.c</a>
-</li>
-<li>R_PWR_SUPPLY
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a95b13ec88426947e3b7713c768b9ec1e">ds18b20.c</a>
-</li>
-<li>R_SCRATCHPAD
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a8c9a7b36c517da4ec0fd8d7ad89f763d">ds18b20.c</a>
-</li>
-<li>READ_ROM
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a440b78da4b83b06eaa5b02fd7e2d81c5">ds18b20.c</a>
-</li>
-<li>RECALL_E2
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a9e702065b3bb9b64bbccc961b85641e4">ds18b20.c</a>
-</li>
-<li>SEARCH_ROM
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a3fd1c22ab8be802749f22a3202ea548f">ds18b20.c</a>
-</li>
-<li>SKIP_ROM
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563a7aadade4e18aa3fa43671e04a0338d01">ds18b20.c</a>
-</li>
-<li>W_SCRATCHPAD
-: <a class="el" href="ds18b20_8c.html#a44cb17608b6febc548076835c1049563aaccc6f6c3af36ee57d9ea6b3e2102882">ds18b20.c</a>
-</li>
-</ul>
-</div><!-- contents -->
+<a href="ds18b20__port_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#ifndef _DS18B20_PORT_H</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define _DS18B20_PORT_H</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;main.h&gt;</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;tim.h&gt;</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define _wire_high()    LL_GPIO_SetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</span></div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define _wire_low()     LL_GPIO_ResetOutputPin(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</span></div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define _wire_is_high() LL_GPIO_IsInputPinSet(ONEWIRE_GPIO_Port, ONEWIRE_Pin)</span></div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="ds18b20__port_8h.html#ab3716dd1e11c06aba7ccf7c2dccf68f5">   31</a></span>&#160;<span class="preprocessor">#define _delay_us(us)   delay_us((us))</span></div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* _DS18B20_PORT_H */</span><span class="preprocessor"></span></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="ds18b20__port_8h.html">ds18b20_port.h</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>

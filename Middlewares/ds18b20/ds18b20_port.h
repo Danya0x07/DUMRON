@@ -12,8 +12,8 @@
  * @author  Danya0x07 <dlef0xf8@gmail.com>
  */
 
-#ifndef DS18B20_PORT_H
-#define DS18B20_PORT_H
+#ifndef _DS18B20_PORT_H
+#define _DS18B20_PORT_H
 
 #include <main.h>
 #include <tim.h>
@@ -30,4 +30,4 @@
 /** Функция микросекундной задержки. */
 #define _delay_us(us)   delay_us((us))
 
-#endif /* DS18B20_PORT_H */
+#endif /* _DS18B20_PORT_H */
