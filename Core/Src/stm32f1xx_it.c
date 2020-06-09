@@ -41,7 +41,7 @@
   * для использования в обработчиках критических ошибок, где стандартная
   * HAL_Delay может оказаться неработоспособной.
   */
-static void Clumsy_DelayMs(uint32_t ms);
+static void clumsyDelayMs(uint32_t ms);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -82,7 +82,7 @@ void HardFault_Handler(void)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
     Led_SetState((ledState = !ledState));
-    Clumsy_DelayMs(100);
+    clumsyDelayMs(100);
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
@@ -100,7 +100,7 @@ void MemManage_Handler(void)
   {
     /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
     Led_SetState((ledState = !ledState));
-    Clumsy_DelayMs(500);
+    clumsyDelayMs(500);
     /* USER CODE END W1_MemoryManagement_IRQn 0 */
   }
 }
@@ -117,9 +117,9 @@ void BusFault_Handler(void)
   {
     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
     Led_SetState(1);
-    Clumsy_DelayMs(2000);
+    clumsyDelayMs(2000);
     Led_SetState(0);
-    Clumsy_DelayMs(1000);
+    clumsyDelayMs(1000);
     /* USER CODE END W1_BusFault_IRQn 0 */
   }
 }
@@ -136,9 +136,9 @@ void UsageFault_Handler(void)
   {
     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
     Led_SetState(1);
-    Clumsy_DelayMs(2000);
+    clumsyDelayMs(2000);
     Led_SetState(0);
-    Clumsy_DelayMs(500);
+    clumsyDelayMs(500);
     /* USER CODE END W1_UsageFault_IRQn 0 */
   }
 }
@@ -192,7 +192,7 @@ void TIM4_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 
-static void Clumsy_DelayMs(uint32_t ms)
+static void clumsyDelayMs(uint32_t ms)
 {
     for (uint_fast32_t i = 0; i < ms; i++)
         for (uint_fast16_t j = 0; j < 2000; j++)

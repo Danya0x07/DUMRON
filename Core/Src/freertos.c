@@ -67,13 +67,6 @@ typedef struct {
 /* USER CODE BEGIN Variables */
 
 /**
-  * Дескриптор очереди выходных данных.
-  * Используется задачами, получающими данные с датчиков
-  * и задачей обновления выходных данных.
-  */
-static osMailQId outcomingElementQueueHandle;
-
-/**
   * Глобальная переменная, которую используют только 2 задачи:
   * задача обновления выходных данных Task_UpdateOutcomingData и
   * задача обмена информацией с пультом Task_ExchangeDataWithRC.
@@ -89,34 +82,91 @@ static DataFromRobot_s outcomingData = {0};
 static bool cliffBehindRobotDetected = false;
 
 /* USER CODE END Variables */
-osThreadId bldHandle;
-osThreadId uodHandle;
-osThreadId chdHandle;
-osThreadId chtHandle;
-osThreadId chbHandle;
-osThreadId exdHandle;
-osTimerId manipulatorTimerHandle;
-osMutexId outcomingDataMutexHandle;
-osMutexId incomingDataMutexHandle;
-osSemaphoreId dataRecieveSemaphoreHandle;
+/* Definitions for bld */
+osThreadId_t bldHandle;
+const osThreadAttr_t bld_attributes = {
+  .name = "bld",
+  .priority = (osPriority_t) osPriorityLow3,
+  .stack_size = 128 * 4
+};
+/* Definitions for uod */
+osThreadId_t uodHandle;
+const osThreadAttr_t uod_attributes = {
+  .name = "uod",
+  .priority = (osPriority_t) osPriorityBelowNormal,
+  .stack_size = 128 * 4
+};
+/* Definitions for chd */
+osThreadId_t chdHandle;
+const osThreadAttr_t chd_attributes = {
+  .name = "chd",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 128 * 4
+};
+/* Definitions for cht */
+osThreadId_t chtHandle;
+const osThreadAttr_t cht_attributes = {
+  .name = "cht",
+  .priority = (osPriority_t) osPriorityLow5,
+  .stack_size = 128 * 4
+};
+/* Definitions for chb */
+osThreadId_t chbHandle;
+const osThreadAttr_t chb_attributes = {
+  .name = "chb",
+  .priority = (osPriority_t) osPriorityLow7,
+  .stack_size = 128 * 4
+};
+/* Definitions for exd */
+osThreadId_t exdHandle;
+const osThreadAttr_t exd_attributes = {
+  .name = "exd",
+  .priority = (osPriority_t) osPriorityHigh,
+  .stack_size = 128 * 4
+};
+/* Definitions for outcomingElementQueue */
+osMessageQueueId_t outcomingElementQueueHandle;
+const osMessageQueueAttr_t outcomingElementQueue_attributes = {
+  .name = "outcomingElementQueue"
+};
+/* Definitions for manipulatorTimer */
+osTimerId_t manipulatorTimerHandle;
+const osTimerAttr_t manipulatorTimer_attributes = {
+  .name = "manipulatorTimer"
+};
+/* Definitions for outcomingDataMutex */
+osMutexId_t outcomingDataMutexHandle;
+const osMutexAttr_t outcomingDataMutex_attributes = {
+  .name = "outcomingDataMutex"
+};
+/* Definitions for incomingDataMutex */
+osMutexId_t incomingDataMutexHandle;
+const osMutexAttr_t incomingDataMutex_attributes = {
+  .name = "incomingDataMutex"
+};
+/* Definitions for dataRecieveSemaphore */
+osSemaphoreId_t dataRecieveSemaphoreHandle;
+const osSemaphoreAttr_t dataRecieveSemaphore_attributes = {
+  .name = "dataRecieveSemaphore"
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 /* USER CODE END FunctionPrototypes */
 
-void Task_BlinkLed(void const * argument);
-void Task_UpdateOutcomingData(void const * argument);
-void Task_CheckDistance(void const * argument);
-void Task_CheckTemp(void const * argument);
-void Task_CheckBatteries(void const * argument);
-void Task_ExchangeDataWithRC(void const * argument);
-void Callback_UpdateManipulator(void const * argument);
+void Task_BlinkLed(void *argument);
+void Task_UpdateOutcomingData(void *argument);
+void Task_CheckDistance(void *argument);
+void Task_CheckTemp(void *argument);
+void Task_CheckBatteries(void *argument);
+void Task_ExchangeDataWithRC(void *argument);
+void Callback_UpdateManipulator(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* Hook prototypes */
 void vApplicationIdleHook(void);
-void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName);
+void vApplicationStackOverflowHook(TaskHandle_t xTask, signed char *pcTaskName);
 void vApplicationMallocFailedHook(void);
 
 /* USER CODE BEGIN 2 */
@@ -131,7 +181,7 @@ void vApplicationIdleHook(void)
 
 /* USER CODE BEGIN 4 */
 
-void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
+void vApplicationStackOverflowHook(TaskHandle_t xTask, signed char *pcTaskName)
 {
     debug_logs((char *)pcTaskName);
     debug_logs(" : stack overflow\n");
@@ -159,70 +209,61 @@ void MX_FREERTOS_Init(void) {
        
   /* USER CODE END Init */
   /* Create the mutex(es) */
-  /* definition and creation of outcomingDataMutex */
-  osMutexDef(outcomingDataMutex);
-  outcomingDataMutexHandle = osMutexCreate(osMutex(outcomingDataMutex));
+  /* creation of outcomingDataMutex */
+  outcomingDataMutexHandle = osMutexNew(&outcomingDataMutex_attributes);
 
-  /* definition and creation of incomingDataMutex */
-  osMutexDef(incomingDataMutex);
-  incomingDataMutexHandle = osMutexCreate(osMutex(incomingDataMutex));
+  /* creation of incomingDataMutex */
+  incomingDataMutexHandle = osMutexNew(&incomingDataMutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
   /* Create the semaphores(s) */
-  /* definition and creation of dataRecieveSemaphore */
-  osSemaphoreDef(dataRecieveSemaphore);
-  dataRecieveSemaphoreHandle = osSemaphoreCreate(osSemaphore(dataRecieveSemaphore), 1);
+  /* creation of dataRecieveSemaphore */
+  dataRecieveSemaphoreHandle = osSemaphoreNew(1, 1, &dataRecieveSemaphore_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* Create the timer(s) */
-  /* definition and creation of manipulatorTimer */
-  osTimerDef(manipulatorTimer, Callback_UpdateManipulator);
-  manipulatorTimerHandle = osTimerCreate(osTimer(manipulatorTimer), osTimerPeriodic, NULL);
+  /* creation of manipulatorTimer */
+  manipulatorTimerHandle = osTimerNew(Callback_UpdateManipulator, osTimerPeriodic, NULL, &manipulatorTimer_attributes);
 
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of outcomingElementQueue */
+  outcomingElementQueueHandle = osMessageQueueNew (6, sizeof(OutcomingElement_s), &outcomingElementQueue_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  osMailQDef(outDataQueue, 8, OutcomingElement_s);
-  outcomingElementQueueHandle = osMailCreate(osMailQ(outDataQueue), NULL);
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of bld */
-  osThreadDef(bld, Task_BlinkLed, osPriorityLow, 0, 128);
-  bldHandle = osThreadCreate(osThread(bld), NULL);
+  /* creation of bld */
+  bldHandle = osThreadNew(Task_BlinkLed, NULL, &bld_attributes);
 
-  /* definition and creation of uod */
-  osThreadDef(uod, Task_UpdateOutcomingData, osPriorityBelowNormal, 0, 128);
-  uodHandle = osThreadCreate(osThread(uod), NULL);
+  /* creation of uod */
+  uodHandle = osThreadNew(Task_UpdateOutcomingData, NULL, &uod_attributes);
 
-  /* definition and creation of chd */
-  osThreadDef(chd, Task_CheckDistance, osPriorityBelowNormal, 0, 128);
-  chdHandle = osThreadCreate(osThread(chd), NULL);
+  /* creation of chd */
+  chdHandle = osThreadNew(Task_CheckDistance, NULL, &chd_attributes);
 
-  /* definition and creation of cht */
-  osThreadDef(cht, Task_CheckTemp, osPriorityLow, 0, 128);
-  chtHandle = osThreadCreate(osThread(cht), NULL);
+  /* creation of cht */
+  chtHandle = osThreadNew(Task_CheckTemp, NULL, &cht_attributes);
 
-  /* definition and creation of chb */
-  osThreadDef(chb, Task_CheckBatteries, osPriorityLow, 0, 128);
-  chbHandle = osThreadCreate(osThread(chb), NULL);
+  /* creation of chb */
+  chbHandle = osThreadNew(Task_CheckBatteries, NULL, &chb_attributes);
 
-  /* definition and creation of exd */
-  osThreadDef(exd, Task_ExchangeDataWithRC, osPriorityNormal, 0, 128);
-  exdHandle = osThreadCreate(osThread(exd), NULL);
+  /* creation of exd */
+  exdHandle = osThreadNew(Task_ExchangeDataWithRC, NULL, &exd_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
 
-  osTimerStart(manipulatorTimerHandle, 70);
+  osTimerStart(manipulatorTimerHandle, pdMS_TO_TICKS(70));
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -233,18 +274,18 @@ void MX_FREERTOS_Init(void) {
   * Показывает, что робот в состоянии хотя бы помигать светодиодом.
   */
 /* USER CODE END Header_Task_BlinkLed */
-void Task_BlinkLed(void const * argument)
+void Task_BlinkLed(void *argument)
 {
   /* USER CODE BEGIN Task_BlinkLed */
 
     for (;;) {
         for (int_fast8_t i = 0; i < 2; i++) {
-            Led_SetState(true);
-            osDelay(140);
-            Led_SetState(false);
-            osDelay(70);
+            Led_SetState(1);
+            osDelay(pdMS_TO_TICKS(140));
+            Led_SetState(0);
+            osDelay(pdMS_TO_TICKS(70));
         }
-        osDelay(1500);
+        osDelay(pdMS_TO_TICKS(1500));
     }
 
   /* USER CODE END Task_BlinkLed */
@@ -258,42 +299,39 @@ void Task_BlinkLed(void const * argument)
   * отправлена через радиомодуль на управляющую сторону.
   */
 /* USER CODE END Header_Task_UpdateOutcomingData */
-void Task_UpdateOutcomingData(void const * argument)
+void Task_UpdateOutcomingData(void *argument)
 {
   /* USER CODE BEGIN Task_UpdateOutcomingData */
 
-    OutcomingElement_s *element;
-    osEvent event;
+    OutcomingElement_s element;
 
     for (;;) {
-        event = osMailGet(outcomingElementQueueHandle, osWaitForever);
-        if (event.status == osEventMail) {
-            element = event.value.p;
-            if (osMutexWait(outcomingDataMutexHandle, osWaitForever) == osOK) {
-                switch (element->kind)
-                {
-                case BACK_DISTANCE:
-                    outcomingData.status.bf.backDistance = element->udata;
-                    break;
-                case BRAINS_CHARGE:
-                    outcomingData.brainsCharge = element->udata;
-                    break;
-                case MOTORS_CHARGE:
-                    outcomingData.motorsCharge = element->udata;
-                    break;
-                case AMBIENT_TEMPERATURE:
-                    outcomingData.ambientTemperature = element->sdata;
-                    break;
-                case INTERNAL_TEMPERATURE:
-                    outcomingData.internalTemperature = element->sdata;
-                    break;
-                }
-                osMutexRelease(outcomingDataMutexHandle);
-            } else {
-                debug_logs("uod: odm failed\n");
+        osMessageQueueGet(outcomingElementQueueHandle, &element, 0, osWaitForever);
+
+        if (osMutexAcquire(outcomingDataMutexHandle, 5) == osOK) {
+            switch (element.kind)
+            {
+            case BACK_DISTANCE:
+                outcomingData.status.bf.backDistance = element.udata;
+                break;
+            case BRAINS_CHARGE:
+                outcomingData.brainsCharge = element.udata;
+                break;
+            case MOTORS_CHARGE:
+                outcomingData.motorsCharge = element.udata;
+                break;
+            case AMBIENT_TEMPERATURE:
+                outcomingData.ambientTemperature = element.sdata;
+                break;
+            case INTERNAL_TEMPERATURE:
+                outcomingData.internalTemperature = element.sdata;
+                break;
             }
-            osMailFree(outcomingElementQueueHandle, element);
+            osMutexRelease(outcomingDataMutexHandle);
+        } else {
+            debug_logs("uod: odm failed\n");
         }
+
     }
 
   /* USER CODE END Task_UpdateOutcomingData */
@@ -306,25 +344,23 @@ void Task_UpdateOutcomingData(void const * argument)
   * робот двигается назад, то движение блокируется.
   */
 /* USER CODE END Header_Task_CheckDistance */
-void Task_CheckDistance(void const * argument)
+void Task_CheckDistance(void *argument)
 {
   /* USER CODE BEGIN Task_CheckDistance */
 
-    OutcomingElement_s *element;
+    OutcomingElement_s element;
     Distance_e distanceStatus;
 
     for (;;) {
         distanceStatus = Distance_GetBack();
+        element.kind = BACK_DISTANCE;
+        element.udata = distanceStatus;
 
-        if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
-            element->kind = BACK_DISTANCE;
-            element->udata = distanceStatus;
-            osMailPut(outcomingElementQueueHandle, element);
-        } else {
-            debug_logs("chd: alloc failed\n");
+        if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
+            debug_logs("chd: oeq failed\n");
         }
 
-        if (osMutexWait(incomingDataMutexHandle, 100) == osOK) {
+        if (osMutexAcquire(incomingDataMutexHandle, 1) == osOK) {
             if (distanceStatus == DIST_CLIFF) {
                 cliffBehindRobotDetected = true;
                 if (Motors_GetDirection() == MOVEDIR_BACKWARD)
@@ -337,7 +373,7 @@ void Task_CheckDistance(void const * argument)
             debug_logs("chd: idm failed\n");
         }
 
-        osDelay(200);
+        osDelay(pdMS_TO_TICKS(200));
     }
 
   /* USER CODE END Task_CheckDistance */
@@ -349,33 +385,31 @@ void Task_CheckDistance(void const * argument)
   * внутренних радиаторов и окружающей среды.
   */
 /* USER CODE END Header_Task_CheckTemp */
-void Task_CheckTemp(void const * argument)
+void Task_CheckTemp(void *argument)
 {
   /* USER CODE BEGIN Task_CheckTemp */
 
-    OutcomingElement_s *element;
+    OutcomingElement_s element;
 
     for (;;) {
         Temperature_StartMeasurement();
-        osDelay(1000);
+        osDelay(pdMS_TO_TICKS(1000));
 
-        if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
-            element->kind = INTERNAL_TEMPERATURE;
-            element->sdata = Temperature_GetInternal();
-            osMailPut(outcomingElementQueueHandle, element);
-        } else {
-            debug_logs("cht: alloc_1 failed\n");
-        }
-        osDelay(10);
+        element.kind = INTERNAL_TEMPERATURE;
+        element.sdata = Temperature_GetInternal();
 
-        if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
-            element->kind = AMBIENT_TEMPERATURE;
-            element->sdata = Temperature_GetAmbient();
-            osMailPut(outcomingElementQueueHandle, element);
-        } else {
-            debug_logs("cht: alloc_2 failed\n");
+        if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
+            debug_logs("cht: oeq1 failed\n");
         }
-        osDelay(1000);
+        osDelay(pdMS_TO_TICKS(10));
+
+        element.kind = AMBIENT_TEMPERATURE;
+        element.sdata = Temperature_GetAmbient();
+
+        if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
+            debug_logs("cht: oeq2 failed\n");
+        }
+        osDelay(pdMS_TO_TICKS(1000));
     }
 
   /* USER CODE END Task_CheckTemp */
@@ -387,30 +421,28 @@ void Task_CheckTemp(void const * argument)
   * с выходных узлов делителей напряжения.
   */
 /* USER CODE END Header_Task_CheckBatteries */
-void Task_CheckBatteries(void const * argument)
+void Task_CheckBatteries(void *argument)
 {
   /* USER CODE BEGIN Task_CheckBatteries */
 
-    OutcomingElement_s *element;
+    OutcomingElement_s element;
 
     for (;;) {
-        if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
-            element->kind = BRAINS_CHARGE;
-            element->udata = Battery_GetChargeBrains();
-            osMailPut(outcomingElementQueueHandle, element);
-        } else {
-            debug_logs("chb: alloc_1 failed\n");
+        element.kind = BRAINS_CHARGE;
+        element.udata = Battery_GetChargeBrains();
+
+        if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
+            debug_logs("chb: oeq1 failed\n");
         }
         osThreadYield();
 
-        if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
-            element->kind = MOTORS_CHARGE;
-            element->udata = Battery_GetChargeMotors();
-            osMailPut(outcomingElementQueueHandle, element);
-        } else {
-            debug_logs("chb: alloc_2 failed\n");
+        element.kind = MOTORS_CHARGE;
+        element.udata = Battery_GetChargeMotors();
+
+        if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
+            debug_logs("chb: oeq2 failed\n");
         }
-        osDelay(3000);
+        osDelay(pdMS_TO_TICKS(3000));
     }
 
   /* USER CODE END Task_CheckBatteries */
@@ -424,7 +456,7 @@ void Task_CheckBatteries(void const * argument)
   * dataRecieveSemaphoreHandle.
   */
 /* USER CODE END Header_Task_ExchangeDataWithRC */
-void Task_ExchangeDataWithRC(void const * argument)
+void Task_ExchangeDataWithRC(void *argument)
 {
   /* USER CODE BEGIN Task_ExchangeDataWithRC */
 
@@ -435,10 +467,10 @@ void Task_ExchangeDataWithRC(void const * argument)
     };
 
     for (;;) {
-        osSemaphoreWait(dataRecieveSemaphoreHandle, osWaitForever);
+        osSemaphoreAcquire(dataRecieveSemaphoreHandle, osWaitForever);
         Radio_TakeIncoming(&incomingData);
 
-        if (osMutexWait(incomingDataMutexHandle, 100) == osOK) {
+        if (osMutexAcquire(incomingDataMutexHandle, 10) == osOK) {
             Motors_SetDirection(incomingData.ctrl.bf.moveDir);
             if (!cliffBehindRobotDetected ||
                     incomingData.ctrl.bf.moveDir != MOVEDIR_BACKWARD)
@@ -455,7 +487,7 @@ void Task_ExchangeDataWithRC(void const * argument)
             debug_logs("exd: idm failed\n");
         }
 
-        if (osMutexWait(outcomingDataMutexHandle, 50) == osOK) {
+        if (osMutexAcquire(outcomingDataMutexHandle, 5) == osOK) {
             Radio_PutOutcoming(&outcomingData);
             osMutexRelease(outcomingDataMutexHandle);
         } else {
@@ -473,7 +505,7 @@ void Task_ExchangeDataWithRC(void const * argument)
 }
 
 /* Callback_UpdateManipulator function */
-void Callback_UpdateManipulator(void const * argument)
+void Callback_UpdateManipulator(void *argument)
 {
   /* USER CODE BEGIN Callback_UpdateManipulator */
 
@@ -481,7 +513,7 @@ void Callback_UpdateManipulator(void const * argument)
      * Чтобы не вызывать сильные просадки напряжения силового аккумулятора,
      * положение манипулятора обновляется плавно, шагами.
      */
-    if (osMutexWait(incomingDataMutexHandle, 100) != osErrorOS) {
+    if (osMutexAcquire(incomingDataMutexHandle, 10) != osErrorOS) {
         Manipulator_Move();
         osMutexRelease(incomingDataMutexHandle);
     } else {
