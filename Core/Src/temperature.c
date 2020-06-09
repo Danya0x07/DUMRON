@@ -1,4 +1,5 @@
 #include "temperature.h"
+#include "protocol.h"
 #include "errors.h"
 #include "debug.h"
 
@@ -15,7 +16,7 @@ static const uint8_t ambientSensorAddress[8] = {
     0x28, 0x0A, 0xA7, 0x79, 0x97, 0x14, 0x03, 0xEF
 };
 
-static int8_t Temperature_Get(const uint8_t *sensorAddress)
+static int8_t measureTemperature(const uint8_t *sensorAddress)
 {
     int32_t result;
     int status;
@@ -28,11 +29,11 @@ static int8_t Temperature_Get(const uint8_t *sensorAddress)
 
     if (status == DS18B20_ECRC) {
         debug_logs("ds18b20 crc mismatch\n");
-        return -128;
+        return TEMPERATURE_ERROR_VALUE;
     }
     else if (status == DS18B20_EABSENT) {
         debug_logs("ds18b20 absent (get)\n");
-        return -128;
+        return TEMPERATURE_ERROR_VALUE;
     }
 
     int8_t res_integer;
@@ -59,16 +60,16 @@ void Temperature_StartMeasurement(void)
     int status = ds18b20_start_measurement(NULL);
 
     if (status == DS18B20_EABSENT) {
-        debug_logs("ds18b20 absent (sm)\n");
+        debug_logs("ds18b20 absent (smsr)\n");
     }
 }
 
 int8_t Temperature_GetAmbient(void)
 {
-    return Temperature_Get(ambientSensorAddress);
+    return measureTemperature(ambientSensorAddress);
 }
 
 int8_t Temperature_GetInternal(void)
 {
-    return Temperature_Get(internalSensorAddress);
+    return measureTemperature(internalSensorAddress);
 }

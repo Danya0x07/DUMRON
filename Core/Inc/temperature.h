@@ -9,16 +9,14 @@
  * просто исторически сложилось так, что у него есть датчики температуры.
  */
 
-#ifndef TEMPERATURE_H
-#define TEMPERATURE_H
+#ifndef _TEMPERATURE_H
+#define _TEMPERATURE_H
 
 #include <stdint.h>
-
-#define TEMPERATURE_MEASURE_TIME_MS     1000
 
 void Temperature_Init(void);
 void Temperature_StartMeasurement(void);
 int8_t Temperature_GetAmbient(void);
 int8_t Temperature_GetInternal(void);
 
-#endif /* TEMPERATURE_H */
+#endif /* _TEMPERATURE_H */

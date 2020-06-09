@@ -1,4 +1,4 @@
-#include <main.h>
+#include "main.h"
 
 #include "manipulator.h"
 
@@ -22,7 +22,7 @@ static const int directions[3] = {0, 1, -1};
 static int armDirection = 0;
 static int clawDirection = 0;
 
-static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval)
+static void constrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval)
 {
     if (*pulse > maxval)
         *pulse = maxval;
@@ -30,19 +30,19 @@ static void ConstrainPulse(uint32_t *pulse, uint32_t maxval, uint32_t minval)
         *pulse = minval;
 }
 
-static void ArmMove(int direction)
+static void moveArm(int direction)
 {
     uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_ARM_PWM_Reg);
     pulse += ARM_PULSE_FADE * direction;
-    ConstrainPulse(&pulse, ARM_MAX_PULSE, ARM_MIN_PULSE);
+    constrainPulse(&pulse, ARM_MAX_PULSE, ARM_MIN_PULSE);
     LL_TIM_WriteReg(SERVO_TIM, SERVO_ARM_PWM_Reg, pulse);
 }
 
-static void ClawMove(int direction)
+static void moveClaw(int direction)
 {
     uint32_t pulse = LL_TIM_ReadReg(SERVO_TIM, SERVO_CLAW_PWM_Reg);
     pulse += CLAW_PULSE_FADE * direction;
-    ConstrainPulse(&pulse, CLAW_MAX_PULSE, CLAW_MIN_PULSE);
+    constrainPulse(&pulse, CLAW_MAX_PULSE, CLAW_MIN_PULSE);
     LL_TIM_WriteReg(SERVO_TIM, SERVO_CLAW_PWM_Reg, pulse);
 }
 
@@ -58,6 +58,6 @@ void Manipulator_SetClaw(ClawControl_e ctrl)
 
 void Manipulator_Move(void)
 {
-    ArmMove(armDirection);
-    ClawMove(clawDirection);
+    moveArm(armDirection);
+    moveClaw(clawDirection);
 }

@@ -110,7 +110,7 @@ void Task_CheckDistance(void const * argument);
 void Task_CheckTemp(void const * argument);
 void Task_CheckBatteries(void const * argument);
 void Task_ExchangeDataWithRC(void const * argument);
-void updateManipulator(void const * argument);
+void Callback_UpdateManipulator(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -182,7 +182,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the timer(s) */
   /* definition and creation of manipulatorTimer */
-  osTimerDef(manipulatorTimer, updateManipulator);
+  osTimerDef(manipulatorTimer, Callback_UpdateManipulator);
   manipulatorTimerHandle = osTimerCreate(osTimer(manipulatorTimer), osTimerPeriodic, NULL);
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -357,7 +357,7 @@ void Task_CheckTemp(void const * argument)
 
     for (;;) {
         Temperature_StartMeasurement();
-        osDelay(TEMPERATURE_MEASURE_TIME_MS);
+        osDelay(1000);
 
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = INTERNAL_TEMPERATURE;
@@ -396,7 +396,7 @@ void Task_CheckBatteries(void const * argument)
     for (;;) {
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = BRAINS_CHARGE;
-            element->udata = Battery_GetPercentageBrains();
+            element->udata = Battery_GetChargeBrains();
             osMailPut(outcomingElementQueueHandle, element);
         } else {
             debug_logs("chb: alloc_1 failed\n");
@@ -405,7 +405,7 @@ void Task_CheckBatteries(void const * argument)
 
         if ((element = osMailAlloc(outcomingElementQueueHandle, 0)) != NULL) {
             element->kind = MOTORS_CHARGE;
-            element->udata = Battery_GetPercentageMotors();
+            element->udata = Battery_GetChargeMotors();
             osMailPut(outcomingElementQueueHandle, element);
         } else {
             debug_logs("chb: alloc_2 failed\n");
@@ -440,7 +440,6 @@ void Task_ExchangeDataWithRC(void const * argument)
 
         if (osMutexWait(incomingDataMutexHandle, 100) == osOK) {
             Motors_SetDirection(incomingData.ctrl.bf.moveDir);
-
             if (!cliffBehindRobotDetected ||
                     incomingData.ctrl.bf.moveDir != MOVEDIR_BACKWARD)
                 Motors_SetSpeed(incomingData.speedL, incomingData.speedR);
@@ -473,10 +472,10 @@ void Task_ExchangeDataWithRC(void const * argument)
   /* USER CODE END Task_ExchangeDataWithRC */
 }
 
-/* updateManipulator function */
-void updateManipulator(void const * argument)
+/* Callback_UpdateManipulator function */
+void Callback_UpdateManipulator(void const * argument)
 {
-  /* USER CODE BEGIN updateManipulator */
+  /* USER CODE BEGIN Callback_UpdateManipulator */
 
     /*
      * Чтобы не вызывать сильные просадки напряжения силового аккумулятора,
@@ -489,7 +488,7 @@ void updateManipulator(void const * argument)
          debug_logs("um: idm failed\n");
     }
 
-  /* USER CODE END updateManipulator */
+  /* USER CODE END Callback_UpdateManipulator */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -1,5 +1,5 @@
-#include <main.h>
-#include <tim.h>
+#include "main.h"
+#include "tim.h"
 
 #include "distance.h"
 #include "errors.h"
@@ -30,7 +30,7 @@ typedef struct {
     uint32_t gpin_echo;
 } HCSR04_s;
 
-static int _Distance_MeasureCm(HCSR04_s *sonar)
+static int measureDistanceCm(HCSR04_s *sonar)
 {
     delay_us(MIN_DELAY_BETWEEN_MEASUREMENTS_US);
 
@@ -60,7 +60,7 @@ Distance_e Distance_GetBack(void)
         .gpin_trig = SONAR_TRIG_Pin,
         .gpin_echo = SONAR_ECHO_Pin
     };
-    int distanceCm = _Distance_MeasureCm(&sternSonar);
+    int distanceCm = measureDistanceCm(&sternSonar);
 
     if (distanceCm < 0) {
         debug_logs("distance error\n");

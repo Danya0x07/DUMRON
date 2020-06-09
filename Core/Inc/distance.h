@@ -2,8 +2,8 @@
  * Модуль обнаружения опасного перепада высоты либо препятствия позади робота.
  */
 
-#ifndef DISTANCE_H
-#define DISTANCE_H
+#ifndef _DISTANCE_H
+#define _DISTANCE_H
 
 #include <stdbool.h>
 
@@ -11,4 +11,4 @@
 
 Distance_e Distance_GetBack(void);
 
-#endif /* DISTANCE_H */
+#endif /* _DISTANCE_H */

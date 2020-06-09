@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include <main.h>
+#include "main.h"
 
 static void debug_uart_send_byte(uint8_t byte)
 {

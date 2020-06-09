@@ -5,8 +5,8 @@
  * никак не получилось.
  */
 
-#ifndef EMMITERS_H
-#define EMMITERS_H
+#ifndef _EMMITERS_H
+#define _EMMITERS_H
 
 #include <stdbool.h>
 
@@ -14,4 +14,4 @@ void Led_SetState(bool state);
 void Lights_SetState(bool state);
 void Buzzer_SetState(bool state);
 
-#endif /* EMMITERS_H */
+#endif /* _EMMITERS_H */

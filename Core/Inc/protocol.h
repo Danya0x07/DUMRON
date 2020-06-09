@@ -2,8 +2,8 @@
  * Протокол общения пульта с роботом.
  */
 
-#ifndef PROTOCOL_H
-#define PROTOCOL_H
+#ifndef _PROTOCOL_H
+#define _PROTOCOL_H
 
 #include <stdint.h>
 
@@ -59,6 +59,11 @@ typedef enum {
 } Distance_e;
 
 /**
+ * Невозможное для датчика температуры значение, свидетельствующее об ошибке.
+ */
+#define TEMPERATURE_ERROR_VALUE     (-128)
+
+/**
  * Структура пакетов, идущих от робота к пульту.
  */
 typedef struct {
@@ -78,4 +83,4 @@ typedef struct {
 _Static_assert(sizeof(DataToRobot_s) == 4, "ss");
 _Static_assert(sizeof(DataFromRobot_s) == 5, "ss");
 
-#endif /* PROTOCOL_H */
+#endif /* _PROTOCOL_H */

@@ -1,4 +1,4 @@
-#include <main.h>
+#include "main.h"
 
 #include "radio.h"
 #include "errors.h"
@@ -52,6 +52,7 @@ void Radio_PutOutcoming(DataFromRobot_s *outcoming)
 {
     if (nrf24l01_full_tx_fifo()) {
         nrf24l01_flush_tx_fifo();
+        debug_logs("full tx fifo\n");
     }
     nrf24l01_rx_write_ack_pld(NRF24L01_PIPE0, outcoming,
                               sizeof(DataFromRobot_s));

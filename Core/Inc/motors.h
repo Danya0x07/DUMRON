@@ -4,8 +4,8 @@
  * Моторов 2: на левую и правую гусеницы соответственно.
  */
 
-#ifndef MOTORS_H
-#define MOTORS_H
+#ifndef _MOTORS_H
+#define _MOTORS_H
 
 #include <stdint.h>
 
@@ -15,4 +15,4 @@ void Motors_SetDirection(MoveDirection_e);
 void Motors_SetSpeed(uint8_t speedL, uint8_t speedR);
 MoveDirection_e Motors_GetDirection(void);
 
-#endif /* MOTORS_H */
+#endif /* _MOTORS_H */
