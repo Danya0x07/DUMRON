@@ -36,13 +36,13 @@ typedef enum {
 typedef struct {
     union {
         struct {
-            uint8_t moveDir :3;
+            uint8_t moveDir  :3;
             uint8_t armCtrl  :2;
             uint8_t clawCtrl :2;
             uint8_t lightsEn :1;
 
-            uint8_t _extra   :7;
             uint8_t buzzerEn :1;
+            uint8_t _extra   :7; /* резервируем байт на будущее */
         } bf;
         uint16_t reg;
     } ctrl;
@@ -69,8 +69,8 @@ typedef enum {
 typedef struct {
     union {
         struct {
-            uint8_t _extra :6;
             uint8_t backDistance :2;
+            uint8_t _extra :6;  /* резервируем байт на будущее */
         } bf;
         uint8_t reg;
     } status;
