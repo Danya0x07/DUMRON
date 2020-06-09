@@ -24,6 +24,7 @@
 #include "temperature.h"
 #include "distance.h"
 #include "emmiters.h"
+#include "errors.h"
 #include "debug.h"
 
 /* USER CODE END Includes */
@@ -130,20 +131,11 @@ void vApplicationIdleHook(void)
 
 /* USER CODE BEGIN 4 */
 
-/** Если обнаружено переполнение стека. */
 void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
 {
-    bool buzzerState = false;
-
-    /* Издаём звуковые сигналы при включённом светодиоде. */
-    Led_SetState(1);
-
-    debug_logs((char*) pcTaskName);
+    debug_logs((char *)pcTaskName);
     debug_logs(" : stack overflow\n");
-    for (;;) {
-        Buzzer_SetState((buzzerState = !buzzerState));
-        HAL_Delay(200);
-    }
+    ErrorCritical_StackOverflow();
 }
 /* USER CODE END 4 */
 
@@ -152,16 +144,8 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
 /** Если не хватило памяти в куче. */
 void vApplicationMallocFailedHook(void)
 {
-    bool buzzerState = false;
-
-    /* Издаём звуковые сигналы при выключённом светодиоде. */
-    Led_SetState(0);
-
     debug_logs("malloc failed\n");
-    for (;;) {
-        Buzzer_SetState((buzzerState = !buzzerState));
-        HAL_Delay(500);
-    }
+    ErrorCritical_MallocFailed();
 }
 /* USER CODE END 5 */
 

@@ -49,8 +49,8 @@ void Temperature_Init(void)
     };
 
     if (ds18b20_configure(NULL, &config) != DS18B20_OK) {
-        Error_InitTemperature();
         debug_logs("ds18b20 init error\n");
+        ErrorShow_InitTemperature();
     }
 }
 

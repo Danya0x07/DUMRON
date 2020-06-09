@@ -25,8 +25,8 @@ void Radio_Init(void)
     HAL_Delay(NRF24L01_PWR_ON_DELAY_MS);
 
     if (nrf24l01_rx_configure(&config) < 0) {
-        Error_InitRadio();
         debug_logs("nrf24l01 init error\n");
+        ErrorShow_InitRadio();
     }
     nrf24l01_rx_setup_pipe(&p0);
     nrf24l01_rx_start_listening();
