@@ -356,10 +356,6 @@ void Task_CheckDistance(void *argument)
         element.kind = BACK_DISTANCE;
         element.udata = distanceStatus;
 
-        if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
-            debug_logs("chd: oeq failed\n");
-        }
-
         if (osMutexAcquire(incomingDataMutexHandle, 1) == osOK) {
             if (distanceStatus == DIST_CLIFF) {
                 cliffBehindRobotDetected = true;
@@ -371,6 +367,10 @@ void Task_CheckDistance(void *argument)
             osMutexRelease(incomingDataMutexHandle);
         } else {
             debug_logs("chd: idm failed\n");
+        }
+
+        if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 2) != osOK) {
+            debug_logs("chd: oeq failed\n");
         }
 
         osDelay(pdMS_TO_TICKS(200));
@@ -470,14 +470,23 @@ void Task_ExchangeDataWithRC(void *argument)
         osSemaphoreAcquire(dataRecieveSemaphoreHandle, osWaitForever);
         Radio_TakeIncoming(&incomingData);
 
-        if (osMutexAcquire(incomingDataMutexHandle, 10) == osOK) {
+        if (osMutexAcquire(incomingDataMutexHandle, 1) == osOK) {
             Motors_SetDirection(incomingData.ctrl.bf.moveDir);
             if (!cliffBehindRobotDetected ||
-                    incomingData.ctrl.bf.moveDir != MOVEDIR_BACKWARD)
+                    incomingData.ctrl.bf.moveDir != MOVEDIR_BACKWARD) {
                 Motors_SetSpeed(incomingData.speedL, incomingData.speedR);
+            }
 
             Manipulator_SetArm(incomingData.ctrl.bf.armCtrl);
             Manipulator_SetClaw(incomingData.ctrl.bf.clawCtrl);
+            if (incomingData.ctrl.bf.armCtrl == ARM_STOP &&
+                    incomingData.ctrl.bf.clawCtrl == CLAW_STOP) {
+                if (osTimerIsRunning(manipulatorTimerHandle))
+                    osTimerStop(manipulatorTimerHandle);
+            } else {
+                if (!osTimerIsRunning(manipulatorTimerHandle))
+                    osTimerStart(manipulatorTimerHandle, pdMS_TO_TICKS(70));
+            }
 
             Lights_SetState(incomingData.ctrl.bf.lightsEn);
             Buzzer_SetState(incomingData.ctrl.bf.buzzerEn);
@@ -487,7 +496,7 @@ void Task_ExchangeDataWithRC(void *argument)
             debug_logs("exd: idm failed\n");
         }
 
-        if (osMutexAcquire(outcomingDataMutexHandle, 5) == osOK) {
+        if (osMutexAcquire(outcomingDataMutexHandle, 1) == osOK) {
             Radio_PutOutcoming(&outcomingData);
             osMutexRelease(outcomingDataMutexHandle);
         } else {
@@ -513,7 +522,7 @@ void Callback_UpdateManipulator(void *argument)
      * Чтобы не вызывать сильные просадки напряжения силового аккумулятора,
      * положение манипулятора обновляется плавно, шагами.
      */
-    if (osMutexAcquire(incomingDataMutexHandle, 10) != osErrorOS) {
+    if (osMutexAcquire(incomingDataMutexHandle, 0) != osErrorOS) {
         Manipulator_Move();
         osMutexRelease(incomingDataMutexHandle);
     } else {
