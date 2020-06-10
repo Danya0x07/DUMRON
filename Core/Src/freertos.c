@@ -4,8 +4,6 @@
   * Задачи выполняются в режиме вытесняющей многозадачности.
   * Используемая ОС - FreeRTOS с обёрткой CMSIS-RTOS.
   * Обёртка так себе, но выбора не было, STM32CubeIDE по другому не умеет.
-  * В callback-ах по обнаружению ошибок издаём звуковые сигналы пьезобуззером
-  * при включённом/выключенном отладочном светодиоде.
   */
 /* USER CODE END Header */
 
@@ -67,16 +65,13 @@ typedef struct {
 /* USER CODE BEGIN Variables */
 
 /**
-  * Глобальная переменная, которую используют только 2 задачи:
-  * задача обновления выходных данных Task_UpdateOutcomingData и
-  * задача обмена информацией с пультом Task_ExchangeDataWithRC.
+  * Глобальная структура с отсылаемыми управлющей стороне данными.
   * Защищена мьютексом по дескриптору outcomingDataMutexHandle.
   */
 static DataFromRobot_s outcomingData = {0};
 
 /**
   * Глобальная переменная, хранящая факт наличия обрыва позади робота.
-  * Используется задачами Task_CheckDistance и Task_ExchangeDataWithRC.
   * Защищена мьютексом по дескриптору outcomingDataMutexHandle.
   */
 static bool cliffBehindRobotDetected = false;
@@ -149,6 +144,11 @@ osSemaphoreId_t dataRecieveSemaphoreHandle;
 const osSemaphoreAttr_t dataRecieveSemaphore_attributes = {
   .name = "dataRecieveSemaphore"
 };
+/* Definitions for batteryMsrSemaphore */
+osSemaphoreId_t batteryMsrSemaphoreHandle;
+const osSemaphoreAttr_t batteryMsrSemaphore_attributes = {
+  .name = "batteryMsrSemaphore"
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -191,7 +191,6 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, signed char *pcTaskName)
 
 /* USER CODE BEGIN 5 */
 
-/** Если не хватило памяти в куче. */
 void vApplicationMallocFailedHook(void)
 {
     debug_logs("malloc failed\n");
@@ -222,6 +221,9 @@ void MX_FREERTOS_Init(void) {
   /* Create the semaphores(s) */
   /* creation of dataRecieveSemaphore */
   dataRecieveSemaphoreHandle = osSemaphoreNew(1, 1, &dataRecieveSemaphore_attributes);
+
+  /* creation of batteryMsrSemaphore */
+  batteryMsrSemaphoreHandle = osSemaphoreNew(1, 1, &batteryMsrSemaphore_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
@@ -340,8 +342,8 @@ void Task_UpdateOutcomingData(void *argument)
 /* USER CODE BEGIN Header_Task_CheckDistance */
 /**
   * Задача, проверяющая расстояние от бампера робота до поверхности.
-  * Если расстояние > MAX_SAFE_TO_FALL_DISTANCE_CM и в данный момент
-  * робот двигается назад, то движение блокируется.
+  * Если сзади робота обрыв и в данный момент робот двигается назад,
+  * то движение блокируется.
   */
 /* USER CODE END Header_Task_CheckDistance */
 void Task_CheckDistance(void *argument)
@@ -393,7 +395,7 @@ void Task_CheckTemp(void *argument)
 
     for (;;) {
         Temperature_StartMeasurement();
-        osDelay(pdMS_TO_TICKS(1000));
+        osDelay(pdMS_TO_TICKS(TEMPERATURE_MEASUREMENT_TIME_MS));
 
         element.kind = INTERNAL_TEMPERATURE;
         element.sdata = Temperature_GetInternal();
@@ -401,7 +403,6 @@ void Task_CheckTemp(void *argument)
         if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
             debug_logs("cht: oeq1 failed\n");
         }
-        osDelay(pdMS_TO_TICKS(10));
 
         element.kind = AMBIENT_TEMPERATURE;
         element.sdata = Temperature_GetAmbient();
@@ -428,16 +429,18 @@ void Task_CheckBatteries(void *argument)
     OutcomingElement_s element;
 
     for (;;) {
+        Battery_StartMeasurement();
+        osSemaphoreAcquire(batteryMsrSemaphoreHandle, osWaitForever);
+
         element.kind = BRAINS_CHARGE;
-        element.udata = Battery_GetChargeBrains();
+        element.udata = Battery_GetBrainsCharge();
 
         if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
             debug_logs("chb: oeq1 failed\n");
         }
-        osThreadYield();
 
         element.kind = MOTORS_CHARGE;
-        element.udata = Battery_GetChargeMotors();
+        element.udata = Battery_GetMotorsCharge();
 
         if (osMessageQueuePut(outcomingElementQueueHandle, &element, 0, 3) != osOK) {
             debug_logs("chb: oeq2 failed\n");

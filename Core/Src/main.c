@@ -9,6 +9,7 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "adc.h"
+#include "dma.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
@@ -16,9 +17,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "emmiters.h"
 #include "temperature.h"
 #include "radio.h"
+#include "emmiters.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,6 +74,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_SPI1_Init();
   MX_TIM1_Init();
@@ -80,6 +82,9 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+
+  // Калибровка АЦП, который будет измерять заряд аккумуляторов.
+  HAL_ADCEx_Calibration_Start(&hadc1);
 
   // ШИМ для моторов;
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
@@ -200,7 +205,8 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /*
    * В случае ошибки на стадии инициализации просто орём пьезобуззером.
-   * Вообще, такая ситуация крайне маловероятна, но ... бла бла бла...
+   * Такая ситуация крайне маловероятна, но ... раз в год и палка неудачно
+   * инициализируется.
    */
   Led_SetState(0);
   Buzzer_SetState(1);

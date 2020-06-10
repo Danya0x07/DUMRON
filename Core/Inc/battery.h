@@ -7,7 +7,8 @@
 
 #include <stdint.h>
 
-uint8_t Battery_GetChargeBrains(void);
-uint8_t Battery_GetChargeMotors(void);
+void Battery_StartMeasurement(void);
+uint8_t Battery_GetBrainsCharge(void);
+uint8_t Battery_GetMotorsCharge(void);
 
 #endif /* _BATTERY_H */

@@ -3,27 +3,24 @@
 
 #include "battery.h"
 
-static uint8_t getChargePercentage(ADC_ChannelConfTypeDef *config)
+static volatile uint16_t conversionResults[2];  /* буфер для DMA */
+
+static uint8_t getChargePercentage(uint16_t convResult)
 {
-    return (uint8_t)(ADC1_Measure(config) * 100 / 4095);
+    return (uint8_t)(convResult * 100 / 4095);
 }
 
-uint8_t Battery_GetChargeBrains(void)
+void Battery_StartMeasurement(void)
 {
-    static ADC_ChannelConfTypeDef config = {
-        .Channel = BATTERY_BRAIN_Channel,
-        .Rank = ADC_REGULAR_RANK_1,
-        .SamplingTime = ADC_SAMPLETIME_7CYCLES_5
-    };
-    return getChargePercentage(&config);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *)conversionResults, 2);
 }
 
-uint8_t Battery_GetChargeMotors(void)
+uint8_t Battery_GetBrainsCharge(void)
 {
-    static ADC_ChannelConfTypeDef config = {
-        .Channel = BATTERY_RADIATORS_Channel,
-        .Rank = ADC_REGULAR_RANK_1,
-        .SamplingTime = ADC_SAMPLETIME_7CYCLES_5
-    };
-    return getChargePercentage(&config);
+    return getChargePercentage(conversionResults[0]);
+}
+
+uint8_t Battery_GetMotorsCharge(void)
+{
+    return getChargePercentage(conversionResults[1]);
 }

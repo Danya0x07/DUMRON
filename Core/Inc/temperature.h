@@ -14,6 +14,8 @@
 
 #include <stdint.h>
 
+#define TEMPERATURE_MEASUREMENT_TIME_MS     1000
+
 void Temperature_Init(void);
 void Temperature_StartMeasurement(void);
 int8_t Temperature_GetAmbient(void);
