@@ -4,7 +4,7 @@ digraph "nrf24l01_conf.h"
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node1 [label="nrf24l01_conf.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="nrf24l01.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01_8h.html",tooltip="Простая кроссплатформенная библиотека для трансиверов NRF24L01 и NRF24L01+. "];
+  Node2 [label="nrf24l01.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01_8h.html",tooltip="Главный заголовочный файл библиотеки. "];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="nrf24l01.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01_8c.html"];
 }

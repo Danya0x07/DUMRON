@@ -4,7 +4,7 @@ digraph "nrf24l01.c"
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node0 [label="nrf24l01.c",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="nrf24l01.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01_8h.html",tooltip="Простая кроссплатформенная библиотека для трансиверов NRF24L01 и NRF24L01+. "];
+  Node1 [label="nrf24l01.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01_8h.html",tooltip="Главный заголовочный файл библиотеки. "];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="stdint.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -12,9 +12,9 @@ digraph "nrf24l01.c"
   Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 [label="stdbool.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="nrf24l01_conf.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01__conf_8h.html",tooltip="Файл с настройками библиотеки NRF24L01/+. "];
+  Node5 [label="nrf24l01_conf.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01__conf_8h.html",tooltip="Файл с настройками библиотеки. "];
   Node0 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="nrf24l01_port.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01__port_8h.html",tooltip="Платформозависимая часть библиотеки трансиверов NRF24L01/+. "];
+  Node6 [label="nrf24l01_port.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$nrf24l01__port_8h.html",tooltip="Платформозависимая часть библиотеки. "];
   Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="main.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node6 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

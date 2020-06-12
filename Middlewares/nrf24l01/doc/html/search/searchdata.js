@@ -3,13 +3,13 @@ var indexSectionsWithContent =
   0: "_acdeflmnprsÐ",
   1: "n",
   2: "n",
-  3: "n",
+  3: "_n",
   4: "acdelmnpr",
   5: "n",
   6: "cnr",
   7: "_cfnrs",
   8: "n",
-  9: "Ð"
+  9: "nÐ"
 };
 
 var indexSectionNames =

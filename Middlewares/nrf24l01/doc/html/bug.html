@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Простая кроссплатформенная библиотека для датчиков температуры DS18B20.: Файл ds18b20_conf.h</title>
+<title>NRF24L01 and NRF24L01+ simple driver: Ошибки</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,8 +28,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Простая кроссплатформенная библиотека для датчиков температуры DS18B20.
-   &#160;<span id="projectnumber">0.7.0</span>
+   <div id="projectname">NRF24L01 and NRF24L01+ simple driver
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
   </td>
  </tr>
@@ -62,7 +62,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('ds18b20__conf_8h.html','');});
+$(document).ready(function(){initNavTree('bug.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -80,55 +80,19 @@ $(document).ready(function(){initNavTree('ds18b20__conf_8h.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Макросы</a>  </div>
   <div class="headertitle">
-<div class="title">Файл ds18b20_conf.h</div>  </div>
+<div class="title">Ошибки </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Файл с настройками библиотеки.  
-<a href="#details">Подробнее...</a></p>
-<div class="textblock"><div class="dynheader">
-Граф файлов, в которые включается этот файл:</div>
-<div class="dyncontent">
-<div class="center"><img src="ds18b20__conf_8h__dep__incl.png" border="0" usemap="#ds18b20__conf_8hdep" alt=""/></div>
-<map name="ds18b20__conf_8hdep" id="ds18b20__conf_8hdep">
-</map>
-</div>
-</div>
-<p><a href="ds18b20__conf_8h_source.html">См. исходные тексты.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Макросы</h2></td></tr>
-<tr class="memitem:aecce701eea615dded98f6de5fd4d766f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ds18b20__conf_8h.html#aecce701eea615dded98f6de5fd4d766f">DS18B20_CRC_MODE</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:aecce701eea615dded98f6de5fd4d766f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Файл с настройками библиотеки. </p>
-<p>Данный файл предназначен адаптировать библиотеку под конкретный проект. </p>
-</div><h2 class="groupheader">Макросы</h2>
-<a id="aecce701eea615dded98f6de5fd4d766f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecce701eea615dded98f6de5fd4d766f">&#9670;&nbsp;</a></span>DS18B20_CRC_MODE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DS18B20_CRC_MODE&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>0: не проверять контрольную сумму, 1: проверять контрольную сумму побитовым расчётом, </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><dl class="reflist">
+<dt><a class="anchor" id="_bug000001"></a>Глобальный <a class="el" href="nrf24l01__port_8h.html#affa9d106355e6c452bd9a7a5103298b0">_spi_transfer_byte</a>  (uint8_t byte)</dt>
+<dd>Если функция обмена байтом по SPI работает с volatile-данными (регистрами МК) и находится в отдельной единице трансляции, то для arm-none-eabi-gcc v6.3.1 имеет место баг, вызванный оптимизацией компилятора. Баг проявляется на уровнях оптимизации, отличных от -O0 и -Og. Симптомы: некорректные значения при передаче/приёме данных по SPI. </dd>
+</dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="ds18b20__conf_8h.html">ds18b20_conf.h</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>

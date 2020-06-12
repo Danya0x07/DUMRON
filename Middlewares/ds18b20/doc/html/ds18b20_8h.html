@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('ds18b20_8h.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>Простая кроссплатформенная библиотека для датчиков температуры DS18B20.  
+<p>Главный заголовочный файл библиотеки.  
 <a href="#details">Подробнее...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stddef.h&gt;</code><br />
@@ -176,12 +176,7 @@ $(document).ready(function(){initNavTree('ds18b20_8h.html','');});
 <tr class="separator:a44aaec53cd8eda5f80ed976333fa2bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Простая кроссплатформенная библиотека для датчиков температуры DS18B20. </p>
-<p>На текущий момент поддерживается работа только с одной линией 1-Wire. Для расчёта контрольной суммы CRC реализован только побитовый алгоритм, поскольку выигрыш по скорости от табличного метода не будет иметь большого по сравнению с проигрышем по памяти значения вследствие невысокой скорости самого протокола 1-Wire.</p>
-<dl class="section author"><dt>Автор</dt><dd>Danya0x07 <a href="#" onclick="location.href='mai'+'lto:'+'dle'+'f0'+'xf8'+'@g'+'mai'+'l.'+'com'; return false;">dlef0<span style="display: none;">.nosp@m.</span>xf8@<span style="display: none;">.nosp@m.</span>gmail<span style="display: none;">.nosp@m.</span>.com</a></dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Необходимо сделать:</a></b></dt><dd><p class="startdd">Реализовать динамический поиск датчиков на линии. </p>
-<p class="enddd">Реализовать поиск датчиков по тревоге (Alarm search). </p>
-</dd></dl>
+<div class="textblock"><p>Главный заголовочный файл библиотеки. </p>
 </div><h2 class="groupheader">Функции</h2>
 <a id="afbe0375190971913b6369845c9825044"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afbe0375190971913b6369845c9825044">&#9670;&nbsp;</a></span>ds18b20_check_presense()</h2>
@@ -374,8 +369,8 @@ $(document).ready(function(){initNavTree('ds18b20_8h.html','');});
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>Результат измерения, полученный вызовом функции <a class="el" href="ds18b20_8h.html#af80971eec2dba9a5fd9f407f8ab5e419" title="Считывает результат измерения температуры. ">ds18b20_get_result()</a> или <a class="el" href="ds18b20_8h.html#a8847aaaa53b4027305881e9e74489b1b" title="Производит измерение температуры. ">ds18b20_measure()</a>.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">integer</td><td>Указатель на переменную, в которую будет записана целая часть результата *(с учётом знака)*, или NULL, если она не нужна.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">fractional</td><td>Указатель на переменную, в которую будет записана дробная часть результата *(без учёта знака)*, или NULL, если она не нужна. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">integer</td><td>Указатель на переменную, в которую будет записана целая часть результата (<em>с учётом знака</em>), или NULL, если она не нужна.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">fractional</td><td>Указатель на переменную, в которую будет записана дробная часть результата (<em>без учёта знака</em>), или NULL, если она не нужна. </td></tr>
   </table>
   </dd>
 </dl>

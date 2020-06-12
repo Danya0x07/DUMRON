@@ -1,6 +1,7 @@
 var NAVTREE =
 [
   [ "Простая кроссплатформенная библиотека для датчиков температуры DS18B20.", "index.html", [
+    [ "Simple cross-platform DS18B20 library", "index.html", null ],
     [ "Список задач", "todo.html", null ],
     [ "Структуры данных", "annotated.html", [
       [ "Структуры данных", "annotated.html", "annotated_dup" ],

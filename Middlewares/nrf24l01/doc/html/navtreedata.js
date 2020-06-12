@@ -1,7 +1,8 @@
 var NAVTREE =
 [
   [ "NRF24L01 and NRF24L01+ simple driver", "index.html", [
-    [ "Список задач", "todo.html", null ],
+    [ "NRF24L01 and NRF24L01+ simple library.", "index.html", null ],
+    [ "Ошибки", "bug.html", null ],
     [ "Группы", "modules.html", "modules" ],
     [ "Структуры данных", "annotated.html", [
       [ "Структуры данных", "annotated.html", "annotated_dup" ],
@@ -27,7 +28,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"nrf24l01_8h.html#aad0e6e922e445d15555c6d7a57ea561aa7176318352db84acf5ccd473136f1d80"
+"nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bad4eeabc540564f8d7873c79527aae625"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

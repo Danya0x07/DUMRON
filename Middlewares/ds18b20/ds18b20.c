@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2020 Daniel Efimenko
+ *     github.com/Danya0x07
+ */
+
 #include "ds18b20.h"
 #include "ds18b20_port.h"
 

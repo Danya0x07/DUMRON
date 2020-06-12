@@ -81,13 +81,14 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Макросы</a>  </div>
+<a href="#define-members">Макросы</a> &#124;
+<a href="#func-members">Функции</a>  </div>
   <div class="headertitle">
 <div class="title">Файл nrf24l01_port.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Платформозависимая часть библиотеки трансиверов NRF24L01/+.  
+<p>Платформозависимая часть библиотеки.  
 <a href="#details">Подробнее...</a></p>
 <div class="textblock"><code>#include &lt;main.h&gt;</code><br />
 <code>#include &lt;tim.h&gt;</code><br />
@@ -112,56 +113,43 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Макросы</h2></td></tr>
 <tr class="memitem:a5647ead118e2be59c7c23959d2f3c046"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a5647ead118e2be59c7c23959d2f3c046">_delay_ms</a>(ms)&#160;&#160;&#160;delay_ms((ms))</td></tr>
-<tr class="memdesc:a5647ead118e2be59c7c23959d2f3c046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция миллисекундной задержки.  <a href="#a5647ead118e2be59c7c23959d2f3c046">Подробнее...</a><br /></td></tr>
 <tr class="separator:a5647ead118e2be59c7c23959d2f3c046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#ab3716dd1e11c06aba7ccf7c2dccf68f5">_delay_us</a>(us)&#160;&#160;&#160;delay_us((us))</td></tr>
-<tr class="memdesc:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция микросекундной задержки.  <a href="#ab3716dd1e11c06aba7ccf7c2dccf68f5">Подробнее...</a><br /></td></tr>
 <tr class="separator:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Макросы для управления выводами трансивера.</div></td></tr>
-<tr class="memitem:a2b006bbe1de1c74a8b22bff7b538a0aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a2b006bbe1de1c74a8b22bff7b538a0aa">_csn_1</a>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
-<tr class="separator:a2b006bbe1de1c74a8b22bff7b538a0aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c5a8b654e8a890c06c7c09c06c55330"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a0c5a8b654e8a890c06c7c09c06c55330">_csn_0</a>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
-<tr class="separator:a0c5a8b654e8a890c06c7c09c06c55330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4204fd4c0ea30dcfc6b0fd88a310ef52"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a4204fd4c0ea30dcfc6b0fd88a310ef52">_ce_1</a>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
-<tr class="separator:a4204fd4c0ea30dcfc6b0fd88a310ef52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8077d6c55270d0b5ce66b5fd8d38040b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a8077d6c55270d0b5ce66b5fd8d38040b">_ce_0</a>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
-<tr class="separator:a8077d6c55270d0b5ce66b5fd8d38040b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676f26b7f228d7f0edfd9004ddb4a0ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a676f26b7f228d7f0edfd9004ddb4a0ad">_csn_high</a>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
+<tr class="separator:a676f26b7f228d7f0edfd9004ddb4a0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a087c5c130ada8e897ca36fb4130a742e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a087c5c130ada8e897ca36fb4130a742e">_csn_low</a>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
+<tr class="separator:a087c5c130ada8e897ca36fb4130a742e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee27de7dc34316aa00d80e084f614cc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#aee27de7dc34316aa00d80e084f614cc0">_ce_high</a>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
+<tr class="separator:aee27de7dc34316aa00d80e084f614cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac607a5ff252402d198a50aa90c1908e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#ac607a5ff252402d198a50aa90c1908e1">_ce_low</a>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
+<tr class="separator:ac607a5ff252402d198a50aa90c1908e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:affa9d106355e6c452bd9a7a5103298b0"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#affa9d106355e6c452bd9a7a5103298b0">_spi_transfer_byte</a> (uint8_t byte)</td></tr>
+<tr class="memdesc:affa9d106355e6c452bd9a7a5103298b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обменивается байтом по SPI.  <a href="#affa9d106355e6c452bd9a7a5103298b0">Подробнее...</a><br /></td></tr>
+<tr class="separator:affa9d106355e6c452bd9a7a5103298b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca7e09d62595e98f037be93be4147d11"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#aca7e09d62595e98f037be93be4147d11">_spi_transfer_bytes</a> (uint8_t *in, const uint8_t *out, size_t len)</td></tr>
+<tr class="memdesc:aca7e09d62595e98f037be93be4147d11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обменивается массивом байт по SPI.  <a href="#aca7e09d62595e98f037be93be4147d11">Подробнее...</a><br /></td></tr>
+<tr class="separator:aca7e09d62595e98f037be93be4147d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Платформозависимая часть библиотеки трансиверов NRF24L01/+. </p>
-<dl class="section author"><dt>Автор</dt><dd>Danya0x07</dd></dl>
-<p>Путём реализации данного интерфейса можно перенести библиотеку на любую платформу.</p>
+<div class="textblock"><p>Платформозависимая часть библиотеки. </p>
+<p>Путём реализации интерфейса, объявленного в данном файле можно перенести библиотеку на любую платформу.</p>
 <dl class="section note"><dt>Заметки</dt><dd>В данном файле можно подключать любые заголовочные файлы, необходимые для реализации объявленного интерфейса. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a></p>
 </div><h2 class="groupheader">Макросы</h2>
-<a id="a8077d6c55270d0b5ce66b5fd8d38040b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8077d6c55270d0b5ce66b5fd8d38040b">&#9670;&nbsp;</a></span>_ce_0</h2>
+<a id="aee27de7dc34316aa00d80e084f614cc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee27de7dc34316aa00d80e084f614cc0">&#9670;&nbsp;</a></span>_ce_high</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define _ce_0</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00029">29</a></p>
-
-</div>
-</div>
-<a id="a4204fd4c0ea30dcfc6b0fd88a310ef52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4204fd4c0ea30dcfc6b0fd88a310ef52">&#9670;&nbsp;</a></span>_ce_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _ce_1</td>
+          <td class="memname">#define _ce_high</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td>&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td>
@@ -169,21 +157,21 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00028">28</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00026">26</a></p>
 
 </div>
 </div>
-<a id="a0c5a8b654e8a890c06c7c09c06c55330"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c5a8b654e8a890c06c7c09c06c55330">&#9670;&nbsp;</a></span>_csn_0</h2>
+<a id="ac607a5ff252402d198a50aa90c1908e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac607a5ff252402d198a50aa90c1908e1">&#9670;&nbsp;</a></span>_ce_low</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define _csn_0</td>
+          <td class="memname">#define _ce_low</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td>
+          <td>&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -192,14 +180,14 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
 
 </div>
 </div>
-<a id="a2b006bbe1de1c74a8b22bff7b538a0aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b006bbe1de1c74a8b22bff7b538a0aa">&#9670;&nbsp;</a></span>_csn_1</h2>
+<a id="a676f26b7f228d7f0edfd9004ddb4a0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a676f26b7f228d7f0edfd9004ddb4a0ad">&#9670;&nbsp;</a></span>_csn_high</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define _csn_1</td>
+          <td class="memname">#define _csn_high</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td>&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td>
@@ -207,7 +195,26 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00026">26</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00024">24</a></p>
+
+</div>
+</div>
+<a id="a087c5c130ada8e897ca36fb4130a742e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a087c5c130ada8e897ca36fb4130a742e">&#9670;&nbsp;</a></span>_csn_low</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _csn_low</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00025">25</a></p>
 
 </div>
 </div>
@@ -226,10 +233,9 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
         </tr>
       </table>
 </div><div class="memdoc">
-
 <p>Функция миллисекундной задержки. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00067">67</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00066">66</a></p>
 
 </div>
 </div>
@@ -248,11 +254,98 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Функция микросекундной задержки.</p>
+<dl class="section note"><dt>Заметки</dt><dd>Данная функция не является необходимой. Если микросекундная задержка не доступна, необходимо указать это в файле <a class="el" href="nrf24l01__conf_8h.html" title="Файл с настройками библиотеки. ">nrf24l01_conf.h</a> </dd></dl>
 
-<p>Функция микросекундной задержки. </p>
-<dl class="section note"><dt>Заметки</dt><dd>Данная функция не является необходимой. Если микросекундная задержка не доступна, необходимо указать это в файле <a class="el" href="nrf24l01__conf_8h.html" title="Файл с настройками библиотеки NRF24L01/+. ">nrf24l01_conf.h</a> </dd></dl>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00075">75</a></p>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00076">76</a></p>
+</div>
+</div>
+<h2 class="groupheader">Функции</h2>
+<a id="affa9d106355e6c452bd9a7a5103298b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affa9d106355e6c452bd9a7a5103298b0">&#9670;&nbsp;</a></span>_spi_transfer_byte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint8_t _spi_transfer_byte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>byte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обменивается байтом по SPI. </p>
+<dl class="section note"><dt>Заметки</dt><dd>Если используемый стандарт языка не поддерживает inline, можно использовать макрос.</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Ошибка:</a></b></dt><dd>Если функция обмена байтом по SPI работает с volatile-данными (регистрами МК) и находится в отдельной единице трансляции, то для arm-none-eabi-gcc v6.3.1 имеет место баг, вызванный оптимизацией компилятора. Баг проявляется на уровнях оптимизации, отличных от -O0 и -Og. Симптомы: некорректные значения при передаче/приёме данных по SPI. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00044">44</a></p>
+
+</div>
+</div>
+<a id="aca7e09d62595e98f037be93be4147d11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca7e09d62595e98f037be93be4147d11">&#9670;&nbsp;</a></span>_spi_transfer_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void _spi_transfer_bytes </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обменивается массивом байт по SPI. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">out</td><td>Буфер исходящих данных. NULL, если не исопльзуется. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">in</td><td>Буфер входящих данных. NULL, если не исопльзуется. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">len</td><td>Количество байт для обмена.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>in и out не могут быть NULL одновременно. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00059">59</a></p>
 
 </div>
 </div>

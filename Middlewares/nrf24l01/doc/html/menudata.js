@@ -19,6 +19,7 @@ var menudata={children:[
 {text:"r",url:"globals_r.html#index_r"},
 {text:"s",url:"globals_s.html#index_s"}]},
 {text:"Функции",url:"globals_func.html",children:[
+{text:"_",url:"globals_func.html#index__"},
 {text:"n",url:"globals_func.html#index_n"}]},
 {text:"Перечисления",url:"globals_enum.html"},
 {text:"Элементы перечислений",url:"globals_eval.html",children:[

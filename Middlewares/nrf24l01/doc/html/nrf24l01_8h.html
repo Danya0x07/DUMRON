@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>Простая кроссплатформенная библиотека для трансиверов NRF24L01 и NRF24L01+.  
+<p>Главный заголовочный файл библиотеки.  
 <a href="#details">Подробнее...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stddef.h&gt;</code><br />
@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Макросы</h2></td></tr>
 <tr class="memitem:a3e35039e5d7087bb8921f4f43a07ac84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a3e35039e5d7087bb8921f4f43a07ac84">NRF24L01_PWR_ON_DELAY_MS</a>&#160;&#160;&#160;100</td></tr>
-<tr class="memdesc:a3e35039e5d7087bb8921f4f43a07ac84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Длительность неопределённого состояния трансивера после подачи питания.  <a href="#a3e35039e5d7087bb8921f4f43a07ac84">Подробнее...</a><br /></td></tr>
+<tr class="memdesc:a3e35039e5d7087bb8921f4f43a07ac84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Длительность неопределённого состояния трансивера после подачи питания  <a href="#a3e35039e5d7087bb8921f4f43a07ac84">Подробнее...</a><br /></td></tr>
 <tr class="separator:a3e35039e5d7087bb8921f4f43a07ac84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab7d9eebe2ca5fafa967a084a051f3e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aab7d9eebe2ca5fafa967a084a051f3e7">NRF24L01_CHANNELS</a>&#160;&#160;&#160;126</td></tr>
 <tr class="memdesc:aab7d9eebe2ca5fafa967a084a051f3e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество радиочастотных каналов, на которых может работать трансивер NRF24L01/+.  <a href="#aab7d9eebe2ca5fafa967a084a051f3e7">Подробнее...</a><br /></td></tr>
@@ -360,9 +360,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="separator:ga489c3bbe77c37ba39e394012d2c94beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Простая кроссплатформенная библиотека для трансиверов NRF24L01 и NRF24L01+. </p>
-<p>На текущий момент поддерживается работа только с единственным физическим экземпляром трансивера.</p>
-<dl class="section author"><dt>Автор</dt><dd>Danya0x07 </dd></dl>
+<div class="textblock"><p>Главный заголовочный файл библиотеки. </p>
 
 <p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a></p>
 </div><h2 class="groupheader">Макросы</h2>
@@ -380,7 +378,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 
 <p>Количество радиочастотных каналов, на которых может работать трансивер NRF24L01/+. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00038">38</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00060">60</a></p>
 
 </div>
 </div>
@@ -396,10 +394,11 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
       </table>
 </div><div class="memdoc">
 
-<p>Длительность неопределённого состояния трансивера после подачи питания. </p>
+<p>Длительность неопределённого состояния трансивера после подачи питания </p>
+<p>в миллисекундах.</p>
 <p>Пользователь должен выдержать данное время между включением системы и обращением к API-функциям бибилотеки. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00032">32</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00054">54</a></p>
 
 </div>
 </div>
@@ -420,12 +419,15 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <p>Для приёмника распространяется на все входящие соединения.</p>
 <dl class="section note"><dt>Заметки</dt><dd>Этот параметр у передатчика и приёмника должен быть одинаковым. </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a1aad9000d24a14218baa21aad4c00d32a05b3a19183081f979822d1c8a4687c3a"></a>NRF24L01_ADDRS_3BYTE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1aad9000d24a14218baa21aad4c00d32a514dfc9d809d84caa00140015d63ee32"></a>NRF24L01_ADDRS_4BYTE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1aad9000d24a14218baa21aad4c00d32a08e6fa6678a36b85afd9ea831c1d12b2"></a>NRF24L01_ADDRS_5BYTE&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a1aad9000d24a14218baa21aad4c00d32a05b3a19183081f979822d1c8a4687c3a"></a>NRF24L01_ADDRS_3BYTE&#160;</td><td class="fielddoc"><p>NRF24L01_ADDRS_3BYTE. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1aad9000d24a14218baa21aad4c00d32a514dfc9d809d84caa00140015d63ee32"></a>NRF24L01_ADDRS_4BYTE&#160;</td><td class="fielddoc"><p>NRF24L01_ADDRS_4BYTE. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1aad9000d24a14218baa21aad4c00d32a08e6fa6678a36b85afd9ea831c1d12b2"></a>NRF24L01_ADDRS_5BYTE&#160;</td><td class="fielddoc"><p>NRF24L01_ADDRS_5BYTE. </p>
+</td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00079">79</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00101">101</a></p>
 
 </div>
 </div>
@@ -451,7 +453,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr><td class="fieldname"><a id="ac53d9acd43f33c5e2dbc6c5671b36f9aa78b4ab3de75f8bee8cc300bf3785078b"></a>NRF24L01_CRC_2BYTE&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00099">99</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00121">121</a></p>
 
 </div>
 </div>
@@ -475,7 +477,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr><td class="fieldname"><a id="a1494e05da46e6388a96c783d39c17628aa922caba1555ab723105fa71e32dedc9"></a>NRF24L01_DATARATE_250KBPS&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00111">111</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00133">133</a></p>
 
 </div>
 </div>
@@ -496,13 +498,13 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a79b46c7a654e5d5485fd6e427d5a6d4ea8a51e1b0f5f39149c7155a86fb5acf55"></a>NRF24L01_PIPE_MODE_NOACK&#160;</td><td class="fielddoc"><p>Не высылать автоподтверждения по этому соединению, размер принимаемой по этому соединению полезной нагрузки постоянен. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a79b46c7a654e5d5485fd6e427d5a6d4ea3b95703088ee5e7d180f7ede02e7b539"></a>NRF24L01_PIPE_MODE_ACK&#160;</td><td class="fielddoc"><p>Высылать автоподтверждения по этому соединению, размер принимаемой по этому соединению полезной нагрузки постоянен.</p>
-<dl class="section note"><dt>Заметки</dt><dd>Если по этому соединению высылаются автоподтверждения с полезной нагрузкой, то, даже если размер принимаемых данных постоянен, нужно использовать режим <a class="el" href="nrf24l01_8h.html#a79b46c7a654e5d5485fd6e427d5a6d4ea1aa4735e9bd8c6acbb413eeaed4c8e98">NRF24L01_PIPE_MODE_ACK_DPL</a>. </dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Если по этому соединению высылаются автоподтверждения с полезной нагрузкой, то, даже если размер принимаемых по нему данных постоянен, нужно использовать режим <a class="el" href="nrf24l01_8h.html#a79b46c7a654e5d5485fd6e427d5a6d4ea1aa4735e9bd8c6acbb413eeaed4c8e98">NRF24L01_PIPE_MODE_ACK_DPL</a>. </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="a79b46c7a654e5d5485fd6e427d5a6d4ea1aa4735e9bd8c6acbb413eeaed4c8e98"></a>NRF24L01_PIPE_MODE_ACK_DPL&#160;</td><td class="fielddoc"><p>Высылать автоподтверждения по этому соединению, размер принимаемой по этому соединению полезной нагрузки непостоянен. </p>
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00226">226</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00248">248</a></p>
 
 </div>
 </div>
@@ -529,7 +531,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr><td class="fieldname"><a id="ac26cef13ff2884749fa1c8826c9a587ba65805e1f8ef3a998c7fc40ed3f9e23c7"></a>NRF24L01_PIPE5&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00179">179</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00201">201</a></p>
 
 </div>
 </div>
@@ -557,7 +559,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00122">122</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00144">144</a></p>
 
 </div>
 </div>
@@ -593,7 +595,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226bad4eeabc540564f8d7873c79527aae625"></a>NRF24L01_RETR_COUNT_15&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00154">154</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00176">176</a></p>
 
 </div>
 </div>
@@ -629,7 +631,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a80edec89e844647210e0e0dab78952ae"></a>NRF24L01_RETR_DELAY_4000US&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00132">132</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00154">154</a></p>
 
 </div>
 </div>
@@ -655,7 +657,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00205">205</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00227">227</a></p>
 
 </div>
 </div>
@@ -681,7 +683,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00191">191</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00213">213</a></p>
 
 </div>
 </div>

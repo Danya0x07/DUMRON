@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2020 Daniel Efimenko
+ *     github.com/Danya0x07
+ */
+
 #include "nrf24l01.h"
 #include "nrf24l01_port.h"
 
