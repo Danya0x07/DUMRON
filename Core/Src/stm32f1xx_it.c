@@ -180,7 +180,7 @@ void EXTI9_5_IRQHandler(void)
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_5);
     /* USER CODE BEGIN LL_EXTI_LINE_5 */
 
-    osSemaphoreRelease(dataRecieveSemaphoreHandle);
+    //osSemaphoreRelease(dataRecieveSemaphoreHandle);
 
     /*
      * Поскольку радиомодуль поднимет IRQ пин обратно только тогда,
@@ -188,7 +188,7 @@ void EXTI9_5_IRQHandler(void)
      * прерывание по спаду напряжения на пине необходимо выключить,
      * иначе по выходу из обработчика мы опять в него попадём.
      */
-    LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_5);
+    //LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_5);
 
     /* USER CODE END LL_EXTI_LINE_5 */
   }

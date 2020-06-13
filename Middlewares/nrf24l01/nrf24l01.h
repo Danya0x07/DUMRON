@@ -100,9 +100,9 @@ extern "C" {
  * Этот параметр у передатчика и приёмника должен быть одинаковым.
  */
 enum nrf24l01_addr_size {
-    NRF24L01_ADDRS_3BYTE = 0x01,//!< NRF24L01_ADDRS_3BYTE
-    NRF24L01_ADDRS_4BYTE = 0x02,//!< NRF24L01_ADDRS_4BYTE
-    NRF24L01_ADDRS_5BYTE = 0x03 //!< NRF24L01_ADDRS_5BYTE
+    NRF24L01_ADDRS_3BYTE = 0x01,
+    NRF24L01_ADDRS_4BYTE = 0x02,
+    NRF24L01_ADDRS_5BYTE = 0x03
 };
 
 /**
@@ -544,8 +544,7 @@ void nrf24l01_rx_close_pipe(enum nrf24l01_pipe_number pipe_no);
  * @brief   Открывает входящее соединение.
  *
  * @note
- * Вызов имеет смысл только если ранее соединение было закрыто,
- * но настроено.
+ * Вызов имеет смысл только если ранее соединение было закрыто, но настроено.
  *
  * @param pipe_no   Номер соединения.
  *

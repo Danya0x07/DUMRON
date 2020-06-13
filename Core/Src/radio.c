@@ -6,6 +6,9 @@
 
 #include <nrf24l01/nrf24l01.h>
 
+static char expected_msg[] = "Hello NRF24L01/+!";
+static char msg_buffer[sizeof(expected_msg)];
+
 void Radio_Init(void)
 {
     struct nrf24l01_rx_config config = {
@@ -24,12 +27,25 @@ void Radio_Init(void)
 
     HAL_Delay(NRF24L01_PWR_ON_DELAY_MS);
 
-    if (nrf24l01_rx_configure(&config) < 0) {
+    if (nrf24l01_rx_configure_minimal(sizeof(expected_msg)) < 0) {
         debug_logs("nrf24l01 init error\n");
         ErrorShow_InitRadio();
     }
-    nrf24l01_rx_setup_pipe(&p0);
+    //nrf24l01_rx_setup_pipe(&p0);
     nrf24l01_rx_start_listening();
+
+    for (;;) {
+        while (LL_GPIO_IsInputPinSet(NRF_IRQ_GPIO_Port, NRF_IRQ_Pin))
+            ;
+        debug_logs("s\n");
+        if (nrf24l01_get_interrupts() & NRF24L01_IRQ_RX_DR) {
+            do {
+                nrf24l01_read_pld(msg_buffer, sizeof(msg_buffer));
+                nrf24l01_clear_interrupts(NRF24L01_IRQ_ALL);
+                debug_logs(msg_buffer);
+            } while (nrf24l01_data_in_rx_fifo());
+        }
+    }
 }
 
 void Radio_TakeIncoming(DataToRobot_s *incoming)

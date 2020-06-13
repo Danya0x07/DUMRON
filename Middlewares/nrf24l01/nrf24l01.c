@@ -282,6 +282,7 @@ int nrf24l01_rx_configure_minimal(uint8_t pld_size)
         pld_size = 32;
 
     nrf24l01_power_up();
+    nrf24l01_write_bits(REG_CONFIG, CONFIG_PRIM_RX, 1);
     nrf24l01_write_reg(REG_RX_PW_P0, pld_size);
 
     return nrf24l01_get_status() == STATUS_RESET_VALUE ? 0 : -1;
