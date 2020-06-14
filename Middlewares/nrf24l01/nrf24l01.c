@@ -419,13 +419,22 @@ void nrf24l01_set_rf_channel(uint8_t channel)
 
 bool nrf24l01_detect_signal(void)
 {
-    uint8_t backup = nrf24l01_read_reg(REG_CONFIG);
+    const uint8_t config_backup = nrf24l01_read_reg(REG_CONFIG);
 
-    nrf24l01_write_bits(REG_CONFIG, CONFIG_PRIM_RX, 1);
+    /*
+     * Чтобы эту функцию можно было вызывать в режиме передатчика,
+     * сохраняем значение регистра настроек, а потом восстанавливаем его.
+     */
+    if ((config_backup & CONFIG_PRIM_RX) == 0)
+        nrf24l01_write_reg(REG_CONFIG, config_backup | CONFIG_PRIM_RX);
+
     _ce_high();
     _delay_rpd();
     _ce_low();
-    nrf24l01_write_reg(REG_CONFIG, backup);
+
+    if ((config_backup & CONFIG_PRIM_RX) == 0)
+        nrf24l01_write_reg(REG_CONFIG, config_backup);
+
     return nrf24l01_read_reg(REG_RPD_CD) & 0x01;
 }
 
@@ -433,12 +442,20 @@ void nrf24l01_measure_noise(uint8_t *snapshot_buff,
                             uint8_t start_ch, uint8_t end_ch)
 {
     uint_fast8_t i, j;
+    const uint8_t config_backup = nrf24l01_read_reg(REG_CONFIG);
 
     if (end_ch > NRF24L01_CHANNELS - 1 || start_ch > end_ch)
         return;
 
     for (i = 0; i < end_ch - start_ch + 1; i++)
         snapshot_buff[i] = 0;
+
+    /*
+     * Чтобы не происходило слишком частой записи по SPI в трансивер,
+     * сохраняем регистр настроек до цикла измерения.
+     */
+    if ((config_backup & CONFIG_PRIM_RX) == 0)
+        nrf24l01_write_reg(REG_CONFIG, config_backup | CONFIG_PRIM_RX);
 
     for (i = 0; i < 0xF; i++) {
         for (j = start_ch; j <= end_ch; j++) {
@@ -447,6 +464,9 @@ void nrf24l01_measure_noise(uint8_t *snapshot_buff,
                 snapshot_buff[j - start_ch]++;
         }
     }
+
+    if ((config_backup & CONFIG_PRIM_RX) == 0)
+        nrf24l01_write_reg(REG_CONFIG, config_backup);
 }
 
 void nrf24l01_start_output_carrier(enum nrf24l01_power power, uint8_t channel)
