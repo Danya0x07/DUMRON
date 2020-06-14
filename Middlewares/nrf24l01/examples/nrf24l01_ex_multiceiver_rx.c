@@ -1,19 +1,21 @@
-#include "main.h"
+/*
+ * Пример кода работы с приёмником с использованием нескольких входящих
+ * соединений. В этом примере используются соединения 0, 1 и 2.
+ */
 
-#include "radio.h"
-#include "errors.h"
-#include "debug.h"
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdlib.h>
 
-#include <nrf24l01/nrf24l01.h>
+#include <nrf24l01.h>
 
-/*static char expected_msg[] = "Hello NRF24L01/+!";
-static char msg_buffer[sizeof(expected_msg)];*/
-
-#define uart_logs(s)    debug_logs(s)
-#define uart_logi(n)    debug_logi(n)
-#define uart_logx(n)    debug_logx(n)
-#define transceiver_irq_pin_is_high()    LL_GPIO_IsInputPinSet(NRF_IRQ_GPIO_Port, NRF_IRQ_Pin)
-#define _delay_ms(ms)   HAL_Delay(ms)
+// вспомогательные функции для демонстрации
+extern void uart_init(void);
+extern void uart_logs(const char *);
+extern void uart_logi(int);
+extern void setup_gpio(void);
+extern void setup_spi(void);
+extern uint8_t transceiver_irq_pin_is_high(void);
 
 struct p0_payload {  // формат полезной нагрузки для 0-го соединения
     uint8_t data0;
@@ -41,8 +43,11 @@ void print_payload_content(uint8_t *pld, uint8_t size)
     }
 }
 
-void Radio_Init(void)
+int main(void)
 {
+    setup_gpio();
+    setup_spi();
+    uart_init();
 
     // сочиняем конфигурацию приёмника
     struct nrf24l01_rx_config config = {
@@ -52,7 +57,7 @@ void Radio_Init(void)
         // непринципиальные для данного примера настройки,
         // однако CRC не может быть OFF, т.к. используются автоподтверждения
         .crc_mode = NRF24L01_CRC_1BYTE,
-        .datarate = NRF24L01_DATARATE_2MBPS,
+        .datarate = NRF24L01_DATARATE_1MBPS,
         .rf_channel = 42,  // такой же как у передатчика
 
         // выбираем самый простой режим, с постоянным размером полезной нагрузки
@@ -177,30 +182,4 @@ void Radio_Init(void)
             } while (nrf24l01_data_in_rx_fifo());
         }
     }
-}
-
-void Radio_TakeIncoming(DataToRobot_s *incoming)
-{
-    if (nrf24l01_get_interrupts() & NRF24L01_IRQ_RX_DR) {
-        do {
-            if (nrf24l01_read_pld_size() != sizeof(DataToRobot_s)) {
-                nrf24l01_flush_rx_fifo();
-                nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
-                debug_logs("incorrect pld size\n");
-                break;
-            }
-            nrf24l01_read_pld(incoming, sizeof(DataToRobot_s));
-            nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
-        } while (nrf24l01_data_in_rx_fifo());
-    }
-}
-
-void Radio_PutOutcoming(DataFromRobot_s *outcoming)
-{
-    if (nrf24l01_full_tx_fifo()) {
-        nrf24l01_flush_tx_fifo();
-        debug_logs("full tx fifo\n");
-    }
-    nrf24l01_rx_write_ack_pld(NRF24L01_PIPE0, outcoming,
-                              sizeof(DataFromRobot_s));
 }
