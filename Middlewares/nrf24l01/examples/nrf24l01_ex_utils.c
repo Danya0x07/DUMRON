@@ -1,3 +1,8 @@
+/*
+ * Common functions needed by examples code.
+ * Ей-богу, не знаю как это по русски выразить.
+ */
+
 #include <avr/io.h>
 #include <stdlib.h>
 
