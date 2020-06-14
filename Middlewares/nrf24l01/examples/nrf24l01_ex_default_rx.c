@@ -15,6 +15,7 @@ extern void uart_init(void);
 extern void uart_logs(const char *);
 extern void setup_gpio(void);
 extern void setup_spi(void);
+extern uint8_t transceiver_irq_pin_is_high(void);
 
 /*
  * В конфигурации по умолчанию размер полезной нагрузки постоянен, и его нужно
@@ -31,7 +32,7 @@ int main(void)
     setup_spi();
     uart_init();
 
-    if (nrf24l01_rx_configure_minimal(sizeof(msg_buffer)) < 0) {
+    if (nrf24l01_rx_configure_default(sizeof(msg_buffer)) < 0) {
         /*
          * Обрабатываем ошибку инициализации.
          * Возможно она вызвана плохим контактом модуля с макетной платой,
@@ -44,7 +45,7 @@ int main(void)
 
     for (;;) {
         // ждём прерывание (спад напряжения на пине IRQ трансивера)
-        while (transiever_irq_pin_is_high())
+        while (transceiver_irq_pin_is_high())
             ;
 
         // получаем маску произошедших прерываний

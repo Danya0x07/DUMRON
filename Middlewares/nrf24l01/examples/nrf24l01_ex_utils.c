@@ -69,7 +69,7 @@ void setup_spi(void)
     SPCR = _BV(SPE) | _BV(MSTR); // режим 0, мастер, частота 1/4 от частоты ЦП
 }
 
-uint8_t transiever_irq_pin_is_high(void)
+uint8_t transceiver_irq_pin_is_high(void)
 {
     return (PIND & NRF_PIN_IRQ) != 0;
 }
