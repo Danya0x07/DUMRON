@@ -51,11 +51,12 @@ int main(void)
     uint8_t noise_buff[NRF24L01_CHANNELS];
 
     for (;;) {
-        nrf24l01_measure_noise(noise_buff, 0, sizeof(noise_buff) - 1);
+        nrf24l01_measure_noise(noise_buff, 0, NRF24L01_CHANNELS - 1);
         for (int i = 0; i < NRF24L01_CHANNELS; i++) {
             /*
              * Зашумлённости каналов представлены числами от 0 до F, поэтому
-             * помещаются в 1 разряд на канал.
+             * помещаются в 1 разряд. Таким образом каждому каналу будет
+             * соответствовать одна колонка чисел в терминале.
              */
             uart_logx(noise_buff[i]);
         }

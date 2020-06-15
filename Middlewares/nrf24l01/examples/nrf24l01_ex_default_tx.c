@@ -20,9 +20,7 @@ extern void setup_spi(void);
 extern uint8_t transceiver_irq_pin_is_high(void);
 
 /*
- * В дефолтной конфигурации трансивера размер полезной нагрузки постоянен,
- * передатчик должен соблюдать это правило, несмотря на то что при его настройке
- * этот размер нигде не указывается.
+ * В этом примере в качестве полезной нагрузки будет строка символов.
  */
 char simple_msg[] = "Hello NRF24L01/+!";
 
@@ -48,7 +46,7 @@ int main(void)
     uint8_t lost, retr;
 
     for (;;) {
-        // записываем полезную нагрузку
+        // записываем полезную нагрузку в очередь
         nrf24l01_tx_write_pld(simple_msg, sizeof(simple_msg));
 
         // отправляем
@@ -68,12 +66,15 @@ int main(void)
         }
         if (irq & NRF24L01_IRQ_MAX_RT) {  // если кончились попытки отправки
             uart_logs("failed to send\n");
+
+            // если заполнили очередь отправки, чистим
             if (nrf24l01_full_tx_fifo())
                 nrf24l01_flush_tx_fifo();
+
             nrf24l01_clear_interrupts(NRF24L01_IRQ_MAX_RT);
         }
 
-        // читаем и печатаем статистику отправки
+        // читаем и печатаем статистику радиообмена
         nrf24l01_tx_get_statistics(&lost, &retr);
 
         uart_logs("lost: ");

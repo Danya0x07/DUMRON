@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NRF24L01 and NRF24L01+ simple driver: Файл nrf24l01.h</title>
+<title>NRF24L01 and NRF24L01+ transceiver library: Файл nrf24l01.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NRF24L01 and NRF24L01+ simple driver
-   &#160;<span id="projectnumber">0.1.0</span>
+   <div id="projectname">NRF24L01 and NRF24L01+ transceiver library
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
+   <div id="projectbrief">simple and cross-platform</div>
   </td>
  </tr>
  </tbody>
@@ -130,16 +131,21 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="memitem:a3e35039e5d7087bb8921f4f43a07ac84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a3e35039e5d7087bb8921f4f43a07ac84">NRF24L01_PWR_ON_DELAY_MS</a>&#160;&#160;&#160;100</td></tr>
 <tr class="memdesc:a3e35039e5d7087bb8921f4f43a07ac84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Длительность неопределённого состояния трансивера после подачи питания  <a href="#a3e35039e5d7087bb8921f4f43a07ac84">Подробнее...</a><br /></td></tr>
 <tr class="separator:a3e35039e5d7087bb8921f4f43a07ac84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab7d9eebe2ca5fafa967a084a051f3e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aab7d9eebe2ca5fafa967a084a051f3e7">NRF24L01_CHANNELS</a>&#160;&#160;&#160;126</td></tr>
-<tr class="memdesc:aab7d9eebe2ca5fafa967a084a051f3e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество радиочастотных каналов, на которых может работать трансивер NRF24L01/+.  <a href="#aab7d9eebe2ca5fafa967a084a051f3e7">Подробнее...</a><br /></td></tr>
+<tr class="memitem:aab7d9eebe2ca5fafa967a084a051f3e7"><td class="memItemLeft" align="right" valign="top"><a id="aab7d9eebe2ca5fafa967a084a051f3e7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aab7d9eebe2ca5fafa967a084a051f3e7">NRF24L01_CHANNELS</a>&#160;&#160;&#160;126</td></tr>
+<tr class="memdesc:aab7d9eebe2ca5fafa967a084a051f3e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество радиочастотных каналов, на которых может работать трансивер NRF24L01/+. <br /></td></tr>
 <tr class="separator:aab7d9eebe2ca5fafa967a084a051f3e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23721041d19743bc08da0b2d837e3727"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga23721041d19743bc08da0b2d837e3727">NRF24L01_IRQ_RX_DR</a>&#160;&#160;&#160;(1 &lt;&lt; 6)</td></tr>
+<tr class="memitem:ga23721041d19743bc08da0b2d837e3727"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_RX_DR</b>&#160;&#160;&#160;(1 &lt;&lt; 6)</td></tr>
 <tr class="separator:ga23721041d19743bc08da0b2d837e3727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16ac3f39447a5579f26a42490bd2ab55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga16ac3f39447a5579f26a42490bd2ab55">NRF24L01_IRQ_TX_DS</a>&#160;&#160;&#160;(1 &lt;&lt; 5)</td></tr>
+<tr class="memitem:ga16ac3f39447a5579f26a42490bd2ab55"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_TX_DS</b>&#160;&#160;&#160;(1 &lt;&lt; 5)</td></tr>
 <tr class="separator:ga16ac3f39447a5579f26a42490bd2ab55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga4643d84db44a4a9f6275aa06a51853e3">NRF24L01_IRQ_MAX_RT</a>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
+<tr class="memitem:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_MAX_RT</b>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
 <tr class="separator:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga93c682c1dddd54e7376c0d294dc93ba1">NRF24L01_IRQ_ALL</a>&#160;&#160;&#160;0x70</td></tr>
+<tr class="memitem:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_ALL</b>&#160;&#160;&#160;0x70</td></tr>
 <tr class="separator:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadf8160e89afd433999f9a00627cb3fa2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_e_s_t___u_t_i_l_i_t_y.html#gadf8160e89afd433999f9a00627cb3fa2">nrf24l01_stop_output_carrier</a>()&#160;&#160;&#160;nrf24l01_stop_cont_transmission()</td></tr>
 <tr class="memdesc:gadf8160e89afd433999f9a00627cb3fa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает трансляцию несущей.  <a href="group___n_r_f24_l01___t_e_s_t___u_t_i_l_i_t_y.html#gadf8160e89afd433999f9a00627cb3fa2">Подробнее...</a><br /></td></tr>
@@ -153,15 +159,15 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
  }<tr class="memdesc:a1aad9000d24a14218baa21aad4c00d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Размер адреса соединений трансивера NRF24L01/+.  <a href="nrf24l01_8h.html#a1aad9000d24a14218baa21aad4c00d32">Подробнее...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:a1aad9000d24a14218baa21aad4c00d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac53d9acd43f33c5e2dbc6c5671b36f9a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ac53d9acd43f33c5e2dbc6c5671b36f9a">nrf24l01_crc_mode</a> { <a class="el" href="nrf24l01_8h.html#ac53d9acd43f33c5e2dbc6c5671b36f9aae1ec15bf25fbcfbcb3fc84bc330b0a0c">NRF24L01_CRC_OFF</a> = 0, 
-<a class="el" href="nrf24l01_8h.html#ac53d9acd43f33c5e2dbc6c5671b36f9aa89a58deb038ed360bdb6d7aa224ecbd3">NRF24L01_CRC_1BYTE</a> = 1 &lt;&lt; 3, 
-<a class="el" href="nrf24l01_8h.html#ac53d9acd43f33c5e2dbc6c5671b36f9aa78b4ab3de75f8bee8cc300bf3785078b">NRF24L01_CRC_2BYTE</a> = 1 &lt;&lt; 3 | 1 &lt;&lt; 2
+<tr class="memitem:ac53d9acd43f33c5e2dbc6c5671b36f9a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ac53d9acd43f33c5e2dbc6c5671b36f9a">nrf24l01_crc_mode</a> { <b>NRF24L01_CRC_OFF</b> = 0, 
+<b>NRF24L01_CRC_1BYTE</b> = 1 &lt;&lt; 3, 
+<b>NRF24L01_CRC_2BYTE</b> = 1 &lt;&lt; 3 | 1 &lt;&lt; 2
  }<tr class="memdesc:ac53d9acd43f33c5e2dbc6c5671b36f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Настройки проверки трансивером контрольной суммы при получении пакета.  <a href="nrf24l01_8h.html#ac53d9acd43f33c5e2dbc6c5671b36f9a">Подробнее...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:ac53d9acd43f33c5e2dbc6c5671b36f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1494e05da46e6388a96c783d39c17628"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a1494e05da46e6388a96c783d39c17628">nrf24l01_datarate</a> { <a class="el" href="nrf24l01_8h.html#a1494e05da46e6388a96c783d39c17628a7f735dcb07472f508266999132a80ac1">NRF24L01_DATARATE_1MBPS</a> = 0, 
-<a class="el" href="nrf24l01_8h.html#a1494e05da46e6388a96c783d39c17628a36fc08be0fbe398a85d0565cd1f1befa">NRF24L01_DATARATE_2MBPS</a> = 1 &lt;&lt; 3, 
-<a class="el" href="nrf24l01_8h.html#a1494e05da46e6388a96c783d39c17628aa922caba1555ab723105fa71e32dedc9">NRF24L01_DATARATE_250KBPS</a> = 1 &lt;&lt; 5
+<tr class="memitem:a1494e05da46e6388a96c783d39c17628"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a1494e05da46e6388a96c783d39c17628">nrf24l01_datarate</a> { <b>NRF24L01_DATARATE_1MBPS</b> = 0, 
+<b>NRF24L01_DATARATE_2MBPS</b> = 1 &lt;&lt; 3, 
+<b>NRF24L01_DATARATE_250KBPS</b> = 1 &lt;&lt; 5
  }<tr class="memdesc:a1494e05da46e6388a96c783d39c17628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Скорость обмена данными.  <a href="nrf24l01_8h.html#a1494e05da46e6388a96c783d39c17628">Подробнее...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:a1494e05da46e6388a96c783d39c17628"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,62 +178,62 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
  }<tr class="memdesc:ae361872da273e1eeac33d834503084ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Мощность сигнала при передаче.  <a href="nrf24l01_8h.html#ae361872da273e1eeac33d834503084ea">Подробнее...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:ae361872da273e1eeac33d834503084ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f2a87863847e7b41e80ca8c33bdf588"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588">nrf24l01_retr_delay</a> { <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588af72f11cb5969696e6c7a20e80e836fd8">NRF24L01_RETR_DELAY_250US</a> = 0x00, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a2f75f592739a5dde0c48f0af0449ee55">NRF24L01_RETR_DELAY_500US</a> = 0x10, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a919dbaa6bcba28416c4c7dac50144e10">NRF24L01_RETR_DELAY_750US</a> = 0x20, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a360df626cca9bb01ea159d5bf31548a3">NRF24L01_RETR_DELAY_1000US</a> = 0x30, 
+<tr class="memitem:a0f2a87863847e7b41e80ca8c33bdf588"><td class="memItemLeft" align="right" valign="top"><a id="a0f2a87863847e7b41e80ca8c33bdf588"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588">nrf24l01_retr_delay</a> { <br />
+&#160;&#160;<b>NRF24L01_RETR_DELAY_250US</b> = 0x00, 
+<b>NRF24L01_RETR_DELAY_500US</b> = 0x10, 
+<b>NRF24L01_RETR_DELAY_750US</b> = 0x20, 
+<b>NRF24L01_RETR_DELAY_1000US</b> = 0x30, 
 <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a2e15cfe617681d4784ffd78e0f888399">NRF24L01_RETR_DELAY_1250US</a> = 0x40, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a4c3d8808190cf847fc8e18420ac63dc6">NRF24L01_RETR_DELAY_1500US</a> = 0x50, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a4c2c9408d2efaef9092fe5f03575bb03">NRF24L01_RETR_DELAY_1750US</a> = 0x60, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a41443c881ae3beb96362a5d845c0354b">NRF24L01_RETR_DELAY_2000US</a> = 0x70, 
+&#160;&#160;<b>NRF24L01_RETR_DELAY_1250US</b> = 0x40, 
+<b>NRF24L01_RETR_DELAY_1500US</b> = 0x50, 
+<b>NRF24L01_RETR_DELAY_1750US</b> = 0x60, 
+<b>NRF24L01_RETR_DELAY_2000US</b> = 0x70, 
 <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588af0c3859fe91f008a40e1e8651b6e1861">NRF24L01_RETR_DELAY_2250US</a> = 0x80, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588aaa9ff1bd2e802e578d757daf00f206fb">NRF24L01_RETR_DELAY_2500US</a> = 0x90, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a66fdc6fa9f5379691b84d43f13a505ff">NRF24L01_RETR_DELAY_2750US</a> = 0xA0, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588afa05cd795659b52b70ca9cd3c3a02aa7">NRF24L01_RETR_DELAY_3000US</a> = 0xB0, 
+&#160;&#160;<b>NRF24L01_RETR_DELAY_2250US</b> = 0x80, 
+<b>NRF24L01_RETR_DELAY_2500US</b> = 0x90, 
+<b>NRF24L01_RETR_DELAY_2750US</b> = 0xA0, 
+<b>NRF24L01_RETR_DELAY_3000US</b> = 0xB0, 
 <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a256391d0599ac2b4755028dc6bbe77d9">NRF24L01_RETR_DELAY_3250US</a> = 0xC0, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a6536e020c82a0f9e2b48b22569b20267">NRF24L01_RETR_DELAY_3500US</a> = 0xD0, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a8622b73011a28dda3e1a80a1d1b06f8c">NRF24L01_RETR_DELAY_3750US</a> = 0xE0, 
-<a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588a80edec89e844647210e0e0dab78952ae">NRF24L01_RETR_DELAY_4000US</a> = 0xF0
+&#160;&#160;<b>NRF24L01_RETR_DELAY_3250US</b> = 0xC0, 
+<b>NRF24L01_RETR_DELAY_3500US</b> = 0xD0, 
+<b>NRF24L01_RETR_DELAY_3750US</b> = 0xE0, 
+<b>NRF24L01_RETR_DELAY_4000US</b> = 0xF0
 <br />
- }<tr class="memdesc:a0f2a87863847e7b41e80ca8c33bdf588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задержка между повторными отправками пакета.  <a href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588">Подробнее...</a><br /></td></tr>
+ }<tr class="memdesc:a0f2a87863847e7b41e80ca8c33bdf588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задержка между повторными отправками пакета. <br /></td></tr>
 </td></tr>
 <tr class="separator:a0f2a87863847e7b41e80ca8c33bdf588"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaabb5839b6864c8029838b6c1d44226b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226b">nrf24l01_retr_count</a> { <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bae16c8bc3856169c2958f76db5b1286d3">NRF24L01_RETR_COUNT_0</a> = 0x00, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226ba45e251f2e039c8a6701ae08e37496c28">NRF24L01_RETR_COUNT_1</a> = 0x01, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226ba85c45d61f8e32a44cde093cb89417cd0">NRF24L01_RETR_COUNT_2</a> = 0x02, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226ba614a1337fb197e0ac78e58a6374adedd">NRF24L01_RETR_COUNT_3</a> = 0x03, 
+<tr class="memitem:aaabb5839b6864c8029838b6c1d44226b"><td class="memItemLeft" align="right" valign="top"><a id="aaabb5839b6864c8029838b6c1d44226b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226b">nrf24l01_retr_count</a> { <br />
+&#160;&#160;<b>NRF24L01_RETR_COUNT_0</b> = 0x00, 
+<b>NRF24L01_RETR_COUNT_1</b> = 0x01, 
+<b>NRF24L01_RETR_COUNT_2</b> = 0x02, 
+<b>NRF24L01_RETR_COUNT_3</b> = 0x03, 
 <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226ba4a5d31914919e88c476d04b9f111b0c1">NRF24L01_RETR_COUNT_4</a> = 0x04, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bafde9033969ecd794a65fd38089e52f8f">NRF24L01_RETR_COUNT_5</a> = 0x05, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bae37209ae9d6c5b07de83d5efe9ddcb56">NRF24L01_RETR_COUNT_6</a> = 0x06, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226ba9735e9d2092cbdd15fa929cd818080e3">NRF24L01_RETR_COUNT_7</a> = 0x07, 
+&#160;&#160;<b>NRF24L01_RETR_COUNT_4</b> = 0x04, 
+<b>NRF24L01_RETR_COUNT_5</b> = 0x05, 
+<b>NRF24L01_RETR_COUNT_6</b> = 0x06, 
+<b>NRF24L01_RETR_COUNT_7</b> = 0x07, 
 <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226baaa24c09f0b1aedf202d8f0dd96aa1744">NRF24L01_RETR_COUNT_8</a> = 0x08, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226baea131128e848791eb9a464cfb90180da">NRF24L01_RETR_COUNT_9</a> = 0x09, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226baf5eb08a4694a0c9d95edcd2c66228f8c">NRF24L01_RETR_COUNT_10</a> = 0x0A, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226ba0dde67211606a3a24576330bd36576ed">NRF24L01_RETR_COUNT_11</a> = 0x0B, 
+&#160;&#160;<b>NRF24L01_RETR_COUNT_8</b> = 0x08, 
+<b>NRF24L01_RETR_COUNT_9</b> = 0x09, 
+<b>NRF24L01_RETR_COUNT_10</b> = 0x0A, 
+<b>NRF24L01_RETR_COUNT_11</b> = 0x0B, 
 <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bad275a6280332fd90a9af14c26157dd11">NRF24L01_RETR_COUNT_12</a> = 0x0C, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226ba86d167793afa73b10717828c51063ea1">NRF24L01_RETR_COUNT_13</a> = 0x0D, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bacccb22268f8a5acd752b33686b348baf">NRF24L01_RETR_COUNT_14</a> = 0x0E, 
-<a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bad4eeabc540564f8d7873c79527aae625">NRF24L01_RETR_COUNT_15</a> = 0x0F
+&#160;&#160;<b>NRF24L01_RETR_COUNT_12</b> = 0x0C, 
+<b>NRF24L01_RETR_COUNT_13</b> = 0x0D, 
+<b>NRF24L01_RETR_COUNT_14</b> = 0x0E, 
+<b>NRF24L01_RETR_COUNT_15</b> = 0x0F
 <br />
- }<tr class="memdesc:aaabb5839b6864c8029838b6c1d44226b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество повторных попыток отправки пакета.  <a href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226b">Подробнее...</a><br /></td></tr>
+ }<tr class="memdesc:aaabb5839b6864c8029838b6c1d44226b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество повторных попыток отправки пакета. <br /></td></tr>
 </td></tr>
 <tr class="separator:aaabb5839b6864c8029838b6c1d44226b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac26cef13ff2884749fa1c8826c9a587b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587b">nrf24l01_pipe_number</a> { <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587bad5ec0fa4882bf22516a1a91a13602bf0">NRF24L01_PIPE0</a> = 0, 
-<a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587bab7ea674d21993c2ba0de2a3ebc3a1888">NRF24L01_PIPE1</a>, 
-<a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587ba2974a4e64baed0535bb7b5e0ac03f81d">NRF24L01_PIPE2</a>, 
-<a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587bae96b441bb9dec288e1c4d48e4d073158">NRF24L01_PIPE3</a>, 
+&#160;&#160;<b>NRF24L01_PIPE0</b> = 0, 
+<b>NRF24L01_PIPE1</b>, 
+<b>NRF24L01_PIPE2</b>, 
+<b>NRF24L01_PIPE3</b>, 
 <br />
-&#160;&#160;<a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587ba82887ccca2045f6ee03ea0ca6e2e1748">NRF24L01_PIPE4</a>, 
-<a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587ba65805e1f8ef3a998c7fc40ed3f9e23c7">NRF24L01_PIPE5</a>
+&#160;&#160;<b>NRF24L01_PIPE4</b>, 
+<b>NRF24L01_PIPE5</b>
 <br />
  }<tr class="memdesc:ac26cef13ff2884749fa1c8826c9a587b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Номер входящего соединения.  <a href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587b">Подробнее...</a><br /></td></tr>
 </td></tr>
@@ -256,9 +262,9 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="memitem:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gac33dbf743e5cb704c71f85e54fd46ebc">nrf24l01_tx_configure</a> (struct <a class="el" href="structnrf24l01__tx__config.html">nrf24l01_tx_config</a> *config)</td></tr>
 <tr class="memdesc:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик.  <a href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gac33dbf743e5cb704c71f85e54fd46ebc">Подробнее...</a><br /></td></tr>
 <tr class="separator:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef456c93713760d459a5a2e8f54bbb67"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gaef456c93713760d459a5a2e8f54bbb67">nrf24l01_tx_configure_minimal</a> (void)</td></tr>
-<tr class="memdesc:gaef456c93713760d459a5a2e8f54bbb67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик настройками по-умолчанию.  <a href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gaef456c93713760d459a5a2e8f54bbb67">Подробнее...</a><br /></td></tr>
-<tr class="separator:gaef456c93713760d459a5a2e8f54bbb67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">nrf24l01_tx_configure_default</a> (void)</td></tr>
+<tr class="memdesc:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик настройками по умолчанию.  <a href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad56100c5019154a702f2f6a5ab2892d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad56100c5019154a702f2f6a5ab2892d8">nrf24l01_tx_write_pld</a> (const void *pld, uint8_t size)</td></tr>
 <tr class="memdesc:gad56100c5019154a702f2f6a5ab2892d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает в очередь отправки полезную нагрузку.  <a href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad56100c5019154a702f2f6a5ab2892d8">Подробнее...</a><br /></td></tr>
 <tr class="separator:gad56100c5019154a702f2f6a5ab2892d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,8 +283,9 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="memitem:gabadb5a802d0040b242370208ae141e8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gabadb5a802d0040b242370208ae141e8c">nrf24l01_tx_start_cont_transmission</a> (void)</td></tr>
 <tr class="memdesc:gabadb5a802d0040b242370208ae141e8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Включает у передатчика режим постоянной отправки.  <a href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gabadb5a802d0040b242370208ae141e8c">Подробнее...</a><br /></td></tr>
 <tr class="separator:gabadb5a802d0040b242370208ae141e8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed">nrf24l01_tx_stop_cont_transmission</a> (void)</td></tr>
-<tr class="memdesc:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает режим постоянной отправки, если ранее он был включен.  <a href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed">Подробнее...</a><br /></td></tr>
+<tr class="memitem:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed">nrf24l01_tx_stop_cont_transmission</a> (void)</td></tr>
+<tr class="memdesc:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает режим постоянной отправки, если ранее он был включен. <br /></td></tr>
 <tr class="separator:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad288c8c54d23f382a941e476ade1c206"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad288c8c54d23f382a941e476ade1c206">nrf24l01_tx_get_statistics</a> (uint8_t *lost, uint8_t *retr)</td></tr>
 <tr class="memdesc:gad288c8c54d23f382a941e476ade1c206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Собирает статистику радиообмена.  <a href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad288c8c54d23f382a941e476ade1c206">Подробнее...</a><br /></td></tr>
@@ -286,12 +293,12 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="memitem:ga7e3fafbf0cbbd700603455d5611b7d64"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga7e3fafbf0cbbd700603455d5611b7d64">nrf24l01_rx_configure</a> (struct <a class="el" href="structnrf24l01__rx__config.html">nrf24l01_rx_config</a> *config)</td></tr>
 <tr class="memdesc:ga7e3fafbf0cbbd700603455d5611b7d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как приёмник.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga7e3fafbf0cbbd700603455d5611b7d64">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga7e3fafbf0cbbd700603455d5611b7d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14251b159a0c47b026098d232080cb16"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga14251b159a0c47b026098d232080cb16">nrf24l01_rx_configure_minimal</a> (uint8_t pld_size)</td></tr>
-<tr class="memdesc:ga14251b159a0c47b026098d232080cb16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как приёмник настройками по-умолчанию.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga14251b159a0c47b026098d232080cb16">Подробнее...</a><br /></td></tr>
-<tr class="separator:ga14251b159a0c47b026098d232080cb16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga855f6bdb7bb8b504b366efa28743ea3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga855f6bdb7bb8b504b366efa28743ea3f">nrf24l01_rx_setup_pipe</a> (struct <a class="el" href="structnrf24l01__pipe__config.html">nrf24l01_pipe_config</a> *config)</td></tr>
-<tr class="memdesc:ga855f6bdb7bb8b504b366efa28743ea3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Открывает и настраивает входящее соединение.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga855f6bdb7bb8b504b366efa28743ea3f">Подробнее...</a><br /></td></tr>
-<tr class="separator:ga855f6bdb7bb8b504b366efa28743ea3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78af4396240d71e15ac850e7d124aae3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga78af4396240d71e15ac850e7d124aae3">nrf24l01_rx_configure_default</a> (uint8_t pld_size)</td></tr>
+<tr class="memdesc:ga78af4396240d71e15ac850e7d124aae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как приёмник настройками по-умолчанию.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga78af4396240d71e15ac850e7d124aae3">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga78af4396240d71e15ac850e7d124aae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a7365eec6ee7d8dfb0112f8658f6ea2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga6a7365eec6ee7d8dfb0112f8658f6ea2">nrf24l01_rx_setup_pipe</a> (enum <a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587b">nrf24l01_pipe_number</a> pipe_no, struct <a class="el" href="structnrf24l01__pipe__config.html">nrf24l01_pipe_config</a> *config)</td></tr>
+<tr class="memdesc:ga6a7365eec6ee7d8dfb0112f8658f6ea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Открывает и настраивает входящее соединение.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga6a7365eec6ee7d8dfb0112f8658f6ea2">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga6a7365eec6ee7d8dfb0112f8658f6ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga71034e87f9c2b4d8df12144b64f3e54c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga71034e87f9c2b4d8df12144b64f3e54c">nrf24l01_rx_close_pipe</a> (enum <a class="el" href="nrf24l01_8h.html#ac26cef13ff2884749fa1c8826c9a587b">nrf24l01_pipe_number</a> pipe_no)</td></tr>
 <tr class="memdesc:ga71034e87f9c2b4d8df12144b64f3e54c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Закрывает входящее соединение.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga71034e87f9c2b4d8df12144b64f3e54c">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga71034e87f9c2b4d8df12144b64f3e54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -301,8 +308,9 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="memitem:ga857f18ce512b5e081e40b5fe4c88fc9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga857f18ce512b5e081e40b5fe4c88fc9f">nrf24l01_rx_start_listening</a> (void)</td></tr>
 <tr class="memdesc:ga857f18ce512b5e081e40b5fe4c88fc9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Включает прослушивание эфира на предмет валидных пакетов.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga857f18ce512b5e081e40b5fe4c88fc9f">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga857f18ce512b5e081e40b5fe4c88fc9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga881e6619382637d1c59e5c8570be465f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga881e6619382637d1c59e5c8570be465f">nrf24l01_rx_stop_listening</a> (void)</td></tr>
-<tr class="memdesc:ga881e6619382637d1c59e5c8570be465f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает прослушивание эфира на предмет валидных пакетов.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga881e6619382637d1c59e5c8570be465f">Подробнее...</a><br /></td></tr>
+<tr class="memitem:ga881e6619382637d1c59e5c8570be465f"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga881e6619382637d1c59e5c8570be465f">nrf24l01_rx_stop_listening</a> (void)</td></tr>
+<tr class="memdesc:ga881e6619382637d1c59e5c8570be465f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает прослушивание эфира на предмет валидных пакетов. <br /></td></tr>
 <tr class="separator:ga881e6619382637d1c59e5c8570be465f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5bfdb3a0e33e5a31518063f36c43adfb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga5bfdb3a0e33e5a31518063f36c43adfb">nrf24l01_rx_get_pld_pipe_no</a> (void)</td></tr>
 <tr class="memdesc:ga5bfdb3a0e33e5a31518063f36c43adfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получает номер соединения, принятая полезная нагрузка для которого находится первой в очереди приёма.  <a href="group___n_r_f24_l01___r_e_c_i_e_v_e_r___f_u_n_c_t_i_o_n_s.html#ga5bfdb3a0e33e5a31518063f36c43adfb">Подробнее...</a><br /></td></tr>
@@ -340,11 +348,13 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <tr class="memitem:ga5a6e877f8b3628b1fe761a0c7336d288"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga5a6e877f8b3628b1fe761a0c7336d288">nrf24l01_read_pld</a> (void *pld, uint8_t size)</td></tr>
 <tr class="memdesc:ga5a6e877f8b3628b1fe761a0c7336d288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Считывает принятую полезную нагрузку из очереди приёма, удаляя её из очереди.  <a href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga5a6e877f8b3628b1fe761a0c7336d288">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga5a6e877f8b3628b1fe761a0c7336d288"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fba1c654b2a44d07b087575c03f85de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga4fba1c654b2a44d07b087575c03f85de">nrf24l01_flush_tx_fifo</a> (void)</td></tr>
-<tr class="memdesc:ga4fba1c654b2a44d07b087575c03f85de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очищает очередь отправки.  <a href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga4fba1c654b2a44d07b087575c03f85de">Подробнее...</a><br /></td></tr>
+<tr class="memitem:ga4fba1c654b2a44d07b087575c03f85de"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga4fba1c654b2a44d07b087575c03f85de">nrf24l01_flush_tx_fifo</a> (void)</td></tr>
+<tr class="memdesc:ga4fba1c654b2a44d07b087575c03f85de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очищает очередь отправки. <br /></td></tr>
 <tr class="separator:ga4fba1c654b2a44d07b087575c03f85de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga414c608bd171c732950b7e612d3e8e78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga414c608bd171c732950b7e612d3e8e78">nrf24l01_flush_rx_fifo</a> (void)</td></tr>
-<tr class="memdesc:ga414c608bd171c732950b7e612d3e8e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очищает очередь приёма.  <a href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga414c608bd171c732950b7e612d3e8e78">Подробнее...</a><br /></td></tr>
+<tr class="memitem:ga414c608bd171c732950b7e612d3e8e78"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga414c608bd171c732950b7e612d3e8e78">nrf24l01_flush_rx_fifo</a> (void)</td></tr>
+<tr class="memdesc:ga414c608bd171c732950b7e612d3e8e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очищает очередь приёма. <br /></td></tr>
 <tr class="separator:ga414c608bd171c732950b7e612d3e8e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga454171201b377a36cd23b5d4447d98b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga454171201b377a36cd23b5d4447d98b0">nrf24l01_set_rf_channel</a> (uint8_t channel)</td></tr>
 <tr class="memdesc:ga454171201b377a36cd23b5d4447d98b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает радиочастотный канал трансивера.  <a href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#ga454171201b377a36cd23b5d4447d98b0">Подробнее...</a><br /></td></tr>
@@ -364,24 +374,6 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 
 <p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a></p>
 </div><h2 class="groupheader">Макросы</h2>
-<a id="aab7d9eebe2ca5fafa967a084a051f3e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab7d9eebe2ca5fafa967a084a051f3e7">&#9670;&nbsp;</a></span>NRF24L01_CHANNELS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF24L01_CHANNELS&#160;&#160;&#160;126</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Количество радиочастотных каналов, на которых может работать трансивер NRF24L01/+. </p>
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00060">60</a></p>
-
-</div>
-</div>
 <a id="a3e35039e5d7087bb8921f4f43a07ac84"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3e35039e5d7087bb8921f4f43a07ac84">&#9670;&nbsp;</a></span>NRF24L01_PWR_ON_DELAY_MS</h2>
 
@@ -398,7 +390,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <p>в миллисекундах.</p>
 <p>Пользователь должен выдержать данное время между включением системы и обращением к API-функциям бибилотеки. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00054">54</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00057">57</a></p>
 
 </div>
 </div>
@@ -427,7 +419,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00101">101</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00104">104</a></p>
 
 </div>
 </div>
@@ -447,13 +439,8 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 <p>Контрольная сумма может либо не проверяться, либо быть размером в 1 байт, либо в 2 байта.</p>
 <dl class="section note"><dt>Заметки</dt><dd>Этот параметр у передатчика и приёмника должен быть одинаковым.</dd></dl>
 <dl class="section attention"><dt>Внимание</dt><dd>Если используется автоподтверждение хотя бы на одном соединении, проверка контрольной суммы не может не использоваться. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="ac53d9acd43f33c5e2dbc6c5671b36f9aae1ec15bf25fbcfbcb3fc84bc330b0a0c"></a>NRF24L01_CRC_OFF&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac53d9acd43f33c5e2dbc6c5671b36f9aa89a58deb038ed360bdb6d7aa224ecbd3"></a>NRF24L01_CRC_1BYTE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac53d9acd43f33c5e2dbc6c5671b36f9aa78b4ab3de75f8bee8cc300bf3785078b"></a>NRF24L01_CRC_2BYTE&#160;</td><td class="fielddoc"></td></tr>
-</table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00121">121</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00124">124</a></p>
 
 </div>
 </div>
@@ -471,13 +458,8 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 
 <p>Скорость обмена данными. </p>
 <dl class="section note"><dt>Заметки</dt><dd>Этот параметр у передатчика и приёмника должен быть одинаковым. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a1494e05da46e6388a96c783d39c17628a7f735dcb07472f508266999132a80ac1"></a>NRF24L01_DATARATE_1MBPS&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1494e05da46e6388a96c783d39c17628a36fc08be0fbe398a85d0565cd1f1befa"></a>NRF24L01_DATARATE_2MBPS&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1494e05da46e6388a96c783d39c17628aa922caba1555ab723105fa71e32dedc9"></a>NRF24L01_DATARATE_250KBPS&#160;</td><td class="fielddoc"></td></tr>
-</table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00133">133</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00136">136</a></p>
 
 </div>
 </div>
@@ -504,7 +486,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00248">248</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00251">251</a></p>
 
 </div>
 </div>
@@ -522,16 +504,8 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 
 <p>Номер входящего соединения. </p>
 <p>6 входящих соединений позволяют приёмнику принимать пакеты от 6-ти передатчиков, работающих на одинаковой частоте с ним. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="ac26cef13ff2884749fa1c8826c9a587bad5ec0fa4882bf22516a1a91a13602bf0"></a>NRF24L01_PIPE0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac26cef13ff2884749fa1c8826c9a587bab7ea674d21993c2ba0de2a3ebc3a1888"></a>NRF24L01_PIPE1&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac26cef13ff2884749fa1c8826c9a587ba2974a4e64baed0535bb7b5e0ac03f81d"></a>NRF24L01_PIPE2&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac26cef13ff2884749fa1c8826c9a587bae96b441bb9dec288e1c4d48e4d073158"></a>NRF24L01_PIPE3&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac26cef13ff2884749fa1c8826c9a587ba82887ccca2045f6ee03ea0ca6e2e1748"></a>NRF24L01_PIPE4&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac26cef13ff2884749fa1c8826c9a587ba65805e1f8ef3a998c7fc40ed3f9e23c7"></a>NRF24L01_PIPE5&#160;</td><td class="fielddoc"></td></tr>
-</table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00201">201</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00204">204</a></p>
 
 </div>
 </div>
@@ -559,79 +533,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00144">144</a></p>
-
-</div>
-</div>
-<a id="aaabb5839b6864c8029838b6c1d44226b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaabb5839b6864c8029838b6c1d44226b">&#9670;&nbsp;</a></span>nrf24l01_retr_count</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226b">nrf24l01_retr_count</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Количество повторных попыток отправки пакета. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226bae16c8bc3856169c2958f76db5b1286d3"></a>NRF24L01_RETR_COUNT_0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226ba45e251f2e039c8a6701ae08e37496c28"></a>NRF24L01_RETR_COUNT_1&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226ba85c45d61f8e32a44cde093cb89417cd0"></a>NRF24L01_RETR_COUNT_2&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226ba614a1337fb197e0ac78e58a6374adedd"></a>NRF24L01_RETR_COUNT_3&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226ba4a5d31914919e88c476d04b9f111b0c1"></a>NRF24L01_RETR_COUNT_4&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226bafde9033969ecd794a65fd38089e52f8f"></a>NRF24L01_RETR_COUNT_5&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226bae37209ae9d6c5b07de83d5efe9ddcb56"></a>NRF24L01_RETR_COUNT_6&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226ba9735e9d2092cbdd15fa929cd818080e3"></a>NRF24L01_RETR_COUNT_7&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226baaa24c09f0b1aedf202d8f0dd96aa1744"></a>NRF24L01_RETR_COUNT_8&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226baea131128e848791eb9a464cfb90180da"></a>NRF24L01_RETR_COUNT_9&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226baf5eb08a4694a0c9d95edcd2c66228f8c"></a>NRF24L01_RETR_COUNT_10&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226ba0dde67211606a3a24576330bd36576ed"></a>NRF24L01_RETR_COUNT_11&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226bad275a6280332fd90a9af14c26157dd11"></a>NRF24L01_RETR_COUNT_12&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226ba86d167793afa73b10717828c51063ea1"></a>NRF24L01_RETR_COUNT_13&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226bacccb22268f8a5acd752b33686b348baf"></a>NRF24L01_RETR_COUNT_14&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaabb5839b6864c8029838b6c1d44226bad4eeabc540564f8d7873c79527aae625"></a>NRF24L01_RETR_COUNT_15&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00176">176</a></p>
-
-</div>
-</div>
-<a id="a0f2a87863847e7b41e80ca8c33bdf588"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f2a87863847e7b41e80ca8c33bdf588">&#9670;&nbsp;</a></span>nrf24l01_retr_delay</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="nrf24l01_8h.html#a0f2a87863847e7b41e80ca8c33bdf588">nrf24l01_retr_delay</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Задержка между повторными отправками пакета. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588af72f11cb5969696e6c7a20e80e836fd8"></a>NRF24L01_RETR_DELAY_250US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a2f75f592739a5dde0c48f0af0449ee55"></a>NRF24L01_RETR_DELAY_500US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a919dbaa6bcba28416c4c7dac50144e10"></a>NRF24L01_RETR_DELAY_750US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a360df626cca9bb01ea159d5bf31548a3"></a>NRF24L01_RETR_DELAY_1000US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a2e15cfe617681d4784ffd78e0f888399"></a>NRF24L01_RETR_DELAY_1250US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a4c3d8808190cf847fc8e18420ac63dc6"></a>NRF24L01_RETR_DELAY_1500US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a4c2c9408d2efaef9092fe5f03575bb03"></a>NRF24L01_RETR_DELAY_1750US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a41443c881ae3beb96362a5d845c0354b"></a>NRF24L01_RETR_DELAY_2000US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588af0c3859fe91f008a40e1e8651b6e1861"></a>NRF24L01_RETR_DELAY_2250US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588aaa9ff1bd2e802e578d757daf00f206fb"></a>NRF24L01_RETR_DELAY_2500US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a66fdc6fa9f5379691b84d43f13a505ff"></a>NRF24L01_RETR_DELAY_2750US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588afa05cd795659b52b70ca9cd3c3a02aa7"></a>NRF24L01_RETR_DELAY_3000US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a256391d0599ac2b4755028dc6bbe77d9"></a>NRF24L01_RETR_DELAY_3250US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a6536e020c82a0f9e2b48b22569b20267"></a>NRF24L01_RETR_DELAY_3500US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a8622b73011a28dda3e1a80a1d1b06f8c"></a>NRF24L01_RETR_DELAY_3750US&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a0f2a87863847e7b41e80ca8c33bdf588a80edec89e844647210e0e0dab78952ae"></a>NRF24L01_RETR_DELAY_4000US&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00154">154</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00147">147</a></p>
 
 </div>
 </div>
@@ -657,7 +559,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00227">227</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00230">230</a></p>
 
 </div>
 </div>
@@ -683,7 +585,7 @@ $(document).ready(function(){initNavTree('nrf24l01_8h.html','');});
 </td></tr>
 </table>
 
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00213">213</a></p>
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00216">216</a></p>
 
 </div>
 </div>

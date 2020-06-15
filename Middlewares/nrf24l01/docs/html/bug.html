@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NRF24L01 and NRF24L01+ simple driver: Ошибки</title>
+<title>NRF24L01 and NRF24L01+ transceiver library: Ошибки</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NRF24L01 and NRF24L01+ simple driver
-   &#160;<span id="projectnumber">0.1.0</span>
+   <div id="projectname">NRF24L01 and NRF24L01+ transceiver library
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
+   <div id="projectbrief">simple and cross-platform</div>
   </td>
  </tr>
  </tbody>
@@ -86,7 +87,7 @@ $(document).ready(function(){initNavTree('bug.html','');});
 <div class="contents">
 <div class="textblock"><dl class="reflist">
 <dt><a class="anchor" id="_bug000001"></a>Глобальный <a class="el" href="nrf24l01__port_8h.html#affa9d106355e6c452bd9a7a5103298b0">_spi_transfer_byte</a>  (uint8_t byte)</dt>
-<dd>Если функция обмена байтом по SPI работает с volatile-данными (регистрами МК) и находится в отдельной единице трансляции, то для arm-none-eabi-gcc v6.3.1 имеет место баг, вызванный оптимизацией компилятора. Баг проявляется на уровнях оптимизации, отличных от -O0 и -Og. Симптомы: некорректные значения при передаче/приёме данных по SPI. </dd>
+<dd>Если функция, которой данная функция/макрос делегирует обмен байтом по SPI, находится в отдельной единице трансляции, то для arm-none-eabi-gcc v6.3.1 имеет место баг, вызванный оптимизацией компилятора. Баг проявляется на уровнях оптимизации, отличных от -O0 и -Og. Симптомы: некорректные значения при передаче/приёме данных по SPI. </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

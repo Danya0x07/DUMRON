@@ -110,6 +110,8 @@ void Radio_Init(void)
 
     uint8_t irq;
 
+    debug_logi(sizeof((const char []){"ggggg"}));
+
     // начинаем слушать эфир
     nrf24l01_rx_start_listening();
 

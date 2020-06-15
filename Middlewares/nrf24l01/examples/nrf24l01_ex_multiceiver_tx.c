@@ -1,5 +1,7 @@
 /*
- * Multiceiver.
+ * В данном примере передатчик симулирует 3 передатчика, шлющих пакеты на 3
+ * открытых соединения приёмника соответственно. Это осуществляется с помощью
+ * последовательной смены конфигураций передатчика.
  */
 
 #include <avr/io.h>
@@ -41,8 +43,9 @@ int main(void)
     uint8_t address1[4] = {0x33, 0x33, 0x33, 0x33};
     uint8_t address2[4] = {0x99, 0x33, 0x33, 0x33};
 
+    // 3 конфигурации передатчика, каждая настроена на одно соединение приёмника
+
     struct nrf24l01_tx_config config0 = {
-        // пусть будет такой 3х-байтовый адрес
         .address = address0,
         .addr_size = NRF24L01_ADDRS_4BYTE,
 
@@ -54,13 +57,15 @@ int main(void)
         .retr_count = NRF24L01_RETR_COUNT_4,
         .rf_channel = 42,  // такой же как у приёмника
 
-        // выбираем режим для приёма автоподтверждений с полезной нагрузкой
+        // выбираем режим для приёма автоподтверждений
         .mode = NRF24L01_TX_MODE_ACK,
 
         // в этом примере не потребуется отслеживать логический уровень пина IRQ
         .en_irq = 0
     };
 
+    // некоторые настройки вполне могут отличаться, в данном случае, для 1-го
+    // соединения приёмник настроен не высылать автоподтверждения
     struct nrf24l01_tx_config config1 = config0;
     config1.address = address1;
     config1.mode = NRF24L01_TX_MODE_NOACK;
@@ -68,6 +73,11 @@ int main(void)
     struct nrf24l01_tx_config config2 = config0;
     config2.address = address2;
 
+    /*
+     * Механизм смены конфигураций: каждому "виртуальному" передатчику
+     * соответствует своя конфигурация, полезная нагрузка и её размер.
+     * Текущая конфигурация определяется индексом.
+     */
     struct nrf24l01_tx_config *configs[3] = {&config0, &config1, &config2};
     void *payloads[3] = {&pld0, &pld1, &pld2};
     uint8_t pld_sizes[3] = {sizeof(pld0), sizeof(pld1), sizeof(pld2)};
@@ -88,21 +98,23 @@ int main(void)
         // отправляем
         nrf24l01_tx_transmit();
 
-        // получаем маску произошедших прерываний
+        // если кончились повторные попытки отправки
         if (nrf24l01_get_interrupts() & NRF24L01_IRQ_MAX_RT) {
             uart_logs("failed to send packet for pipe ");
             uart_logi(index);
             uart_logs("\n");
 
+            // если заполнили очередь отправки, чистим
             if (nrf24l01_full_tx_fifo())
                 nrf24l01_flush_tx_fifo();
 
             nrf24l01_clear_interrupts(NRF24L01_IRQ_MAX_RT);
         }
 
-        if (++index > 2)
+        if (++index > 2)  // индекс работает как циклический счётчик
             index = 0;
 
+        // изменяем отправляемые данные для наглядности
         pld0.data0++;
 
         pld1.data0++;

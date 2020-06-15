@@ -4,6 +4,5 @@ var structnrf24l01__pipe__config =
     [ "array", "structnrf24l01__pipe__config.html#a84be482c05bff2e29589caf9a64e9d15", null ],
     [ "lsb", "structnrf24l01__pipe__config.html#ac04c35971c92b7a0ddc152c107c02780", null ],
     [ "mode", "structnrf24l01__pipe__config.html#a6e8dea0111da63a0919db2ba804453ba", null ],
-    [ "number", "structnrf24l01__pipe__config.html#a93fdeffedf85949ff63213dd89b65b8c", null ],
     [ "pld_size", "structnrf24l01__pipe__config.html#a757bfea5579a440bfd902148910ff795", null ]
 ];

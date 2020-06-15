@@ -1,6 +1,6 @@
 /*
- * Пример кода работы с приёмником с использованием нескольких входящих
- * соединений. В этом примере используются соединения 0, 1 и 2.
+ * Пример работы с приёмником с использованием нескольких входящих соединений.
+ * В этом примере используются соединения 0, 1 и 2.
  */
 
 #include <avr/io.h>
@@ -108,29 +108,24 @@ int main(void)
          uart_logs("nrf24l01 init error\n");
     }
 
-    // настраиваем входящее соединение
+    // настраиваем входящие соединения
     nrf24l01_rx_setup_pipe(NRF24L01_PIPE0, &pipe0_conf);
     nrf24l01_rx_setup_pipe(NRF24L01_PIPE1, &pipe1_conf);
     nrf24l01_rx_setup_pipe(NRF24L01_PIPE2, &pipe2_conf);
-
-    uint8_t irq;
 
     // начинаем слушать эфир
     nrf24l01_rx_start_listening();
 
     for (;;) {
-
         // ждём прерывание (спад напряжения на пине IRQ трансивера)
         // правильнее было бы использовать внешнее прерывание МК
         while (transceiver_irq_pin_is_high())
             ;
 
-        // получаем маску произошедших прерываний
-        irq = nrf24l01_get_interrupts();
-
-        if (irq & NRF24L01_IRQ_RX_DR) {  // если прилетели данные с приёмника
+        // если прилетели данные с передатчика
+        if (nrf24l01_get_interrupts() & NRF24L01_IRQ_RX_DR) {
             int pipe_no;
-            void *pld = &pld2;  // инициализируем чем-нибудь
+            void *pld = &pld2;  // инициализируем чем-нибудь на всякий случай
             uint8_t size = sizeof(struct p2_payload);
 
             do {
@@ -172,14 +167,14 @@ int main(void)
                     break;
                 }
 
+                // считываем полезную нагрузку и сбрасываем прерывание
                 nrf24l01_read_pld(pld, size);
                 nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
 
                 // печатаем принятые данные
-                uart_logs("payload recieved: ");
                 print_payload_content(pld, size);
                 uart_logs("\n\n");
-            } while (nrf24l01_data_in_rx_fifo());
+            } while (nrf24l01_data_in_rx_fifo());  // пока есть данные в очереди
         }
     }
 }

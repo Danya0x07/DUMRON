@@ -1,6 +1,7 @@
 /*
- * Пример кода работы с приёмником с использованием двухстороннего обмена.
- * Данные с приёмника отправляются передатчику вместе с пакетами подтверждения.
+ * Этот пример работы с приёмником показывает, как можно организовать
+ * двухсторонний обмен на NRF24L01/+. Данные с приёмника отправляются
+ * передатчику вместе с пакетами автоподтверждения.
  */
 
 #include <avr/io.h>
@@ -17,12 +18,12 @@ extern void setup_gpio(void);
 extern void setup_spi(void);
 extern uint8_t transceiver_irq_pin_is_high(void);
 
-struct tx_payload {
+struct tx_payload {  // структура полезной нагрузки, принимаемой от передатчика
     uint8_t data;
     uint8_t other_data;
 } in_buffer;
 
-struct ack_payload {
+struct ack_payload {  // структура полезной нагрузки, отправляемой передатчику
     uint8_t data;
     uint8_t other_data;
 } out_buffer;
@@ -44,7 +45,7 @@ int main(void)
 
     // сочиняем конфигурацию приёмника
     struct nrf24l01_rx_config config = {
-        // пусть будет 3х-байтовый адрес
+        // пусть будет 3х-байтовый адрес, (как и у передатчика)
         .addr_size = NRF24L01_ADDRS_3BYTE,
 
         // непринципиальные для данного примера настройки
@@ -85,6 +86,10 @@ int main(void)
          uart_logs("nrf24l01 init error\n");
     }
 
+#if (NRF24L01_PLUS == 0)  // только для модификации без +
+    nrf24l01_activate();
+#endif
+
     // настраиваем входящее соединение
     nrf24l01_rx_setup_pipe(NRF24L01_PIPE0, &pipe0_conf);
 
@@ -112,30 +117,29 @@ int main(void)
         while (transceiver_irq_pin_is_high())
             ;
 
-        // получаем маску произошедших прерываний
-        irq = nrf24l01_get_interrupts();
-
-        if (irq & NRF24L01_IRQ_RX_DR) {  // если прилетели данные с приёмника
+        // если прилетели данные с передатчика
+        if (nrf24l01_get_interrupts() & NRF24L01_IRQ_RX_DR) {
             do {
                 /*
                  * Поскольку используется динамический размер полезной нагрузки,
                  * его нужно считываь и проверять на валидность.
                  */
                 if (nrf24l01_read_pld_size() != sizeof(struct tx_payload)) {
-                    // чистим очередь приёма
+                    // чистим входную очередь
                     nrf24l01_flush_rx_fifo();
                     nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
                     uart_logs("incorrect ack pld size\n");
                     break;
                 }
 
+                // считываем полезную нагрузку и сбрасываем прерывание
                 nrf24l01_read_pld(&in_buffer, sizeof(struct tx_payload));
                 nrf24l01_clear_interrupts(NRF24L01_IRQ_RX_DR);
 
                 // печатаем принятые данные
                 uart_logs("payload recieved: ");
                 print_tx_pld(&in_buffer);
-            } while (nrf24l01_data_in_rx_fifo());
+            } while (nrf24l01_data_in_rx_fifo());  // пока есть данные в очереди
         }
 
         // изменяем отправляемые данные для наглядности

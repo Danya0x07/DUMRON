@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NRF24L01 and NRF24L01+ simple driver: NRF24L01_IRQ</title>
+<title>NRF24L01 and NRF24L01+ transceiver library: NRF24L01_IRQ</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NRF24L01 and NRF24L01+ simple driver
-   &#160;<span id="projectnumber">0.1.0</span>
+   <div id="projectname">NRF24L01 and NRF24L01+ transceiver library
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
+   <div id="projectbrief">simple and cross-platform</div>
   </td>
  </tr>
  </tbody>
@@ -89,13 +90,17 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Макросы</h2></td></tr>
-<tr class="memitem:ga23721041d19743bc08da0b2d837e3727"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga23721041d19743bc08da0b2d837e3727">NRF24L01_IRQ_RX_DR</a>&#160;&#160;&#160;(1 &lt;&lt; 6)</td></tr>
+<tr class="memitem:ga23721041d19743bc08da0b2d837e3727"><td class="memItemLeft" align="right" valign="top"><a id="ga23721041d19743bc08da0b2d837e3727"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_RX_DR</b>&#160;&#160;&#160;(1 &lt;&lt; 6)</td></tr>
 <tr class="separator:ga23721041d19743bc08da0b2d837e3727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16ac3f39447a5579f26a42490bd2ab55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga16ac3f39447a5579f26a42490bd2ab55">NRF24L01_IRQ_TX_DS</a>&#160;&#160;&#160;(1 &lt;&lt; 5)</td></tr>
+<tr class="memitem:ga16ac3f39447a5579f26a42490bd2ab55"><td class="memItemLeft" align="right" valign="top"><a id="ga16ac3f39447a5579f26a42490bd2ab55"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_TX_DS</b>&#160;&#160;&#160;(1 &lt;&lt; 5)</td></tr>
 <tr class="separator:ga16ac3f39447a5579f26a42490bd2ab55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga4643d84db44a4a9f6275aa06a51853e3">NRF24L01_IRQ_MAX_RT</a>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
+<tr class="memitem:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memItemLeft" align="right" valign="top"><a id="ga4643d84db44a4a9f6275aa06a51853e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_MAX_RT</b>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
 <tr class="separator:ga4643d84db44a4a9f6275aa06a51853e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___i_r_q.html#ga93c682c1dddd54e7376c0d294dc93ba1">NRF24L01_IRQ_ALL</a>&#160;&#160;&#160;0x70</td></tr>
+<tr class="memitem:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memItemLeft" align="right" valign="top"><a id="ga93c682c1dddd54e7376c0d294dc93ba1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF24L01_IRQ_ALL</b>&#160;&#160;&#160;0x70</td></tr>
 <tr class="separator:ga93c682c1dddd54e7376c0d294dc93ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
@@ -103,71 +108,6 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___i_r_q.html','');
 <p>У данных радиомодулей есть 3 прерывания: по приёму пакета(RX_DR), по успешной отправке пакета(TX_DS) и по истечению максимального количества повторных попыток отправки(MAX_RT). С помощью битовой маски можно выбирать, на какие их них реагировать, а на какие нет. Реакция заключается в спаде напряжения на пине IRQ трансивера.</p>
 <dl class="section note"><dt>Заметки</dt><dd>Для приёмника обычно характерно только прерывание RX_DR. Для передатчика, в случае с трансивером NRF24L01 - TX_DS и MAX_RT, а в случае с NRF24L01+ - ещё и RX_DR (если используется возможность прикрепления полезной нагрузки к пакетам автоподтверждения).</dd></dl>
 <dl class="section attention"><dt>Внимание</dt><dd>В случае происхождения прерывания MAX_RT, дальнейшая отправка данных блокируется до тех пор, пока флаг прерывание не будет сброшен вызовом <a class="el" href="group___n_r_f24_l01___c_o_m_m_o_n___f_u_n_c_t_i_o_n_s.html#gafb9e361b525599ebdb8e34352c13fd7d" title="Сбрасывает флаги произошедших событий трансивера. ">nrf24l01_clear_interrupts()</a>. </dd></dl>
-<h2 class="groupheader">Макросы</h2>
-<a id="ga93c682c1dddd54e7376c0d294dc93ba1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga93c682c1dddd54e7376c0d294dc93ba1">&#9670;&nbsp;</a></span>NRF24L01_IRQ_ALL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF24L01_IRQ_ALL&#160;&#160;&#160;0x70</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00090">90</a></p>
-
-</div>
-</div>
-<a id="ga4643d84db44a4a9f6275aa06a51853e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4643d84db44a4a9f6275aa06a51853e3">&#9670;&nbsp;</a></span>NRF24L01_IRQ_MAX_RT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF24L01_IRQ_MAX_RT&#160;&#160;&#160;(1 &lt;&lt; 4)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00088">88</a></p>
-
-</div>
-</div>
-<a id="ga23721041d19743bc08da0b2d837e3727"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga23721041d19743bc08da0b2d837e3727">&#9670;&nbsp;</a></span>NRF24L01_IRQ_RX_DR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF24L01_IRQ_RX_DR&#160;&#160;&#160;(1 &lt;&lt; 6)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00086">86</a></p>
-
-</div>
-</div>
-<a id="ga16ac3f39447a5579f26a42490bd2ab55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga16ac3f39447a5579f26a42490bd2ab55">&#9670;&nbsp;</a></span>NRF24L01_IRQ_TX_DS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF24L01_IRQ_TX_DS&#160;&#160;&#160;(1 &lt;&lt; 5)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8h_source.html">nrf24l01.h</a> строка <a class="el" href="nrf24l01_8h_source.html#l00087">87</a></p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

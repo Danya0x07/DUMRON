@@ -1,14 +1,19 @@
 var searchData=
 [
-  ['cmd_5fflush_5frx',['CMD_FLUSH_RX',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9ad0c1ff7f3359c941d11e1ae1e5ff0bcc',1,'nrf24l01.c']]],
-  ['cmd_5fflush_5ftx',['CMD_FLUSH_TX',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a1c6ccdd17145129eda3aa3237fd1300d',1,'nrf24l01.c']]],
-  ['cmd_5fnop',['CMD_NOP',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9ade98a6a76f021dcb73250be3bb4027c6',1,'nrf24l01.c']]],
-  ['cmd_5fr_5fregister',['CMD_R_REGISTER',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a538dacd7f406f94a519cc3bb2546cd9f',1,'nrf24l01.c']]],
-  ['cmd_5fr_5frx_5fpayload',['CMD_R_RX_PAYLOAD',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9aaaee7ff6b841445e86bcee9361f2f580',1,'nrf24l01.c']]],
-  ['cmd_5fr_5frx_5fpl_5fwid',['CMD_R_RX_PL_WID',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a1971c8221fc4eede24df18066aabe4f8',1,'nrf24l01.c']]],
-  ['cmd_5freuse_5ftx_5fpl',['CMD_REUSE_TX_PL',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a9f68061f3111ab1197553c2ee83bb8d9',1,'nrf24l01.c']]],
-  ['cmd_5fw_5fack_5fpayload',['CMD_W_ACK_PAYLOAD',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a5bb88da5e68f63cac73627b3dbb609fb',1,'nrf24l01.c']]],
-  ['cmd_5fw_5fregister',['CMD_W_REGISTER',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a6205477956fc71938a27cfef27ca9ff0',1,'nrf24l01.c']]],
-  ['cmd_5fw_5ftx_5fpayload',['CMD_W_TX_PAYLOAD',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a5724d7a1e1215a57c1b8ba91d7a1ed62',1,'nrf24l01.c']]],
-  ['cmd_5fw_5ftx_5fpayload_5fnoack',['CMD_W_TX_PAYLOAD_NOACK',['../nrf24l01_8c.html#acb1c47c2be0d1affeb70bab480fb6da9a1a4066087084e0831602fd90f12fe94a',1,'nrf24l01.c']]]
+  ['nrf24l01_5faddrs_5f3byte',['NRF24L01_ADDRS_3BYTE',['../nrf24l01_8h.html#a1aad9000d24a14218baa21aad4c00d32a05b3a19183081f979822d1c8a4687c3a',1,'nrf24l01.h']]],
+  ['nrf24l01_5faddrs_5f4byte',['NRF24L01_ADDRS_4BYTE',['../nrf24l01_8h.html#a1aad9000d24a14218baa21aad4c00d32a514dfc9d809d84caa00140015d63ee32',1,'nrf24l01.h']]],
+  ['nrf24l01_5faddrs_5f5byte',['NRF24L01_ADDRS_5BYTE',['../nrf24l01_8h.html#a1aad9000d24a14218baa21aad4c00d32a08e6fa6678a36b85afd9ea831c1d12b2',1,'nrf24l01.h']]],
+  ['nrf24l01_5fpipe_5fmode_5fack',['NRF24L01_PIPE_MODE_ACK',['../nrf24l01_8h.html#a79b46c7a654e5d5485fd6e427d5a6d4ea3b95703088ee5e7d180f7ede02e7b539',1,'nrf24l01.h']]],
+  ['nrf24l01_5fpipe_5fmode_5fack_5fdpl',['NRF24L01_PIPE_MODE_ACK_DPL',['../nrf24l01_8h.html#a79b46c7a654e5d5485fd6e427d5a6d4ea1aa4735e9bd8c6acbb413eeaed4c8e98',1,'nrf24l01.h']]],
+  ['nrf24l01_5fpipe_5fmode_5fnoack',['NRF24L01_PIPE_MODE_NOACK',['../nrf24l01_8h.html#a79b46c7a654e5d5485fd6e427d5a6d4ea8a51e1b0f5f39149c7155a86fb5acf55',1,'nrf24l01.h']]],
+  ['nrf24l01_5fpower_5f0dbm',['NRF24L01_POWER_0DBM',['../nrf24l01_8h.html#ae361872da273e1eeac33d834503084eaa0c5cb5fde20527bb63ebb0f523da46ef',1,'nrf24l01.h']]],
+  ['nrf24l01_5fpower_5fn12dbm',['NRF24L01_POWER_N12DBM',['../nrf24l01_8h.html#ae361872da273e1eeac33d834503084eaaf9dd51dbdee998bf8cff30e792089fcd',1,'nrf24l01.h']]],
+  ['nrf24l01_5fpower_5fn18dbm',['NRF24L01_POWER_N18DBM',['../nrf24l01_8h.html#ae361872da273e1eeac33d834503084eaa652b703b8c63bb4c7f8c161c2b374b1a',1,'nrf24l01.h']]],
+  ['nrf24l01_5fpower_5fn6dbm',['NRF24L01_POWER_N6DBM',['../nrf24l01_8h.html#ae361872da273e1eeac33d834503084eaa74cb70dde9beee74e3e8699a88f63c5a',1,'nrf24l01.h']]],
+  ['nrf24l01_5frx_5fmode_5fdpl',['NRF24L01_RX_MODE_DPL',['../nrf24l01_8h.html#aad0e6e922e445d15555c6d7a57ea561aa1c830fd6418ed7178115a21f32801de0',1,'nrf24l01.h']]],
+  ['nrf24l01_5frx_5fmode_5fdpl_5fack_5fpayload',['NRF24L01_RX_MODE_DPL_ACK_PAYLOAD',['../nrf24l01_8h.html#aad0e6e922e445d15555c6d7a57ea561aa7176318352db84acf5ccd473136f1d80',1,'nrf24l01.h']]],
+  ['nrf24l01_5frx_5fmode_5fnodpl',['NRF24L01_RX_MODE_NODPL',['../nrf24l01_8h.html#aad0e6e922e445d15555c6d7a57ea561aa8eaedf439f8837ba9fdd44f6306d219e',1,'nrf24l01.h']]],
+  ['nrf24l01_5ftx_5fmode_5fack',['NRF24L01_TX_MODE_ACK',['../nrf24l01_8h.html#a6fc69ecc8c32333b8b55c1bdd7d95aaaa17bfb84aa7f5b17bc1bcee5bc98a18ab',1,'nrf24l01.h']]],
+  ['nrf24l01_5ftx_5fmode_5fack_5fpayload',['NRF24L01_TX_MODE_ACK_PAYLOAD',['../nrf24l01_8h.html#a6fc69ecc8c32333b8b55c1bdd7d95aaaaa6efb3a03d20656bcfe270c8630ed910',1,'nrf24l01.h']]],
+  ['nrf24l01_5ftx_5fmode_5fnoack',['NRF24L01_TX_MODE_NOACK',['../nrf24l01_8h.html#a6fc69ecc8c32333b8b55c1bdd7d95aaaa3ebe6a37dfb57a2a1b842168ed63a351',1,'nrf24l01.h']]]
 ];

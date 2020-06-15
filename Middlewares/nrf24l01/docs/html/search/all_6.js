@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lsb',['lsb',['../structnrf24l01__pipe__config.html#ac04c35971c92b7a0ddc152c107c02780',1,'nrf24l01_pipe_config']]]
+  ['rf_5fchannel',['rf_channel',['../structnrf24l01__tx__config.html#af3d9a47c23ac9c920c700f512e208602',1,'nrf24l01_tx_config::rf_channel()'],['../structnrf24l01__rx__config.html#af3d9a47c23ac9c920c700f512e208602',1,'nrf24l01_rx_config::rf_channel()']]]
 ];

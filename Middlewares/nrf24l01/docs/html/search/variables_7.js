@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pld_5fsize',['pld_size',['../structnrf24l01__pipe__config.html#a757bfea5579a440bfd902148910ff795',1,'nrf24l01_pipe_config']]],
-  ['power',['power',['../structnrf24l01__tx__config.html#a020c7498b7a58e17d23dd5ed776cf887',1,'nrf24l01_tx_config']]]
+  ['out_5fbuffer',['out_buffer',['../nrf24l01__ex__io__rx_8c.html#a1a0ebb0d7afe5c1e544c7d299a7187e8',1,'out_buffer():&#160;nrf24l01_ex_io_rx.c'],['../nrf24l01__ex__io__tx_8c.html#a214c86b5e16b54a276b05ff126ebd5a9',1,'out_buffer():&#160;nrf24l01_ex_io_tx.c']]]
 ];

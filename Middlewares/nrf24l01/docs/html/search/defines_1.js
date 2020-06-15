@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['config_5fen_5fcrc',['CONFIG_EN_CRC',['../nrf24l01_8c.html#a461e8cd302d1029e969818f6fcea3e78',1,'nrf24l01.c']]],
-  ['config_5fprim_5frx',['CONFIG_PRIM_RX',['../nrf24l01_8c.html#a38db0d33a9bc52cc2dea3d4349b25f36',1,'nrf24l01.c']]],
-  ['config_5fpwr_5fup',['CONFIG_PWR_UP',['../nrf24l01_8c.html#a329d8ccec5fdb21438da718614f7d2a2',1,'nrf24l01.c']]]
+  ['nrf24l01_5fchannels',['NRF24L01_CHANNELS',['../nrf24l01_8h.html#aab7d9eebe2ca5fafa967a084a051f3e7',1,'nrf24l01.h']]],
+  ['nrf24l01_5fdelay_5fus_5favailable',['NRF24L01_DELAY_US_AVAILABLE',['../nrf24l01__conf_8h.html#ad1c1379ba79ab6d5e47741e0ef7b599e',1,'nrf24l01_conf.h']]],
+  ['nrf24l01_5fplus',['NRF24L01_PLUS',['../nrf24l01__conf_8h.html#a416d6b21ffa837c378760a52367c75f4',1,'nrf24l01_conf.h']]],
+  ['nrf24l01_5fpwr_5fon_5fdelay_5fms',['NRF24L01_PWR_ON_DELAY_MS',['../nrf24l01_8h.html#a3e35039e5d7087bb8921f4f43a07ac84',1,'nrf24l01.h']]]
 ];

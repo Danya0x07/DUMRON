@@ -1,7 +1,8 @@
 var NAVTREE =
 [
-  [ "NRF24L01 and NRF24L01+ simple driver", "index.html", [
-    [ "NRF24L01 and NRF24L01+ simple library.", "index.html", null ],
+  [ "NRF24L01 and NRF24L01+ transceiver library", "index.html", [
+    [ "Simple cross-platform NRF24L01 and NRF24L01+ library.", "index.html", null ],
+    [ "Примеры работы с трансиверами NRF24L01/+.", "md_examples__r_e_a_d_m_e.html", null ],
     [ "Ошибки", "bug.html", null ],
     [ "Группы", "modules.html", "modules" ],
     [ "Структуры данных", "annotated.html", [
@@ -15,7 +16,7 @@ var NAVTREE =
     [ "Файлы", null, [
       [ "Файлы", "files.html", "files" ],
       [ "Список членов всех файлов", "globals.html", [
-        [ "Указатель", "globals.html", "globals_dup" ],
+        [ "Указатель", "globals.html", null ],
         [ "Функции", "globals_func.html", null ],
         [ "Перечисления", "globals_enum.html", null ],
         [ "Элементы перечислений", "globals_eval.html", null ],
@@ -27,8 +28,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"nrf24l01_8h.html#aaabb5839b6864c8029838b6c1d44226bad4eeabc540564f8d7873c79527aae625"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

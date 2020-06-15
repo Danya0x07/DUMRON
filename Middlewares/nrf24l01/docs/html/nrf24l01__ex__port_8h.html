@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NRF24L01 and NRF24L01+ transceiver library: Файл examples/nrf24l01_ex_port.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NRF24L01 and NRF24L01+ transceiver library
+   &#160;<span id="projectnumber">1.0.0</span>
+   </div>
+   <div id="projectbrief">simple and cross-platform</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('nrf24l01__ex__port_8h.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Макросы</a> &#124;
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle">
+<div class="title">Файл nrf24l01_ex_port.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;avr/io.h&gt;</code><br />
+<code>#include &lt;util/delay.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Граф включаемых заголовочных файлов для nrf24l01_ex_port.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="nrf24l01__ex__port_8h__incl.png" border="0" usemap="#examples_2nrf24l01__ex__port_8h" alt=""/></div>
+<map name="examples_2nrf24l01__ex__port_8h" id="examples_2nrf24l01__ex__port_8h">
+</map>
+</div>
+</div>
+<p><a href="nrf24l01__ex__port_8h_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Макросы</h2></td></tr>
+<tr class="memitem:a676f26b7f228d7f0edfd9004ddb4a0ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#a676f26b7f228d7f0edfd9004ddb4a0ad">_csn_high</a>()&#160;&#160;&#160;(PORTB |= _BV(1))</td></tr>
+<tr class="separator:a676f26b7f228d7f0edfd9004ddb4a0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a087c5c130ada8e897ca36fb4130a742e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#a087c5c130ada8e897ca36fb4130a742e">_csn_low</a>()&#160;&#160;&#160;(PORTB &amp;= ~_BV(1))</td></tr>
+<tr class="separator:a087c5c130ada8e897ca36fb4130a742e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee27de7dc34316aa00d80e084f614cc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#aee27de7dc34316aa00d80e084f614cc0">_ce_high</a>()&#160;&#160;&#160;(PORTD |= _BV(7))</td></tr>
+<tr class="separator:aee27de7dc34316aa00d80e084f614cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac607a5ff252402d198a50aa90c1908e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#ac607a5ff252402d198a50aa90c1908e1">_ce_low</a>()&#160;&#160;&#160;(PORTD &amp;= ~_BV(7))</td></tr>
+<tr class="separator:ac607a5ff252402d198a50aa90c1908e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5647ead118e2be59c7c23959d2f3c046"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#a5647ead118e2be59c7c23959d2f3c046">_delay_ms</a>(ms)&#160;&#160;&#160;_delay_ms((ms))</td></tr>
+<tr class="separator:a5647ead118e2be59c7c23959d2f3c046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#ab3716dd1e11c06aba7ccf7c2dccf68f5">_delay_us</a>(us)&#160;&#160;&#160;_delay_us((us))</td></tr>
+<tr class="separator:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:affa9d106355e6c452bd9a7a5103298b0"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#affa9d106355e6c452bd9a7a5103298b0">_spi_transfer_byte</a> (uint8_t byte)</td></tr>
+<tr class="separator:affa9d106355e6c452bd9a7a5103298b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca7e09d62595e98f037be93be4147d11"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__ex__port_8h.html#aca7e09d62595e98f037be93be4147d11">_spi_transfer_bytes</a> (uint8_t *in, const uint8_t *out, size_t len)</td></tr>
+<tr class="separator:aca7e09d62595e98f037be93be4147d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Макросы</h2>
+<a id="aee27de7dc34316aa00d80e084f614cc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee27de7dc34316aa00d80e084f614cc0">&#9670;&nbsp;</a></span>_ce_high</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _ce_high</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(PORTD |= _BV(7))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00014">14</a></p>
+
+</div>
+</div>
+<a id="ac607a5ff252402d198a50aa90c1908e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac607a5ff252402d198a50aa90c1908e1">&#9670;&nbsp;</a></span>_ce_low</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _ce_low</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(PORTD &amp;= ~_BV(7))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00015">15</a></p>
+
+</div>
+</div>
+<a id="a676f26b7f228d7f0edfd9004ddb4a0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a676f26b7f228d7f0edfd9004ddb4a0ad">&#9670;&nbsp;</a></span>_csn_high</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _csn_high</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(PORTB |= _BV(1))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00012">12</a></p>
+
+</div>
+</div>
+<a id="a087c5c130ada8e897ca36fb4130a742e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a087c5c130ada8e897ca36fb4130a742e">&#9670;&nbsp;</a></span>_csn_low</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _csn_low</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(PORTB &amp;= ~_BV(1))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00013">13</a></p>
+
+</div>
+</div>
+<a id="a5647ead118e2be59c7c23959d2f3c046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5647ead118e2be59c7c23959d2f3c046">&#9670;&nbsp;</a></span>_delay_ms</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _delay_ms</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ms</td><td>)</td>
+          <td>&#160;&#160;&#160;_delay_ms((ms))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00039">39</a></p>
+
+</div>
+</div>
+<a id="ab3716dd1e11c06aba7ccf7c2dccf68f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3716dd1e11c06aba7ccf7c2dccf68f5">&#9670;&nbsp;</a></span>_delay_us</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _delay_us</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">us</td><td>)</td>
+          <td>&#160;&#160;&#160;_delay_us((us))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00040">40</a></p>
+
+</div>
+</div>
+<h2 class="groupheader">Функции</h2>
+<a id="affa9d106355e6c452bd9a7a5103298b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affa9d106355e6c452bd9a7a5103298b0">&#9670;&nbsp;</a></span>_spi_transfer_byte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint8_t _spi_transfer_byte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>byte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00017">17</a></p>
+
+</div>
+</div>
+<a id="aca7e09d62595e98f037be93be4147d11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca7e09d62595e98f037be93be4147d11">&#9670;&nbsp;</a></span>_spi_transfer_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void _spi_transfer_bytes </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="nrf24l01__ex__port_8h_source.html">nrf24l01_ex_port.h</a> строка <a class="el" href="nrf24l01__ex__port_8h_source.html#l00024">24</a></p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d28a4824dc47e487b107a5db32ef43c4.html">examples</a></li><li class="navelem"><a class="el" href="nrf24l01__ex__port_8h.html">nrf24l01_ex_port.h</a></li>
+    <li class="footer">Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>

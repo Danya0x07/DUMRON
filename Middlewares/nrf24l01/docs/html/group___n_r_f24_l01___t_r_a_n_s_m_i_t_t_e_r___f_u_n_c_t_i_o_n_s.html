@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NRF24L01 and NRF24L01+ simple driver: NRF24L01_TRANSMITTER_FUNCTIONS</title>
+<title>NRF24L01 and NRF24L01+ transceiver library: NRF24L01_TRANSMITTER_FUNCTIONS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NRF24L01 and NRF24L01+ simple driver
-   &#160;<span id="projectnumber">0.1.0</span>
+   <div id="projectname">NRF24L01 and NRF24L01+ transceiver library
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
+   <div id="projectbrief">simple and cross-platform</div>
   </td>
  </tr>
  </tbody>
@@ -92,9 +93,9 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <tr class="memitem:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gac33dbf743e5cb704c71f85e54fd46ebc">nrf24l01_tx_configure</a> (struct <a class="el" href="structnrf24l01__tx__config.html">nrf24l01_tx_config</a> *config)</td></tr>
 <tr class="memdesc:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик.  <a href="#gac33dbf743e5cb704c71f85e54fd46ebc">Подробнее...</a><br /></td></tr>
 <tr class="separator:gac33dbf743e5cb704c71f85e54fd46ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef456c93713760d459a5a2e8f54bbb67"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gaef456c93713760d459a5a2e8f54bbb67">nrf24l01_tx_configure_minimal</a> (void)</td></tr>
-<tr class="memdesc:gaef456c93713760d459a5a2e8f54bbb67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик настройками по-умолчанию.  <a href="#gaef456c93713760d459a5a2e8f54bbb67">Подробнее...</a><br /></td></tr>
-<tr class="separator:gaef456c93713760d459a5a2e8f54bbb67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">nrf24l01_tx_configure_default</a> (void)</td></tr>
+<tr class="memdesc:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует трансивер как передатчик настройками по умолчанию.  <a href="#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga5eb2a00a2131344cd6d8ef4c78ee0c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad56100c5019154a702f2f6a5ab2892d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad56100c5019154a702f2f6a5ab2892d8">nrf24l01_tx_write_pld</a> (const void *pld, uint8_t size)</td></tr>
 <tr class="memdesc:gad56100c5019154a702f2f6a5ab2892d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает в очередь отправки полезную нагрузку.  <a href="#gad56100c5019154a702f2f6a5ab2892d8">Подробнее...</a><br /></td></tr>
 <tr class="separator:gad56100c5019154a702f2f6a5ab2892d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,8 +114,9 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 <tr class="memitem:gabadb5a802d0040b242370208ae141e8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gabadb5a802d0040b242370208ae141e8c">nrf24l01_tx_start_cont_transmission</a> (void)</td></tr>
 <tr class="memdesc:gabadb5a802d0040b242370208ae141e8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Включает у передатчика режим постоянной отправки.  <a href="#gabadb5a802d0040b242370208ae141e8c">Подробнее...</a><br /></td></tr>
 <tr class="separator:gabadb5a802d0040b242370208ae141e8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed">nrf24l01_tx_stop_cont_transmission</a> (void)</td></tr>
-<tr class="memdesc:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает режим постоянной отправки, если ранее он был включен.  <a href="#ga6d0159ea0c82f76bf902e9c803b6a3ed">Подробнее...</a><br /></td></tr>
+<tr class="memitem:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memItemLeft" align="right" valign="top"><a id="ga6d0159ea0c82f76bf902e9c803b6a3ed"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed">nrf24l01_tx_stop_cont_transmission</a> (void)</td></tr>
+<tr class="memdesc:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выключает режим постоянной отправки, если ранее он был включен. <br /></td></tr>
 <tr class="separator:ga6d0159ea0c82f76bf902e9c803b6a3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad288c8c54d23f382a941e476ade1c206"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#gad288c8c54d23f382a941e476ade1c206">nrf24l01_tx_get_statistics</a> (uint8_t *lost, uint8_t *retr)</td></tr>
 <tr class="memdesc:gad288c8c54d23f382a941e476ade1c206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Собирает статистику радиообмена.  <a href="#gad288c8c54d23f382a941e476ade1c206">Подробнее...</a><br /></td></tr>
@@ -154,14 +156,14 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
 
 </div>
 </div>
-<a id="gaef456c93713760d459a5a2e8f54bbb67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaef456c93713760d459a5a2e8f54bbb67">&#9670;&nbsp;</a></span>nrf24l01_tx_configure_minimal()</h2>
+<a id="ga5eb2a00a2131344cd6d8ef4c78ee0c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5eb2a00a2131344cd6d8ef4c78ee0c4e">&#9670;&nbsp;</a></span>nrf24l01_tx_configure_default()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nrf24l01_tx_configure_minimal </td>
+          <td class="memname">int nrf24l01_tx_configure_default </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -170,8 +172,8 @@ $(document).ready(function(){initNavTree('group___n_r_f24_l01___t_r_a_n_s_m_i_t_
       </table>
 </div><div class="memdoc">
 
-<p>Инициализирует трансивер как передатчик настройками по-умолчанию. </p>
-<p>Минимальная конфигурация передатчика и приёмника позволяет протестировать их работоспособность. Она подразумевает односторонний обмен данными с подтверждениями и фиксированным размером полезной нагрузки.</p>
+<p>Инициализирует трансивер как передатчик настройками по умолчанию. </p>
+<p>Конфигурация по умолчанию передатчика и приёмника позволяет протестировать их работоспособность. Она подразумевает односторонний обмен данными с подтверждениями и фиксированным размером полезной нагрузки.</p>
 <dl class="section attention"><dt>Внимание</dt><dd>Данная функция будет корректно работать только если настройки трансивера ранее не менялись (со времени подачи на него питания).</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>0, если инициализация прошла успешно, </dd>
 <dd>
@@ -290,28 +292,6 @@ false, если выключено.</dd></dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="group___n_r_f24_l01___t_r_a_n_s_m_i_t_t_e_r___f_u_n_c_t_i_o_n_s.html#ga6d0159ea0c82f76bf902e9c803b6a3ed" title="Выключает режим постоянной отправки, если ранее он был включен. ">nrf24l01_tx_stop_cont_transmission()</a> </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00234">234</a></p>
-
-</div>
-</div>
-<a id="ga6d0159ea0c82f76bf902e9c803b6a3ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6d0159ea0c82f76bf902e9c803b6a3ed">&#9670;&nbsp;</a></span>nrf24l01_tx_stop_cont_transmission()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void nrf24l01_tx_stop_cont_transmission </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Выключает режим постоянной отправки, если ранее он был включен. </p>
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01_8c_source.html">nrf24l01.c</a> строка <a class="el" href="nrf24l01_8c_source.html#l00239">239</a></p>
 
 </div>
 </div>

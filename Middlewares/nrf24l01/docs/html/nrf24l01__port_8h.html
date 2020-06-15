@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NRF24L01 and NRF24L01+ simple driver: Файл nrf24l01_port.h</title>
+<title>NRF24L01 and NRF24L01+ transceiver library: Файл nrf24l01_port.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -28,9 +28,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NRF24L01 and NRF24L01+ simple driver
-   &#160;<span id="projectnumber">0.1.0</span>
+   <div id="projectname">NRF24L01 and NRF24L01+ transceiver library
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
+   <div id="projectbrief">simple and cross-platform</div>
   </td>
  </tr>
  </tbody>
@@ -117,13 +118,17 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
 <tr class="memitem:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#ab3716dd1e11c06aba7ccf7c2dccf68f5">_delay_us</a>(us)&#160;&#160;&#160;delay_us((us))</td></tr>
 <tr class="separator:ab3716dd1e11c06aba7ccf7c2dccf68f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Макросы для управления выводами трансивера.</div></td></tr>
-<tr class="memitem:a676f26b7f228d7f0edfd9004ddb4a0ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a676f26b7f228d7f0edfd9004ddb4a0ad">_csn_high</a>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
+<tr class="memitem:a676f26b7f228d7f0edfd9004ddb4a0ad"><td class="memItemLeft" align="right" valign="top"><a id="a676f26b7f228d7f0edfd9004ddb4a0ad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>_csn_high</b>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
 <tr class="separator:a676f26b7f228d7f0edfd9004ddb4a0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a087c5c130ada8e897ca36fb4130a742e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#a087c5c130ada8e897ca36fb4130a742e">_csn_low</a>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
+<tr class="memitem:a087c5c130ada8e897ca36fb4130a742e"><td class="memItemLeft" align="right" valign="top"><a id="a087c5c130ada8e897ca36fb4130a742e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>_csn_low</b>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td></tr>
 <tr class="separator:a087c5c130ada8e897ca36fb4130a742e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee27de7dc34316aa00d80e084f614cc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#aee27de7dc34316aa00d80e084f614cc0">_ce_high</a>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
+<tr class="memitem:aee27de7dc34316aa00d80e084f614cc0"><td class="memItemLeft" align="right" valign="top"><a id="aee27de7dc34316aa00d80e084f614cc0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>_ce_high</b>()&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
 <tr class="separator:aee27de7dc34316aa00d80e084f614cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac607a5ff252402d198a50aa90c1908e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nrf24l01__port_8h.html#ac607a5ff252402d198a50aa90c1908e1">_ce_low</a>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
+<tr class="memitem:ac607a5ff252402d198a50aa90c1908e1"><td class="memItemLeft" align="right" valign="top"><a id="ac607a5ff252402d198a50aa90c1908e1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>_ce_low</b>()&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td></tr>
 <tr class="separator:ac607a5ff252402d198a50aa90c1908e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -142,82 +147,6 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
 
 <p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a></p>
 </div><h2 class="groupheader">Макросы</h2>
-<a id="aee27de7dc34316aa00d80e084f614cc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee27de7dc34316aa00d80e084f614cc0">&#9670;&nbsp;</a></span>_ce_high</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _ce_high</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00026">26</a></p>
-
-</div>
-</div>
-<a id="ac607a5ff252402d198a50aa90c1908e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac607a5ff252402d198a50aa90c1908e1">&#9670;&nbsp;</a></span>_ce_low</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _ce_low</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CE_GPIO_Port, NRF_CE_Pin)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00027">27</a></p>
-
-</div>
-</div>
-<a id="a676f26b7f228d7f0edfd9004ddb4a0ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a676f26b7f228d7f0edfd9004ddb4a0ad">&#9670;&nbsp;</a></span>_csn_high</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _csn_high</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;LL_GPIO_SetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00024">24</a></p>
-
-</div>
-</div>
-<a id="a087c5c130ada8e897ca36fb4130a742e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a087c5c130ada8e897ca36fb4130a742e">&#9670;&nbsp;</a></span>_csn_low</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _csn_low</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;LL_GPIO_ResetOutputPin(NRF_CSN_GPIO_Port, NRF_CSN_Pin)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00025">25</a></p>
-
-</div>
-</div>
 <a id="a5647ead118e2be59c7c23959d2f3c046"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5647ead118e2be59c7c23959d2f3c046">&#9670;&nbsp;</a></span>_delay_ms</h2>
 
@@ -288,7 +217,7 @@ $(document).ready(function(){initNavTree('nrf24l01__port_8h.html','');});
 
 <p>Обменивается байтом по SPI. </p>
 <dl class="section note"><dt>Заметки</dt><dd>Если используемый стандарт языка не поддерживает inline, можно использовать макрос.</dd></dl>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Ошибка:</a></b></dt><dd>Если функция обмена байтом по SPI работает с volatile-данными (регистрами МК) и находится в отдельной единице трансляции, то для arm-none-eabi-gcc v6.3.1 имеет место баг, вызванный оптимизацией компилятора. Баг проявляется на уровнях оптимизации, отличных от -O0 и -Og. Симптомы: некорректные значения при передаче/приёме данных по SPI. </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Ошибка:</a></b></dt><dd>Если функция, которой данная функция/макрос делегирует обмен байтом по SPI, находится в отдельной единице трансляции, то для arm-none-eabi-gcc v6.3.1 имеет место баг, вызванный оптимизацией компилятора. Баг проявляется на уровнях оптимизации, отличных от -O0 и -Og. Симптомы: некорректные значения при передаче/приёме данных по SPI. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="nrf24l01__port_8h_source.html">nrf24l01_port.h</a> строка <a class="el" href="nrf24l01__port_8h_source.html#l00044">44</a></p>
 
