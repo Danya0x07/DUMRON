@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['transceiver_5firq_5fpin_5fis_5fhigh',['transceiver_irq_pin_is_high',['../nrf24l01__ex__default__rx_8c.html#ae71fb8078fba2f602169cfcf623adadc',1,'transceiver_irq_pin_is_high(void):&#160;nrf24l01_ex_utils.c'],['../nrf24l01__ex__default__tx_8c.html#ae71fb8078fba2f602169cfcf623adadc',1,'transceiver_irq_pin_is_high(void):&#160;nrf24l01_ex_utils.c'],['../nrf24l01__ex__io__rx_8c.html#ae71fb8078fba2f602169cfcf623adadc',1,'transceiver_irq_pin_is_high(void):&#160;nrf24l01_ex_utils.c'],['../nrf24l01__ex__io__tx_8c.html#ae71fb8078fba2f602169cfcf623adadc',1,'transceiver_irq_pin_is_high(void):&#160;nrf24l01_ex_utils.c'],['../nrf24l01__ex__multiceiver__rx_8c.html#ae71fb8078fba2f602169cfcf623adadc',1,'transceiver_irq_pin_is_high(void):&#160;nrf24l01_ex_utils.c'],['../nrf24l01__ex__utils_8c.html#ae71fb8078fba2f602169cfcf623adadc',1,'transceiver_irq_pin_is_high(void):&#160;nrf24l01_ex_utils.c']]]
-];
