@@ -37,9 +37,16 @@ struct ds18b20_scratchpad {
 static void onewire_write_bit(uint_fast8_t bit)
 {
     _wire_low();
-    _delay_us(bit ? 3 : 65);
+    if (bit)
+        _delay_us(3);
+    else
+        _delay_us(65);
+
     _wire_high();
-    _delay_us(bit ? 65 : 3);
+    if (bit)
+        _delay_us(65);
+    else
+        _delay_us(3);
 }
 
 static uint_fast8_t onewire_read_bit(void)
@@ -77,6 +84,46 @@ static uint_fast8_t onewire_perform_reset(void)
     _delay_us(250);
     return wire_status;
 }
+
+#ifdef USE_ALTWIRE_FOR_ADDRESS_READING
+
+static void altwire_write_bit(uint_fast8_t bit)
+{
+    _alt_wire_low();
+    if (bit)
+        _delay_us(3);
+    else
+        _delay_us(65);
+
+    _alt_wire_high();
+    if (bit)
+        _delay_us(65);
+    else
+        _delay_us(3);
+}
+
+static uint_fast8_t altwire_read_bit(void)
+{
+    _alt_wire_low();
+    _delay_us(2);
+    _alt_wire_high();
+    _delay_us(10);
+    uint_fast8_t bit = _alt_wire_is_high();
+    _delay_us(55);
+    return bit;
+}
+
+static uint_fast8_t altwire_perform_reset(void)
+{
+    _alt_wire_low();
+    _delay_us(490);
+    _alt_wire_high();
+    _delay_us(70);
+    uint_fast8_t status = _alt_wire_is_high();
+    _delay_us(250);
+    return status;
+}
+#endif  /* USE_ALTWIRE_FOR_ADDRESS_READING */
 
 int ds18b20_check_presense(void)
 {
@@ -125,7 +172,23 @@ static uint8_t ds18b20_calc_crc8(const uint8_t *data, uint8_t len)
 int ds18b20_read_address(uint8_t address[8])
 {
     int status;
+#ifdef USE_ALTWIRE_FOR_ADDRESS_READING
+    if ((status = -altwire_perform_reset()) == DS18B20_OK) {
+        uint_fast8_t i, j;
 
+        for (i = 0; i < 8; i++)
+            altwire_write_bit(READ_ROM & (1 << i));
+
+        for (i = 0; i < 8; i++) {
+            address[i] = 0;
+            for (j = 0; j < 8; j++)
+                address[i] |= altwire_read_bit() << j;
+        }
+
+        if (ds18b20_calc_crc8(address, 7) != address[7])
+            status = DS18B20_ECRC;
+    }
+#else
     if ((status = ds18b20_check_presense()) == DS18B20_OK) {
         uint_fast8_t i;
 
@@ -133,12 +196,10 @@ int ds18b20_read_address(uint8_t address[8])
         for (i = 0; i < 8; i++)
             address[i] = onewire_read_byte();
 
-#if (DS18B20_CRC_MODE > 0)
         if (ds18b20_calc_crc8(address, 7) != address[7])
             status = DS18B20_ECRC;
-#endif
-
     }
+#endif
     return status;
 }
 
@@ -165,8 +226,11 @@ int ds18b20_configure(const uint8_t *address,
 
     if ((status = ds18b20_select(address)) == DS18B20_OK) {
         onewire_write_byte(W_SCRATCHPAD);
-        onewire_write_byte(config->temp_lim_h);
-        onewire_write_byte(config->temp_lim_l);
+        /*
+         * Допустимые границы температуры удобнее проверять из вызывающего кода.
+         */
+        onewire_write_byte(127);
+        onewire_write_byte(-128);
         onewire_write_byte(config->resolution);
     }
     return status;
@@ -198,12 +262,10 @@ int ds18b20_get_result(const uint8_t *address, int32_t *result)
         for (i = 0; i < sizeof(scratchpad); i++)
             *data++ = onewire_read_byte();
 
-#if (DS18B20_CRC_MODE > 0)
         if (ds18b20_calc_crc8((uint8_t *)&scratchpad, sizeof(scratchpad) - 1)
                 != scratchpad.crc) {
             return DS18B20_ECRC;
         }
-#endif
 
         res_sign = (scratchpad.temp_msb & 0x80) ? -1 : 1;
         res_int = 0x7F & ((scratchpad.temp_msb << 4) |
@@ -233,7 +295,7 @@ int ds18b20_measure(const uint8_t *address, int32_t *result)
     int status;
 
     if ((status = ds18b20_start_measurement(address)) == DS18B20_OK) {
-        int wait_time_ms = 0;
+        uint16_t wait_time_ms = 0;
 
         do {
             _delay_us(3 * 1000);

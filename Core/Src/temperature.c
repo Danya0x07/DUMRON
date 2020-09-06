@@ -44,8 +44,6 @@ static int8_t measureTemperature(const uint8_t *sensorAddress)
 void Temperature_Init(void)
 {
     struct ds18b20_config config = {
-        .temp_lim_h = 80,
-        .temp_lim_l = -10,
         .resolution = DS18B20_RESOLUTION_9BIT
     };
 
