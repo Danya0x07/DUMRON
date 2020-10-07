@@ -20,6 +20,7 @@
 #include "temperature.h"
 #include "radio.h"
 #include "emmiters.h"
+#include "errors.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -105,6 +106,7 @@ int main(void)
 
   // Настройка радиомодуля; 
   Radio_Init();
+  ErrorShow_InitTemperature();
 
   /* USER CODE END 2 */
 

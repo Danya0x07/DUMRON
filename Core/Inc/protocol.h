@@ -31,9 +31,15 @@ typedef enum {
 } ClawControl_e;
 
 /**
+ * Частотный канал, а который настроены робот и пульт сразу после включения,
+ * и который потом меняется.
+ */
+#define RADIO_INITIAL_CHANNEL	126
+
+/**
  * Структура пакетов, идущих от пульта к роботу.
  */
-typedef struct {
+typedef struct __attribute__((packed)) {
     union {
         struct {
             uint8_t moveDir  :3;
@@ -42,10 +48,19 @@ typedef struct {
             uint8_t lightsEn :1;
 
             uint8_t buzzerEn :1;
-            uint8_t _extra   :7; /* резервируем байт на будущее */
+            uint8_t reserved :7;
         } bf;
         uint16_t reg;
     } ctrl;
+
+    union {
+    	struct {
+    		uint8_t switched :1;
+			uint8_t channel	 :7;
+    	} bf;
+    	uint8_t reg;
+    } radio;
+
     uint8_t speedL;
     uint8_t speedR;
 } DataToRobot_s;
@@ -66,11 +81,11 @@ typedef enum {
 /**
  * Структура пакетов, идущих от робота к пульту.
  */
-typedef struct {
+typedef struct __attribute__((packed)) {
     union {
         struct {
             uint8_t backDistance :2;
-            uint8_t _extra :6;  /* резервируем байт на будущее */
+            uint8_t reserved     :6;
         } bf;
         uint8_t reg;
     } status;
@@ -80,7 +95,7 @@ typedef struct {
     int8_t  internalTemperature;
 } DataFromRobot_s;
 
-_Static_assert(sizeof(DataToRobot_s) == 4, "ss");
-_Static_assert(sizeof(DataFromRobot_s) == 5, "ss");
+_Static_assert(sizeof(DataToRobot_s) == 5, "Unexpected payload size.");
+_Static_assert(sizeof(DataFromRobot_s) == 5, "Unexpected payload size.");
 
 #endif /* _PROTOCOL_H */

@@ -474,6 +474,10 @@ void Task_ExchangeDataWithRC(void *argument)
         Radio_TakeIncoming(&incomingData);
 
         if (osMutexAcquire(incomingDataMutexHandle, 1) == osOK) {
+        	if (incomingData.radio.bf.switched) {
+				Radio_SwitchChannel(incomingData.radio.bf.channel);
+			}
+
             Motors_SetDirection(incomingData.ctrl.bf.moveDir);
             if (!cliffBehindRobotDetected ||
                     incomingData.ctrl.bf.moveDir != MOVEDIR_BACKWARD) {
@@ -529,7 +533,7 @@ void Callback_UpdateManipulator(void *argument)
         Manipulator_Move();
         osMutexRelease(incomingDataMutexHandle);
     } else {
-         debug_logs("um: idm failed\n");
+    	debug_logs("um: idm failed\n");
     }
 
   /* USER CODE END Callback_UpdateManipulator */

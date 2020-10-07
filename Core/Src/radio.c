@@ -9,15 +9,15 @@
 void Radio_Init(void)
 {
     struct nrf24l01_rx_config config = {
-        .addr_size = NRF24L01_ADDRS_4BYTE,
+        .addr_size = NRF24L01_ADDRS_3BYTE,
         .crc_mode  = NRF24L01_CRC_1BYTE,
         .datarate  = NRF24L01_DATARATE_1MBPS,
         .mode = NRF24L01_RX_MODE_DPL_ACK_PAYLOAD,
         .en_irq = NRF24L01_IRQ_RX_DR,
-        .rf_channel = 112,
+        .rf_channel = RADIO_INITIAL_CHANNEL,
     };
     struct nrf24l01_pipe_config p0_conf = {
-        .address.array = (uint8_t [4]){0xC7, 0x68, 0xAC, 0x35},
+        .address.array = (uint8_t [3]){0xC7, 0x68, 0xAC},
         .mode = NRF24L01_PIPE_MODE_ACK_DPL,
     };
 
@@ -55,4 +55,9 @@ void Radio_PutOutcoming(DataFromRobot_s *outcoming)
     }
     nrf24l01_rx_write_ack_pld(NRF24L01_PIPE0, outcoming,
                               sizeof(DataFromRobot_s));
+}
+
+void Radio_SwitchChannel(uint8_t channel)
+{
+	nrf24l01_set_rf_channel(channel);
 }
