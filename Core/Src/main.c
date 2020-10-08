@@ -106,7 +106,6 @@ int main(void)
 
   // Настройка радиомодуля; 
   Radio_Init();
-  ErrorShow_InitTemperature();
 
   /* USER CODE END 2 */
 
