@@ -474,8 +474,11 @@ void Task_ExchangeDataWithRC(void *argument)
         Radio_TakeIncoming(&incomingData);
 
         if (osMutexAcquire(incomingDataMutexHandle, 1) == osOK) {
-        	if (incomingData.radio.bf.switched) {
+        	if (incomingData.radio.bf.switched && incomingData.radio.bf.channel == 0) {
 				Radio_SwitchChannel(incomingData.radio.bf.channel);
+				Buzzer_SetState(1);
+				osDelay(pdMS_TO_TICKS(20));
+				Buzzer_SetState(0);
 			}
 
             Motors_SetDirection(incomingData.ctrl.bf.moveDir);
